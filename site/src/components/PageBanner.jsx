@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 // - Hero image with maroon overlay, centered eyebrow + title.
 // - Breadcrumb ALWAYS rendered in its own bar BELOW the banner.
 // `trail` is an array of { label, to? } — the last item is the current page.
-export default function PageBanner({ image, eyebrow, title, subtitle, trail = [] }) {
+// `imagePosition` (CSS object-position) keeps a face in view when the photo is cropped.
+export default function PageBanner({ image, imagePosition, eyebrow, title, subtitle, trail = [] }) {
   return (
     <>
       <header className="relative h-[300px] sm:h-[360px] md:h-[420px] flex items-center justify-center overflow-hidden bg-maroon-dark">
@@ -12,6 +13,7 @@ export default function PageBanner({ image, eyebrow, title, subtitle, trail = []
           <img
             className="absolute inset-0 w-full h-full object-cover"
             src={image}
+            style={imagePosition ? { objectPosition: imagePosition } : undefined}
             alt={typeof title === "string" ? title : ""}
           />
         )}
