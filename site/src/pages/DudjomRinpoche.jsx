@@ -127,7 +127,8 @@ export default function DudjomRinpoche() {
         }
       `}</style>
       <PageBanner
-        image="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1783136224/monastery/hkkeoombqu6suwynrufj.png"
+        image="/images/dudjom-rinpoche-banner.jpg"
+        imagePosition="50% 20%"
         eyebrow="Venerable Lineage"
         title="H.H. Dudjom Rinpoche (1904-1987)"
         trail={[{ label: "Home", to: "/" }, { label: "About", to: "/about" }, { label: "Dudjom Rinpoche" }]}
