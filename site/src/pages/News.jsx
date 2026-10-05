@@ -23,8 +23,7 @@ export default function News() {
   useEffect(() => {
     let alive = true;
     listPublished("news").then((d) => {
-      // "Consecration page only" posts appear on the 2028 site, not in this list.
-      if (alive) setDocs((d || []).filter((x) => !x.consecrationOnly));
+      if (alive) setDocs(d || []);
     });
     return () => { alive = false; };
   }, []);
@@ -38,6 +37,7 @@ export default function News() {
     body: localized(d, "body", lang),
     img: newsCover(d),
     alt: localized(d, "title", lang),
+    consecrationOnly: !!d.consecrationOnly,
     images: Array.isArray(d.images) ? d.images.filter(Boolean).map(cld) : [],
   });
 
@@ -57,7 +57,10 @@ export default function News() {
     setSearchParams(f === "All" ? {} : { category: slug(f) }, { replace: true });
 
   const PAGE_SIZE = 6;
-  const filtered = data.filter((a) => activeFilter === "All" || a.category === activeFilter);
+  // "Consecration page only" posts stay out of "All" (and the homepage) but are
+  // listed under their own category tab, which the 2028 site links to.
+  const filtered = data.filter((a) =>
+    activeFilter === "All" ? !a.consecrationOnly : a.category === activeFilter);
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, totalPages);
   const pageItems = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
