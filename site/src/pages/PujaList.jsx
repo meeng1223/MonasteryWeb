@@ -74,7 +74,7 @@ export default function PujaList() {
       subject: "Puja Request: " + (pf.puja || "—"),
       message: `Puja: ${pf.puja}\nDedication: ${pf.dedication}\nIntention: ${pf.intention}`,
     };
-    try { await createItem("messages", { ...payload, type: "puja_request" }); } catch (err) { console.warn(err?.message); }
+    try { await createItem("messages", { ...payload, type: "puja_request", source: "Monastery website" }); } catch (err) { console.warn(err?.message); }
     // Add the requester to MailerLite ("Website: Puja requests", + newsletter if ticked)
     await addToMailerLite({ email: pf.email, name: pf.name, source: "puja", newsletter, puja: pf.puja });
     try {

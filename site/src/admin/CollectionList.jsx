@@ -62,6 +62,7 @@ export default function CollectionList() {
     if (v) next.set(filterDef.name, v);
     else next.delete(filterDef.name);
     try { sessionStorage.setItem(memoKey, v); } catch { /* private mode: URL still works */ }
+    setSelected(new Set());
     setParams(next, { replace: true });
   };
 
@@ -78,11 +79,12 @@ export default function CollectionList() {
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
-  const allSelected = items.length > 0 && selected.size === items.length;
-  const targets = () => (selected.size ? items.filter((x) => selected.has(x.id)) : items);
+  // Bulk actions act on what the list shows (the current filter), never on hidden rows.
+  const allSelected = shown.length > 0 && shown.every((x) => selected.has(x.id));
+  const targets = () => (selected.size ? items.filter((x) => selected.has(x.id)) : shown);
 
   const bulkDelete = async (all) => {
-    const list = all ? items : items.filter((x) => selected.has(x.id));
+    const list = all ? shown : items.filter((x) => selected.has(x.id));
     if (!list.length) return;
     const what = all ? `ALL ${list.length} ${coll.labelVi.toLowerCase()}` : `${list.length} selected`;
     if (!window.confirm(`Delete ${what}? This cannot be undone.`)) return;
@@ -142,8 +144,8 @@ export default function CollectionList() {
           {coll.inbox && (
             <div className="flex flex-wrap items-center gap-3 mb-3 text-[12px]">
               <label className="flex items-center gap-2 text-ink-mid cursor-pointer">
-                <input type="checkbox" checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(items.map((x) => x.id)))} />
-                {selected.size ? `${selected.size} selected` : `Select all (${items.length})`}
+                <input type="checkbox" checked={allSelected} onChange={() => setSelected(allSelected ? new Set() : new Set(shown.map((x) => x.id)))} />
+                {selected.size ? `${selected.size} selected` : `Select all (${shown.length})`}
               </label>
               <span className="flex-1" />
               {busy && <span className="text-ink-light">{busy}</span>}
@@ -161,7 +163,7 @@ export default function CollectionList() {
                 Delete selected
               </button>
               <button disabled={!!busy} onClick={() => bulkDelete(true)} className="px-3 py-1.5 border border-error/40 text-error rounded-sm hover:bg-error hover:text-white disabled:opacity-40">
-                Delete all
+                {filter ? `Delete all ${shown.length} shown` : "Delete all"}
               </button>
             </div>
           )}
