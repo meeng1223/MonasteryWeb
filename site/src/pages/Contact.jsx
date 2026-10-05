@@ -19,7 +19,7 @@ export default function Contact() {
 
     // 1) Lưu vào admin inbox (Firestore) — best effort
     try {
-      await createItem("messages", { ...form });
+      await createItem("messages", { ...form, source: "Monastery website" });
     } catch (err) {
       console.warn("save message:", err?.message);
     }

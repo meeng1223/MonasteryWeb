@@ -138,7 +138,18 @@ export const COLLECTIONS = {
     titleField: "name",
     subtitleField: "email",
     imageField: null,
+    // Which website the message came from: dundulraptenling.org forms, or the
+    // Zangdok Palri contact form (saved by zangdok-palri-2028/api/zp-contact).
+    // Older messages have no value and count as the monastery website.
+    filterField: "source",
     fields: [
+      {
+        name: "source",
+        label: "Website",
+        type: "select",
+        options: ["Monastery website", "Zangdok Palri website"],
+        default: "Monastery website",
+      },
       { name: "name", label: "Full name", type: "text" },
       { name: "email", label: "Email", type: "text" },
       { name: "subject", label: "Subject", type: "text" },
