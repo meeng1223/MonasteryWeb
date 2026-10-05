@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { listPublished } from "../lib/content.js";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useNewsletter } from "../lib/useNewsletter.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
@@ -15,7 +15,8 @@ const slug = (c) => c.toLowerCase().replace(/\s+/g, "-");
 
 export default function News() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [docs, setDocs] = useState(null);
+  // Last known news first (instant), then refreshed from the CMS.
+  const [docs, setDocs] = useState(() => cachedPublished("news"));
   const [page, setPage] = useState(1);
   const { email, setEmail, status, subscribe } = useNewsletter();
   const { lang } = useLang();
@@ -23,7 +24,7 @@ export default function News() {
   useEffect(() => {
     let alive = true;
     listPublished("news").then((d) => {
-      if (alive) setDocs(d || []);
+      if (alive) setDocs((prev) => d || prev || []);
     });
     return () => { alive = false; };
   }, []);

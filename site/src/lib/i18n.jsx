@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { TIB } from "./translations.js";
 
 const LangCtx = createContext({ lang: "EN", setLang: () => {} });
 export const useLang = () => useContext(LangCtx);
@@ -15,8 +14,10 @@ export const LANGUAGES = [
   { code: "OR", short: "OR", html: "or", label: "ଓଡ଼ିଆ" },
 ];
 
-// English -> language dictionaries. Tibetan is bundled; the others load on demand.
+// English -> language dictionaries, each loaded on demand (only English ships in
+// the main bundle; Tibetan alone is ~1 MB of text).
 const LOADERS = {
+  TIB: () => import("./translations.js").then((m) => ({ default: m.TIB })),
   ZH: () => import("./i18n/zh.json"),
   VI: () => import("./i18n/vi.json"),
   OR: () => import("./i18n/or.json"),
@@ -49,12 +50,21 @@ const indexDict = (d) => {
   for (const k in d) out[norm(k)] = d[k];
   return out;
 };
-const DICTS = { TIB: indexDict(TIB) };
+const DICTS = {};
 
 async function loadDict(code) {
   if (code === "EN") return null;
   if (!DICTS[code] && LOADERS[code]) DICTS[code] = indexDict((await LOADERS[code]()).default);
   return DICTS[code] || null;
+}
+
+// Returning visitors who chose another language: start downloading that
+// dictionary right away, before React renders, so English shows only briefly.
+try {
+  const saved = localStorage.getItem("lang");
+  if (saved && saved !== "EN") loadDict(saved);
+} catch {
+  /* storage blocked: the dictionary loads when the language is applied */
 }
 
 function lookup(dict, raw) {

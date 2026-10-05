@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -33,12 +34,14 @@ import Terms from "./pages/Terms.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
-import ProtectedRoute from "./admin/ProtectedRoute.jsx";
-import AdminLayout from "./admin/AdminLayout.jsx";
-import Login from "./admin/Login.jsx";
-import Dashboard from "./admin/Dashboard.jsx";
-import CollectionList from "./admin/CollectionList.jsx";
-import CollectionForm from "./admin/CollectionForm.jsx";
+// Admin screens (and Firebase) load only when someone opens /admin.
+const AdminRoot = lazy(() => import("./admin/AdminRoot.jsx"));
+const ProtectedRoute = lazy(() => import("./admin/ProtectedRoute.jsx"));
+const AdminLayout = lazy(() => import("./admin/AdminLayout.jsx"));
+const Login = lazy(() => import("./admin/Login.jsx"));
+const Dashboard = lazy(() => import("./admin/Dashboard.jsx"));
+const CollectionList = lazy(() => import("./admin/CollectionList.jsx"));
+const CollectionForm = lazy(() => import("./admin/CollectionForm.jsx"));
 
 export default function App() {
   return (
@@ -46,13 +49,15 @@ export default function App() {
       <ScrollToTop />
       <Routes>
         {/* ---- Admin (no public chrome) ---- */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin" element={<ProtectedRoute />}>
-          <Route element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path=":coll" element={<CollectionList />} />
-            <Route path=":coll/new" element={<CollectionForm />} />
-            <Route path=":coll/:id" element={<CollectionForm />} />
+        <Route element={<Suspense fallback={null}><AdminRoot /></Suspense>}>
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin" element={<ProtectedRoute />}>
+            <Route element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path=":coll" element={<CollectionList />} />
+              <Route path=":coll/new" element={<CollectionForm />} />
+              <Route path=":coll/:id" element={<CollectionForm />} />
+            </Route>
           </Route>
         </Route>
 

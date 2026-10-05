@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { listPublished } from "../lib/content.js";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
@@ -61,7 +61,7 @@ function BookButtons({ pdf, online }) {
 
 export default function PrayerBooks() {
   const { lang } = useLang();
-  const [docs, setDocs] = useState(null);
+  const [docs, setDocs] = useState(() => cachedPublished("prayerbooks"));
 
   useEffect(() => {
     let alive = true;

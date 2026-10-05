@@ -54,7 +54,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+    <!-- Icon font, cut down to what the site uses: weight 300, outline + filled, and
+         only the icons listed in icon_names (~4 MB → a few KB). display=block so icon
+         names ("menu", "language") never flash as words. Using a NEW icon? Add its
+         name to icon_names (alphabetical); `npm run build` checks this
+         (scripts/check-icons.mjs). -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0..1,0&icon_names=account_balance,add,add_photo_alternate,alternate_email,apps,arrow_back,arrow_forward,auto_awesome,auto_stories,badge,bolt,book,brightness_7,category,check_circle,chevron_left,chevron_right,close,dashboard,delete,diversity_3,download,edit,expand_more,favorite,filter_vintage,format_bold,format_clear,format_italic,format_list_bulleted,format_list_numbered,format_paint,format_underlined,grid_view,group,handshake,health_and_safety,history_edu,image,inbox,language,laptop_mac,link,link_off,lock,logout,mail,medical_services,menu,menu_book,newspaper,nights_stay,open_in_new,palette,photo_library,picture_as_pdf,play_arrow,prayer_times,progress_activity,reply,restaurant,self_improvement,send,settings,settings_suggest,spa,star_rate,temple_buddhist,top_panel_close,translate,upload,upload_file,verified,verified_user,yard&display=block" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tibetan:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Oriya:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getOne } from "../lib/content.js";
+import { getPublished, cachedItem } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
@@ -9,17 +9,30 @@ import { applySeo, NoIndex } from "../components/Seo.jsx";
 import { trimDescription } from "../lib/seo.js";
 import { richTextToPlain } from "../lib/richtext.js";
 
+// 2028 consecration registration page in the visitor's language.
+const REGISTER_2028 = {
+  EN: "https://2028.zangdokpalriodisha.com/register",
+  VI: "https://2028.zangdokpalriodisha.com/vi/register",
+  ZH: "https://2028.zangdokpalriodisha.com/zh-hk/register",
+  HI: "https://2028.zangdokpalriodisha.com/hi/register",
+  TIB: "https://2028.zangdokpalriodisha.com/bo/register",
+  OR: "https://2028.zangdokpalriodisha.com/or/register",
+};
+
 export default function NewsDetail() {
   const { id } = useParams();
   const { lang } = useLang();
-  const [doc, setDoc] = useState(undefined); // undefined = loading, null = not found
+  // undefined = loading, null = not found. Starts from the cached news list
+  // (instant when the visitor came from /news or the homepage), then refreshes.
+  const [doc, setDoc] = useState(() => cachedItem("news", id) || undefined);
 
   useEffect(() => {
     let alive = true;
     window.scrollTo(0, 0);
-    getOne("news", id)
-      .then((d) => { if (alive) setDoc(d && d.published !== false ? d : null); })
-      .catch(() => { if (alive) setDoc(null); });
+    setDoc(cachedItem("news", id) || undefined);
+    getPublished("news", id)
+      .then((d) => { if (alive) setDoc(d); })
+      .catch(() => { if (alive) setDoc((prev) => prev || null); });
     return () => { alive = false; };
   }, [id]);
 
@@ -73,7 +86,7 @@ export default function NewsDetail() {
           <aside className="mb-xl border-l-2 border-gold bg-cream px-base py-3 font-body-md text-ink-mid">
             <span>Part of Zangdok Palri</span>
             {" · "}
-            <a href="https://2028.zangdokpalriodisha.com/#register" target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
+            <a href={REGISTER_2028[lang] || REGISTER_2028.EN} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
               <span>Register for the 2028 consecration</span> →
             </a>
           </aside>

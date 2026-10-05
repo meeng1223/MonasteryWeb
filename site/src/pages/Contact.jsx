@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { trackEvent } from "../lib/analytics.js";
-import { createItem } from "../lib/content.js";
+import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
 import PageBanner from "../components/PageBanner.jsx";
 
