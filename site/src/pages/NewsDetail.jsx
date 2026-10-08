@@ -8,10 +8,12 @@ import RichText from "../components/RichText.jsx";
 import { applySeo, NoIndex } from "../components/Seo.jsx";
 import { trimDescription } from "../lib/seo.js";
 import { richTextToPlain } from "../lib/richtext.js";
+import { useSisterLinks } from "../lib/sisterSites.js";
 
 export default function NewsDetail() {
   const { id } = useParams();
   const { lang } = useLang();
+  const sister = useSisterLinks();
   const [doc, setDoc] = useState(undefined); // undefined = loading, null = not found
 
   useEffect(() => {
@@ -73,8 +75,12 @@ export default function NewsDetail() {
           <aside className="mb-xl border-l-2 border-gold bg-cream px-base py-3 font-body-md text-ink-mid">
             <span>Part of Zangdok Palri</span>
             {" · "}
-            <a href="https://2028.zangdokpalriodisha.com/#register" target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
+            <a href={sister.register} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
               <span>Register for the 2028 consecration</span> →
+            </a>
+            {" · "}
+            <a href={sister.travel} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
+              <span>Plan your visit: transport, stay &amp; permits</span> →
             </a>
           </aside>
         )}
