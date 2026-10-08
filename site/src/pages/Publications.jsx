@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
-import { listPublished } from "../lib/content.js";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { cld } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import RichText from "../components/RichText.jsx";
@@ -85,7 +85,7 @@ const publications = [
 ];
 
 export default function Publications() {
-  const [docs, setDocs] = useState(null);
+  const [docs, setDocs] = useState(() => cachedPublished("publications"));
   const { lang } = useLang();
 
   useEffect(() => {

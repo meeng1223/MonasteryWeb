@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { listPublished } from "../lib/content.js";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { useSisterLinks } from "../lib/sisterSites.js";
@@ -50,23 +50,24 @@ export default function Home() {
   // Latest News — auto-synced from the News page (Firestore "news" collection).
   const { lang } = useLang();
   const sister = useSisterLinks();
-  const [newsItems, setNewsItems] = useState(null);
+  // Last known news first (instant), then refreshed from the CMS.
+  const [newsDocs, setNewsDocs] = useState(() => cachedPublished("news"));
   useEffect(() => {
     let alive = true;
     listPublished("news").then((docs) => {
-      if (!alive || !docs) return;
-      setNewsItems(
-        docs.filter((d) => !d.consecrationOnly).slice(0, 3).map((d) => [
-          newsCover(d),
-          [d.category, localized(d, "date", lang)].filter(Boolean).join(" · "),
-          localized(d, "title", lang),
-          localized(d, "excerpt", lang) || richTextToPlain(localized(d, "body", lang)),
-          `/news/${d.id}`,
-        ])
-      );
+      if (alive && docs) setNewsDocs(docs);
     });
     return () => { alive = false; };
-  }, [lang]);
+  }, []);
+  const newsItems = newsDocs
+    ? newsDocs.filter((d) => !d.consecrationOnly).slice(0, 3).map((d) => [
+        newsCover(d),
+        [d.category, localized(d, "date", lang)].filter(Boolean).join(" · "),
+        localized(d, "title", lang),
+        localized(d, "excerpt", lang) || richTextToPlain(localized(d, "body", lang)),
+        `/news/${d.id}`,
+      ])
+    : null;
 
   const latestNews = newsItems ?? [
     [IMG.news1, "Announcement · March 2025", "The 1st Lopon Graduation Certification Event", "Celebrating the achievements of our scholars who have completed their rigorous studies in Buddhist philosophy.", "/graduate-monks"],

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { listPublished } from "../lib/content.js";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
@@ -81,7 +81,7 @@ const ITEMS = [
 
 export default function Gallery() {
   const [active, setActive] = useState("All");
-  const [docs, setDocs] = useState(null);
+  const [docs, setDocs] = useState(() => cachedPublished("gallery"));
   const [lightbox, setLightbox] = useState(null);
   const { lang } = useLang();
 

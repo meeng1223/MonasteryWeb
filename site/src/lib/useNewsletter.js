@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createItem } from "./content.js";
+import { createItem } from "./publicContent.js";
 import { addToMailerLite } from "./mailerlite.js";
 import { trackEvent } from "./analytics.js";
 

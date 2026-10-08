@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getOne } from "../lib/content.js";
+import { getPublished, cachedItem } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
@@ -14,14 +14,17 @@ export default function NewsDetail() {
   const { id } = useParams();
   const { lang } = useLang();
   const sister = useSisterLinks();
-  const [doc, setDoc] = useState(undefined); // undefined = loading, null = not found
+  // undefined = loading, null = not found. Starts from the cached news list
+  // (instant when the visitor came from /news or the homepage), then refreshes.
+  const [doc, setDoc] = useState(() => cachedItem("news", id) || undefined);
 
   useEffect(() => {
     let alive = true;
     window.scrollTo(0, 0);
-    getOne("news", id)
-      .then((d) => { if (alive) setDoc(d && d.published !== false ? d : null); })
-      .catch(() => { if (alive) setDoc(null); });
+    setDoc(cachedItem("news", id) || undefined);
+    getPublished("news", id)
+      .then((d) => { if (alive) setDoc(d); })
+      .catch(() => { if (alive) setDoc((prev) => prev || null); });
     return () => { alive = false; };
   }, [id]);
 

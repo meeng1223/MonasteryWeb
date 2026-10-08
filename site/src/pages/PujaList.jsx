@@ -3,7 +3,7 @@ import { trackEvent } from "../lib/analytics.js";
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import { PUJA_LIST, PUJA_CATEGORIES, PUJA_PURPOSES, pujaCategoryId } from "../data/pujaList.js";
-import { createItem } from "../lib/content.js";
+import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
 import { useLang } from "../lib/i18n.jsx";
 
