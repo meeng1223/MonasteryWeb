@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { trackEvent } from "../lib/analytics.js";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { NAV } from "../site.js";
-import { useLang, LANGUAGES } from "../lib/i18n.jsx";
+import { useLang, LANGUAGES, localePath } from "../lib/i18n.jsx";
 
 const LOGO =
   "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,w_160/v1782276752/monastery/jcdpra8qbr4a3loloekk.png";
@@ -37,7 +37,7 @@ export default function Nav() {
   const [open, setOpen] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileGroup, setMobileGroup] = useState(null);
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
   const current = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
@@ -122,11 +122,18 @@ export default function Nav() {
                 <ul role="listbox" aria-label="Language" className="absolute right-0 mt-2 w-40 bg-white border border-cream-dark rounded-sm shadow-lg py-1 z-50">
                   {LANGUAGES.map((l) => (
                     <li key={l.code} role="option" aria-selected={l.code === lang}>
-                      <button
-                        type="button"
+                      {/* Real link to this page in that language (full page load).
+                          The choice is remembered: plain English links then open in it. */}
+                      <a
+                        href={localePath(l.code, pathname)}
+                        hrefLang={l.html}
                         lang={l.html}
                         onClick={() => {
-                          setLang(l.code);
+                          try {
+                            localStorage.setItem("lang", l.code);
+                            if (l.code === "EN") localStorage.removeItem("langChosen");
+                            else localStorage.setItem("langChosen", "1");
+                          } catch { /* storage blocked */ }
                           trackEvent("select_language", { language: l.code });
                           setLangOpen(false);
                         }}
@@ -137,7 +144,7 @@ export default function Nav() {
                       >
                         <span className="w-6 text-[11px] font-bold tracking-widest">{l.short}</span>
                         {l.label}
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ul>

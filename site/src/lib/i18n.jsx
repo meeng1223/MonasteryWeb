@@ -1,18 +1,12 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useLayoutEffect } from "react";
+import { LANGUAGES, langMeta } from "./langs.js";
 
-const LangCtx = createContext({ lang: "EN", setLang: () => {} });
+export { LANGUAGES, PATH, langFromPath, localePath } from "./langs.js";
+
+// The page language comes from the URL only (see main.jsx); it never changes
+// while a page is open — switching language is a full navigation.
+const LangCtx = createContext({ lang: "EN" });
 export const useLang = () => useContext(LangCtx);
-
-// Site languages. `code` is stored in localStorage ("TIB" kept for backwards
-// compatibility), `html` is the <html lang> value, `label` is shown in its own script.
-export const LANGUAGES = [
-  { code: "EN", short: "EN", html: "en", label: "English" },
-  { code: "VI", short: "VI", html: "vi", label: "Tiếng Việt" },
-  { code: "ZH", short: "ZH", html: "zh-HK", label: "繁體中文" },
-  { code: "HI", short: "HI", html: "hi", label: "हिन्दी" },
-  { code: "TIB", short: "BO", html: "bo", label: "བོད་ཡིག" },
-  { code: "OR", short: "OR", html: "or", label: "ଓଡ଼ିଆ" },
-];
 
 // English -> language dictionaries, each loaded on demand (only English ships in
 // the main bundle; Tibetan alone is ~1 MB of text).
@@ -35,6 +29,15 @@ export function localized(doc, field, lang) {
   return (sfx && doc[`${field}_${sfx}`]) || doc[field] || "";
 }
 
+// Languages a CMS article really exists in: English plus every language whose
+// title and body are both filled in.
+export function articleLangs(doc) {
+  return ["EN", ...Object.keys(CMS_SUFFIX).filter((code) => {
+    const sfx = CMS_SUFFIX[code];
+    return String(doc?.[`title_${sfx}`] || "").trim() && String(doc?.[`body_${sfx}`] || "").trim();
+  })];
+}
+
 // Original-value stores so we can restore English when switching language.
 const TEXT_ORIG = new WeakMap(); // textNode -> original English nodeValue
 const TEXT_APPLIED = new WeakMap(); // textNode -> value we wrote (detects React re-renders)
@@ -52,19 +55,10 @@ const indexDict = (d) => {
 };
 const DICTS = {};
 
-async function loadDict(code) {
+export async function loadDict(code) {
   if (code === "EN") return null;
   if (!DICTS[code] && LOADERS[code]) DICTS[code] = indexDict((await LOADERS[code]()).default);
   return DICTS[code] || null;
-}
-
-// Returning visitors who chose another language: start downloading that
-// dictionary right away, before React renders, so English shows only briefly.
-try {
-  const saved = localStorage.getItem("lang");
-  if (saved && saved !== "EN") loadDict(saved);
-} catch {
-  /* storage blocked: the dictionary loads when the language is applied */
 }
 
 function lookup(dict, raw) {
@@ -77,6 +71,17 @@ function lookup(dict, raw) {
   const lead = raw.match(/^\s*/)[0];
   const trail = raw.match(/\s*$/)[0];
   return lead + t + trail;
+}
+
+// Translate one string (e.g. a page title) with an already-loaded dictionary.
+// "A | B" titles fall back to translating each part.
+export function t(str, lang) {
+  const dict = DICTS[lang];
+  if (!str || !dict) return str;
+  const whole = lookup(dict, str);
+  if (whole != null) return whole;
+  if (!str.includes(" | ")) return str;
+  return str.split(" | ").map((part) => lookup(dict, part) ?? part).join(" | ");
 }
 
 // Translate every text node / attribute under `root` with `dict`
@@ -134,37 +139,63 @@ function translateTree(root, dict) {
   }
 }
 
-export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState(() => {
-    const saved = localStorage.getItem("lang");
-    return LANGUAGES.some((l) => l.code === saved) ? saved : "EN";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("lang", lang);
+// `lang` comes from the URL (main.jsx), which loads its dictionary before the
+// first render, so the first commit is translated before the browser paints it.
+export function LanguageProvider({ lang, children }) {
+  useLayoutEffect(() => {
+    // Hint only (newsletter sign-ups, the saved-language redirect in main.jsx):
+    // never read to decide the language of a page. An English page shown while
+    // another language is chosen (/admin, a 404) must not overwrite the choice.
+    try {
+      if (!(lang === "EN" && localStorage.getItem("langChosen") === "1")) localStorage.setItem("lang", lang);
+    } catch { /* storage blocked */ }
     const root = document.getElementById("root");
-    const meta = LANGUAGES.find((l) => l.code === lang) || LANGUAGES[0];
+    const meta = langMeta(lang);
     const html = document.documentElement;
     html.lang = meta.html;
     for (const l of LANGUAGES) html.classList.toggle(`lang-${l.html.split("-")[0]}`, l.code === lang);
     html.classList.toggle("lang-tib", lang === "TIB"); // existing Tibetan styles
 
+    let dict = DICTS[lang] || null;
     let raf = 0;
-    let dict = null;
+    let timer = 0;
+    let settle = 0;
     let cancelled = false;
-    const run = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => translateTree(root, dict));
+    // html[data-i18n] = lang once the page has had no DOM changes for 300 ms
+    // after a translation pass (the prerender waits for it).
+    const markSettled = () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => { html.dataset.i18n = lang; }, 300);
     };
-    loadDict(lang).then((d) => {
-      if (cancelled) return;
-      dict = d;
-      run();
-    });
-    run(); // restore English immediately while a dictionary loads
+    const translate = () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      raf = timer = 0;
+      if (dict) translateTree(root, dict);
+      markSettled();
+    };
+    // rAF for smoothness, plus a timer fallback for hidden tabs (rAF paused).
+    const run = () => {
+      if (raf || timer) return;
+      raf = requestAnimationFrame(translate);
+      timer = setTimeout(translate, 100);
+    };
+
+    if (lang !== "EN" && !dict) {
+      loadDict(lang).then((d) => {
+        if (cancelled) return;
+        dict = d;
+        run();
+      });
+    } else {
+      translate(); // synchronous: before the first paint
+    }
 
     // Re-apply after React re-renders / route changes / async content.
-    const observer = new MutationObserver(() => run());
+    const observer = new MutationObserver(() => {
+      delete html.dataset.i18n;
+      run();
+    });
     observer.observe(root, { childList: true, subtree: true, characterData: true });
 
     // Catch late async content (e.g. Firestore-loaded news/gallery) that may
@@ -175,9 +206,11 @@ export function LanguageProvider({ children }) {
       cancelled = true;
       observer.disconnect();
       cancelAnimationFrame(raf);
+      clearTimeout(timer);
+      clearTimeout(settle);
       timers.forEach(clearTimeout);
     };
   }, [lang]);
 
-  return <LangCtx.Provider value={{ lang, setLang }}>{children}</LangCtx.Provider>;
+  return <LangCtx.Provider value={{ lang }}>{children}</LangCtx.Provider>;
 }

@@ -3,6 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Page language from the URL prefix, set before first paint (fonts/zoom use
+      // the lang-* class). Same prefixes as src/lib/langs.js.
+      (function () {
+        var m = { vi: ["vi", "vi"], "zh-hk": ["zh-HK", "zh"], hi: ["hi", "hi"], bo: ["bo", "bo tib"], or: ["or", "or"] };
+        var l = m[(location.pathname.split("/")[1] || "").toLowerCase()] || ["en", "en"];
+        var h = document.documentElement;
+        h.lang = l[0];
+        h.className = h.className.replace(/(^|\s)lang-\S+/g, "").trim();
+        l[1].split(" ").forEach(function (c) { h.classList.add("lang-" + c); });
+      })();
+    </script>
     <title>Dundul Raptenling Monastery · Nyingma Tradition · Dudjom Tersar</title>
     <meta name="description" content="Dundul Raptenling Monastery — preserving the Dudjom Tersar lineage and the wisdom of Guru Padmasambhava through authentic practice and study." />
     <link rel="icon" type="image/png" href="/favicon.png" />
