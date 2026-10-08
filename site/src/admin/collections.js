@@ -1,7 +1,9 @@
 // Schema-driven config. Adding a field here adds it to the admin form,
 // the list view, and the saved document — no other code changes needed.
 //
-// field types: text | textarea | richtext | select | image | images | pdf | url | bool | date
+// field types: text | textarea | richtext | select | image | images | pdf | url | bool | date | slug
+// (slug = the post's URL, /news/<slug>: filled from `from` (the English title)
+// while a new post is written, kept unchanged afterwards — see CollectionForm)
 // (richtext = bold/italic/lists/links, stored as cleaned HTML — see lib/richtext.js)
 
 // Languages a "bilingual" field can carry besides English. Each is stored as
@@ -26,6 +28,7 @@ export const COLLECTIONS = {
     filterField: "category", // list view: filter chips for this select field
     fields: [
       { name: "title", label: "Title", type: "text", required: true, bilingual: true },
+      { name: "slug", label: "Web address", type: "slug", from: "title", prefix: "/news/" },
       {
         name: "category",
         label: "Category",
