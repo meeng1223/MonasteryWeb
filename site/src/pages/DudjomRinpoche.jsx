@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
+import { usePersonSchema, DUDJOM_RINPOCHE } from "../lib/personSchema.js";
 
 const SECTIONS = [
   {
@@ -92,6 +93,7 @@ function linkify(text) {
 }
 
 export default function DudjomRinpoche() {
+  usePersonSchema(DUDJOM_RINPOCHE);
   return (
     <div className="page-dudjom">
       <style>{`
