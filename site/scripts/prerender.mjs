@@ -13,8 +13,9 @@
 // serves with HTTP 404 for any URL not matched by a rewrite in firebase.json,
 // and checks that firebase.json has a rewrite for every route in src/App.jsx.
 //
-// Also prerenders every news article linked from /news (content from Firestore;
-// articles live at /news/<slug>, see src/lib/newsSlug.js), writes a redirect
+// Also prerenders every published news article (content from Firestore, incl.
+// "consecration page only" posts that /news doesn't list; articles live at
+// /news/<slug>, see src/lib/newsSlug.js), writes a redirect
 // page at each article's old /news/<id> URL (in every language), and writes dist/sitemap.xml from the pages that rendered, keeping the
 // priorities from public/sitemap.xml. Pages whose canonical URL points elsewhere
 // (people listed under both /presidents and /vajra-masters, untranslated
@@ -157,8 +158,11 @@ function outFile(url) {
   return join(DIST, url.replace(/^\//, ""), "index.html");
 }
 
-// Article URLs linked from the rendered /news page, plus every published post
-// (the list the page loaded and cached, newest first — for the redirect pages).
+// Every published article: the full list the /news page loaded from Firestore
+// (listPublished: one unpaginated query, published only, newest first, kept in
+// localStorage) -> /news/<slug> routes. The list page only links 6 articles
+// per page and hides "consecration page only" posts, so its links are just
+// cross-checked against the list.
 async function newsRoutes(browser) {
   const page = await browser.newPage();
   try {
@@ -166,8 +170,15 @@ async function newsRoutes(browser) {
     await page.waitForSelector('a[href^="/news/"]', { timeout: 15000, polling: 100 });
     const hrefs = await page.$$eval('a[href^="/news/"]', (as) => as.map((a) => a.getAttribute("href")));
     const posts = await page.evaluate(() => JSON.parse(localStorage.getItem("cms:news:v1") || "[]"));
-    return { routes: [...new Set(hrefs.filter((h) => /^\/news\/[^/?#]+$/.test(h)))], posts };
+    const slugs = newsSlugMap(posts);
+    const routes = posts.map((p) => `/news/${slugs.get(p.id)}`);
+    const linked = [...new Set(hrefs.filter((h) => /^\/news\/[^/?#]+$/.test(h)))];
+    const unknown = linked.filter((h) => !routes.includes(h));
+    if (unknown.length) fail(`/news links to articles missing from the published list:\n  ${unknown.join("\n  ")}`);
+    console.log(`[prerender] news: ${routes.length} published articles (${linked.length} linked from /news page 1)`);
+    return { routes, posts };
   } catch (e) {
+    if (e instanceof PrerenderError) throw e;
     console.warn(`[prerender] could not list news articles: ${e.message}`);
     return { routes: [], posts: [] };
   } finally {
