@@ -1,8 +1,6 @@
 // Links to the Zangdok Palri sister sites, in the visitor's current language.
 // Both sites use language path prefixes: /vi, /zh-hk, /hi, /bo, /or (English = root).
-import { useLang } from "./i18n.jsx";
-
-const SISTER_PATH = { VI: "vi", ZH: "zh-hk", HI: "hi", TIB: "bo", OR: "or" };
+import { useLang, PATH as SISTER_PATH } from "./i18n.jsx";
 
 // Zangdok Palri Consecration 2028 — event page, or its registration page.
 export function consecrationUrl(lang, page = "") {

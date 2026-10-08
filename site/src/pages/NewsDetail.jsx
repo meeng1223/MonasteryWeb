@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getPublished, cachedItem } from "../lib/publicContent.js";
-import { useLang, localized } from "../lib/i18n.jsx";
+import { useLang, localized, articleLangs, t } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 import RichText from "../components/RichText.jsx";
@@ -28,18 +28,31 @@ export default function NewsDetail() {
     return () => { alive = false; };
   }, [id]);
 
-  // Article title/description/image for Google and link previews (English —
-  // the site has one URL per page; other languages are translated in the browser).
+  // Languages this article exists in: English + every language whose title and
+  // body are both translated. Other languages show the English article, with
+  // the English URL as canonical and no hreflang entry of their own.
+  const langs = doc ? articleLangs(doc) : [];
+  const shown = langs.includes(lang) ? lang : "EN";
+
+  // Article title/description/image for Google and link previews, in the
+  // language shown.
   useEffect(() => {
     if (!doc) return;
-    const text = richTextToPlain(localized(doc, "excerpt", "en") || localized(doc, "body", "en"));
+    // (an English excerpt is not used for a translated article: its body is)
+    const excerpt = localized(doc, "excerpt", shown);
+    const ownExcerpt = shown === "EN" || excerpt !== localized(doc, "excerpt", "EN") ? excerpt : "";
+    const text = richTextToPlain(ownExcerpt || localized(doc, "body", shown));
     applySeo({
-      title: `${localized(doc, "title", "en")} | Dundul Raptenling Monastery`,
+      title: `${localized(doc, "title", shown)} | ${t("Dundul Raptenling Monastery", lang)}`,
       description: trimDescription(text.replace(/\s+/g, " ").trim()),
       path: `/news/${id}`,
       image: newsCover(doc, { fallback: false }) || undefined,
+      lang,
+      langs: articleLangs(doc),
+      canonicalLang: shown,
+      translate: false,
     });
-  }, [doc, id]);
+  }, [doc, id, lang, shown]);
 
   if (doc === undefined) {
     return <div className="py-4xl text-center text-ink-light">Loading…</div>;
@@ -55,9 +68,9 @@ export default function NewsDetail() {
     );
   }
 
-  const title = localized(doc, "title", lang);
-  const date = localized(doc, "date", lang);
-  const body = localized(doc, "body", lang) || localized(doc, "excerpt", lang);
+  const title = localized(doc, "title", shown);
+  const date = localized(doc, "date", shown);
+  const body = localized(doc, "body", shown) || localized(doc, "excerpt", shown);
   const images = Array.isArray(doc.images) ? doc.images.filter(Boolean).map(cld) : [];
 
   return (

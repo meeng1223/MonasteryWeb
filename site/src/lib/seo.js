@@ -3,8 +3,22 @@
 // head on every route change. Canonical/OG URLs use the primary domain.
 
 import { getMaster } from "../data/masters.js";
+import { LANGUAGES, localePath } from "./langs.js";
+
+export { localePath };
 
 export const SITE_URL = "https://dundulraptenling.org";
+
+// hreflang alternates of an (unprefixed) path: one per language in `langs`
+// (default: all six) plus x-default = English.
+export function alternates(path, langs = LANGUAGES.map((l) => l.code)) {
+  const out = LANGUAGES.filter((l) => langs.includes(l.code)).map((l) => ({
+    hreflang: l.html,
+    href: SITE_URL + localePath(l.code, path),
+  }));
+  out.push({ hreflang: "x-default", href: SITE_URL + localePath("EN", path) });
+  return out;
+}
 
 // Default share image (same as index.html).
 export const DEFAULT_IMAGE =

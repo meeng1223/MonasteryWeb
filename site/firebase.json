@@ -8,7 +8,15 @@
     "trailingSlash": false,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "redirects": [
-      { "source": "/lama-sonam-tashi", "destination": "/presidents/lama-sonam-tashi-rinpoche", "type": 301 }
+      { "source": "/lama-sonam-tashi", "destination": "/presidents/lama-sonam-tashi-rinpoche", "type": 301 },
+      { "regex": "^/(?P<lang>vi|zh-hk|hi|bo|or)/lama-sonam-tashi$", "destination": "/:lang/presidents/lama-sonam-tashi-rinpoche", "type": 301 },
+      { "source": "/zh", "destination": "/zh-hk", "type": 301 },
+      { "source": "/zh-tw", "destination": "/zh-hk", "type": 301 },
+      { "regex": "^/(?:zh|zh-tw)/(?P<rest>.+)$", "destination": "/zh-hk/:rest", "type": 301 },
+      { "source": "/tib", "destination": "/bo", "type": 301 },
+      { "regex": "^/tib/(?P<rest>.+)$", "destination": "/bo/:rest", "type": 301 },
+      { "source": "/en", "destination": "/", "type": 301 },
+      { "regex": "^/en/(?P<rest>.+)$", "destination": "/:rest", "type": 301 }
     ],
     "rewrites": [
       { "source": "/about", "destination": "/index.html" },
@@ -48,6 +56,7 @@
       { "source": "/presidents/kongtul-tsephel-rinpoche", "destination": "/index.html" },
       { "source": "/presidents/lama-sonam-tashi-rinpoche", "destination": "/index.html" },
       { "source": "/news/*", "destination": "/index.html" },
+      { "regex": "^/(vi|zh-hk|hi|bo|or)(/(about|history|stupa|odisha-vihara|dudjom-rinpoche|vajra-masters|presidents|board-members|shedra|graduate-monks|puja|prayer-books|community-support|support|support-young-monks|offering|hostel-project|expenditures|news|magazine|publications|gallery|apps|contact|terms|privacy|vajra-masters/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sherab-dorje-rinpoche|khenchen-tulku-shekar-rinpoche|lama-dorje-namgyal-rinpoche|lama-jamphel-sherap-rinpoche|lama-kelsang-nyima-rinpoche)|presidents/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sonam-tashi-rinpoche)|news/[^/]+))?$", "destination": "/index.html" },
       { "source": "/admin", "destination": "/index.html" },
       { "source": "/admin/**", "destination": "/index.html" }
     ],

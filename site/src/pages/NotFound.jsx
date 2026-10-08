@@ -1,18 +1,19 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { NoIndex } from "../components/Seo.jsx";
+import { NoIndex, setAlternates } from "../components/Seo.jsx";
 import { NOT_FOUND_TITLE } from "../lib/notFound.js";
 
 export default function NotFound() {
   const { pathname } = useLocation();
 
   // Runs after <Seo/> (an earlier sibling in Layout): a missing page gets its own
-  // title and no canonical/og:url pointing at the bad URL. Also what the build
+  // title and no canonical/og:url/hreflang pointing at the bad URL. Also what the build
   // bakes into dist/404.html (served by Firebase Hosting with HTTP 404).
   useEffect(() => {
     document.title = NOT_FOUND_TITLE;
     document.head.querySelector('link[rel="canonical"]')?.remove();
     document.head.querySelector('meta[property="og:url"]')?.remove();
+    setAlternates([]);
   }, [pathname]);
 
   return (
