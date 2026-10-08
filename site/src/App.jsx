@@ -85,7 +85,7 @@ export default function App() {
           <Route path="/hostel-project" element={<HostelProject />} />
           <Route path="/expenditures" element={<Expenditures />} />
           <Route path="/news" element={<News />} />
-          <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/news/:slug" element={<NewsDetail />} />
           <Route path="/magazine" element={<Magazine />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/gallery" element={<Gallery />} />

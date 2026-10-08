@@ -5,7 +5,9 @@ import { translateFields } from "../lib/translate.js";
 import MessageThread from "./MessageThread.jsx";
 import RichTextEditor from "./RichTextEditor.jsx";
 import { normalizeRichText, richTextToPlain } from "../lib/richtext.js";
-import { getOne, createItem, updateItem } from "../lib/content.js";
+import { getOne, listAll, createItem, updateItem } from "../lib/content.js";
+import { slugify, baseSlug, newsSlugMap } from "../lib/newsSlug.js";
+import { SITE_URL } from "../lib/seo.js";
 import { uploadImage, uploadFile, cloudinaryEnabled } from "../lib/cloudinary.js";
 
 function ImageField({ field, value, onChange }) {
@@ -254,6 +256,12 @@ export default function CollectionForm() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  // URL slug (news): the slugs other posts use, this post's current address,
+  // and whether the admin has typed in the field.
+  const slugField = coll?.fields.find((f) => f.type === "slug");
+  const [taken, setTaken] = useState(null);
+  const [currentSlug, setCurrentSlug] = useState("");
+  const [slugTouched, setSlugTouched] = useState(false);
 
   useEffect(() => {
     if (isNew || !coll) return;
@@ -267,7 +275,42 @@ export default function CollectionForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collKey, id]);
 
+  useEffect(() => {
+    if (!slugField) return;
+    let alive = true;
+    listAll(collKey)
+      .then((all) => {
+        if (!alive) return;
+        const map = newsSlugMap(all.filter((x) => x.published !== false));
+        const others = new Set();
+        for (const x of all) {
+          if (x.id === id) continue;
+          others.add(baseSlug(x));
+          if (map.has(x.id)) others.add(map.get(x.id));
+        }
+        setTaken(others);
+        // An existing post keeps the address it has now (stored or computed).
+        if (!isNew) setCurrentSlug(map.get(id) || baseSlug(all.find((x) => x.id === id)));
+      })
+      .catch(() => alive && setTaken(new Set()));
+    return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collKey, id]);
+
   if (!coll) return <div className="p-8">Section not found.</div>;
+
+  // First free slug for `base` ("x", "x-2", "x-3"…).
+  const freeSlug = (base) => {
+    if (!base || !taken?.has(base)) return base;
+    let n = 2;
+    while (taken.has(`${base}-${n}`)) n++;
+    return `${base}-${n}`;
+  };
+  // What the slug field shows: a new post follows its title until the admin
+  // edits the field; an existing post shows its stored or current address.
+  const slugValue = !slugField ? ""
+    : slugTouched || data[slugField.name] ? data[slugField.name] || ""
+    : isNew ? freeSlug(slugify(data[slugField.from])) : currentSlug;
 
   const set = (name, val) => setData((d) => ({ ...d, [name]: val }));
   const setAuto = (key, srcOrFalse) =>
@@ -283,10 +326,21 @@ export default function CollectionForm() {
     setError("");
     setSaving(true);
     try {
+      // The post's URL slug, saved once and never derived from the title again.
+      let slug;
+      if (slugField) {
+        const typed = slugify(slugTouched || data[slugField.name] ? data[slugField.name] : "");
+        slug = typed || (isNew ? freeSlug(slugify(data[slugField.from])) : currentSlug);
+        if (slug === id) slug = ""; // title without Latin letters: the URL stays the post ID
+        if (typed && typed !== currentSlug && taken?.has(typed)) {
+          throw new Error(`The web address ${slugField.prefix}${typed} is already used by another post. Please choose another one.`);
+        }
+      }
       // Machine-translate language boxes that are empty, or were auto-translated
       // from English that has since changed. Manual translations are never touched.
       const auto = { ...(data.i18nAuto || {}) };
       const out = { ...data };
+      if (slugField) out[slugField.name] = slug || "";
       const fields = {};
       const jobs = {};
       for (const f of coll.fields) {
@@ -368,6 +422,30 @@ export default function CollectionForm() {
           }
           if (f.type === "pdf") {
             return <FileField key={f.name} field={f} value={data[f.name]} onChange={(v) => set(f.name, v)} />;
+          }
+          if (f.type === "slug") {
+            return (
+              <div key={f.name}>
+                <label className="block text-[11px] font-semibold uppercase tracking-widest text-ink-light mb-2">{f.label}</label>
+                <div className="flex items-baseline border-b-2 border-cream-dark focus-within:border-gold">
+                  <span className="text-ink-light text-sm whitespace-nowrap">{SITE_URL.replace(/^https?:\/\//, "")}{f.prefix}</span>
+                  <input
+                    type="text"
+                    value={slugValue}
+                    onChange={(e) => {
+                      setSlugTouched(true);
+                      set(f.name, e.target.value);
+                    }}
+                    placeholder="filled from the title"
+                    className="flex-1 min-w-0 outline-none py-2 text-ink bg-transparent"
+                  />
+                </div>
+                <p className="text-[11px] text-ink-light mt-1">
+                  Filled from the English title for a new post, then kept: editing the title later does not change it.
+                  Lowercase letters, numbers and hyphens. Changing it on a published post breaks links that use the old address.
+                </p>
+              </div>
+            );
           }
           if (f.type === "bool") {
             return (

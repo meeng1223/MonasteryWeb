@@ -13,8 +13,9 @@
 // serves with HTTP 404 for any URL not matched by a rewrite in firebase.json,
 // and checks that firebase.json has a rewrite for every route in src/App.jsx.
 //
-// Also prerenders every news article linked from /news (content from Firestore)
-// and writes dist/sitemap.xml from the pages that rendered, keeping the
+// Also prerenders every news article linked from /news (content from Firestore;
+// articles live at /news/<slug>, see src/lib/newsSlug.js), writes a redirect
+// page at each article's old /news/<id> URL (in every language), and writes dist/sitemap.xml from the pages that rendered, keeping the
 // priorities from public/sitemap.xml. Pages whose canonical URL points elsewhere
 // (people listed under both /presidents and /vajra-masters, untranslated
 // articles in another language) or that are noindex are left out of the sitemap.
@@ -36,6 +37,7 @@ import { PAGE_SEO, SITE_URL, alternates } from "../src/lib/seo.js";
 import { LANGUAGES, PATH, localePath, langMeta } from "../src/lib/langs.js";
 import { NOT_FOUND_TITLE } from "../src/lib/notFound.js";
 import { MASTERS } from "../src/data/masters.js";
+import { newsSlugMap } from "../src/lib/newsSlug.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = resolve(__dirname, "../dist");
@@ -155,20 +157,64 @@ function outFile(url) {
   return join(DIST, url.replace(/^\//, ""), "index.html");
 }
 
-// Article URLs linked from the rendered /news page.
+// Article URLs linked from the rendered /news page, plus every published post
+// (the list the page loaded and cached, newest first — for the redirect pages).
 async function newsRoutes(browser) {
   const page = await browser.newPage();
   try {
     await page.goto(ORIGIN + "/news", { waitUntil: "networkidle2", timeout: 30000 });
     await page.waitForSelector('a[href^="/news/"]', { timeout: 15000, polling: 100 });
     const hrefs = await page.$$eval('a[href^="/news/"]', (as) => as.map((a) => a.getAttribute("href")));
-    return [...new Set(hrefs.filter((h) => /^\/news\/[^/?#]+$/.test(h)))];
+    const posts = await page.evaluate(() => JSON.parse(localStorage.getItem("cms:news:v1") || "[]"));
+    return { routes: [...new Set(hrefs.filter((h) => /^\/news\/[^/?#]+$/.test(h)))], posts };
   } catch (e) {
     console.warn(`[prerender] could not list news articles: ${e.message}`);
-    return [];
+    return { routes: [], posts: [] };
   } finally {
     await page.close();
   }
+}
+
+const escapeHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+// Old article URLs (/news/<id>, /<lang>/news/<id>) -> the slug URL in the same
+// language. Firebase Hosting serves these static files before the /news/*
+// rewrite. An instant meta refresh is treated by Google as a permanent
+// redirect; the canonical names the article's canonical URL, and the script
+// keeps the query and hash for visitors.
+async function writeNewsRedirects(posts, en, out) {
+  const slugs = newsSlugMap(posts);
+  let n = 0;
+  for (const post of posts) {
+    const slug = slugs.get(post.id);
+    if (!slug || slug === post.id) continue;
+    const route = `/news/${slug}`;
+    const langs = en.get(route)?.langs;
+    for (const code of CODES) {
+      const from = localePath(code, `/news/${post.id}`);
+      if (out.has(from)) fail(`${from} is both an article page and an old-URL redirect`);
+      const to = localePath(code, route);
+      const canonical = SITE_URL + localePath(!langs || langs.includes(code) ? code : "EN", route);
+      const html = `<!doctype html>
+<html lang="${langMeta(code).html}">
+<head>
+<meta charset="utf-8">
+<title>${escapeHtml(post.title || "News")} | Dundul Raptenling Monastery</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="${escapeHtml(canonical)}">
+<meta http-equiv="refresh" content="0; url=${escapeHtml(to)}">
+<script>location.replace(${JSON.stringify(to)} + location.search + location.hash);</script>
+</head>
+<body><p>This article has moved to <a href="${escapeHtml(to)}">${escapeHtml(SITE_URL + to)}</a>.</p></body>
+</html>
+`;
+      const file = outFile(from);
+      await mkdir(dirname(file), { recursive: true });
+      await writeFile(file, html, "utf8");
+      n++;
+    }
+  }
+  console.log(`[prerender] ${n} old /news/<id> URLs -> redirect pages to /news/<slug>`);
 }
 
 // entries: [{ path, langs }] — English canonical path + languages it exists in.
@@ -333,7 +379,8 @@ async function main() {
     const guardErrors = [];
     const out = new Map(); // url -> html (written once everything has rendered)
     const en = new Map(); // route -> English render info
-    const list = [...routes(), ...(await newsRoutes(browser))];
+    const news = await newsRoutes(browser);
+    const list = [...routes(), ...news.routes];
     const htmlToCode = Object.fromEntries(LANGUAGES.map((l) => [l.html, l.code]));
 
     const render = async (route, code) => {
@@ -421,6 +468,7 @@ async function main() {
       await writeFile(file, html, "utf8");
     }
     console.log(`[prerender] wrote ${out.size} pages to dist/`);
+    await writeNewsRedirects(news.posts, en, out);
     await render404(browser);
 
     // Sitemap: English pages whose canonical is themselves, with the languages

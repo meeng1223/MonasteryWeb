@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
+import { newsSlugMap } from "../lib/newsSlug.js";
 import { useNewsletter } from "../lib/useNewsletter.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
@@ -29,8 +30,10 @@ export default function News() {
     return () => { alive = false; };
   }, []);
 
+  const slugs = newsSlugMap(docs || []);
   const mapDoc = (d) => ({
     id: d.id,
+    slug: slugs.get(d.id),
     category: d.category || "Announcement",
     date: localized(d, "date", lang),
     title: localized(d, "title", lang),
@@ -142,7 +145,7 @@ export default function News() {
                   )}
                   <div className="mt-auto">
                     <Link
-                      to={a.id ? `/news/${a.id}` : "/news"}
+                      to={a.slug ? `/news/${a.slug}` : "/news"}
                       className="font-button-text text-maroon hover:text-gold transition-colors flex items-center gap-xs uppercase"
                     >
                       Read More <span className="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>

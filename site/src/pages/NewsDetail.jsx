@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getPublished, cachedItem } from "../lib/publicContent.js";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import { listPublished, cachedPublished } from "../lib/publicContent.js";
+import { findNews } from "../lib/newsSlug.js";
 import { useLang, localized, articleLangs, t } from "../lib/i18n.jsx";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
@@ -11,22 +12,40 @@ import { richTextToPlain } from "../lib/richtext.js";
 import { useSisterLinks } from "../lib/sisterSites.js";
 
 export default function NewsDetail() {
-  const { id } = useParams();
+  // /news/<slug>; old links /news/<id> are replaced by the slug URL below.
+  const { slug: param } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { lang } = useLang();
   const sister = useSisterLinks();
-  // undefined = loading, null = not found. Starts from the cached news list
-  // (instant when the visitor came from /news or the homepage), then refreshes.
-  const [doc, setDoc] = useState(() => cachedItem("news", id) || undefined);
+  // Slugs depend on the whole list (collisions), so the article is looked up in
+  // the published news list: the cached copy first (instant when the visitor
+  // came from /news or the homepage), then a fresh one.
+  const [posts, setPosts] = useState(() => cachedPublished("news"));
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let alive = true;
-    window.scrollTo(0, 0);
-    setDoc(cachedItem("news", id) || undefined);
-    getPublished("news", id)
-      .then((d) => { if (alive) setDoc(d); })
-      .catch(() => { if (alive) setDoc((prev) => prev || null); });
+    listPublished("news").then((d) => {
+      if (!alive) return;
+      if (d) setPosts(d);
+      setLoaded(true);
+    });
     return () => { alive = false; };
-  }, [id]);
+  }, []);
+
+  useEffect(() => { window.scrollTo(0, 0); }, [param]);
+
+  const found = posts ? findNews(posts, param) : null;
+  // undefined = loading, null = not found.
+  const doc = found ? found.post : loaded ? null : undefined;
+  const slug = found?.slug;
+
+  // An old /news/<id> link: show the readable URL instead (same language
+  // prefix via the router basename, query and hash kept).
+  useEffect(() => {
+    if (found?.byId) navigate(`/news/${found.slug}${location.search}${location.hash}`, { replace: true });
+  }, [found?.byId, found?.slug, location.search, location.hash, navigate]);
 
   // Languages this article exists in: English + every language whose title and
   // body are both translated. Other languages show the English article, with
@@ -45,14 +64,14 @@ export default function NewsDetail() {
     applySeo({
       title: `${localized(doc, "title", shown)} | ${t("Dundul Raptenling Monastery", lang)}`,
       description: trimDescription(text.replace(/\s+/g, " ").trim()),
-      path: `/news/${id}`,
+      path: `/news/${slug}`,
       image: newsCover(doc, { fallback: false }) || undefined,
       lang,
       langs: articleLangs(doc),
       canonicalLang: shown,
       translate: false,
     });
-  }, [doc, id, lang, shown]);
+  }, [doc, slug, lang, shown]);
 
   if (doc === undefined) {
     return <div className="py-4xl text-center text-ink-light">Loading…</div>;

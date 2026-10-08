@@ -5,6 +5,7 @@ import { cld, newsCover } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { useSisterLinks } from "../lib/sisterSites.js";
 import { richTextToPlain } from "../lib/richtext.js";
+import { newsPath } from "../lib/newsSlug.js";
 
 const IMG = {
   hero: "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1786318624/monastery/swpytecsk7ftgfwrz3j4.jpg",
@@ -65,7 +66,7 @@ export default function Home() {
         [d.category, localized(d, "date", lang)].filter(Boolean).join(" · "),
         localized(d, "title", lang),
         localized(d, "excerpt", lang) || richTextToPlain(localized(d, "body", lang)),
-        `/news/${d.id}`,
+        newsPath(d, newsDocs),
       ])
     : null;
 
