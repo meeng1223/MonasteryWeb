@@ -5,7 +5,13 @@
 // Runs after `vite build` (see the "postbuild" npm script). Serves the built
 // dist/ with `vite preview`, loads each route in headless Chrome, waits for
 // React + <Seo/> to run, and writes the rendered HTML back into dist/.
-// Degrades gracefully (skips) if Chrome isn't available.
+// Fails the build (exit 1) if Chrome can't be found/launched or a page can't be
+// rendered: a build without prerender ships pages without their per-page meta.
+// SKIP_PRERENDER=1 skips it on purpose — local dev only, never for a deploy.
+//
+// Also writes dist/404.html (the NotFound page, noindex), which Firebase Hosting
+// serves with HTTP 404 for any URL not matched by a rewrite in firebase.json,
+// and checks that firebase.json has a rewrite for every route in src/App.jsx.
 //
 // Also prerenders every news article linked from /news (content from Firestore)
 // and writes dist/sitemap.xml from the pages that rendered, keeping the
@@ -20,6 +26,7 @@ import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer-core";
 
 import { PAGE_SEO, SITE_URL } from "../src/lib/seo.js";
+import { NOT_FOUND_TITLE } from "../src/lib/notFound.js";
 import { MASTERS } from "../src/data/masters.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -49,6 +56,71 @@ function routes() {
     if (m.groups.includes("president")) set.add(`/presidents/${m.slug}`);
   }
   return [...set];
+}
+
+// Thrown for expected failures; main() prints it and exits 1 (after cleanup).
+class PrerenderError extends Error {}
+function fail(msg) {
+  throw new PrerenderError(msg);
+}
+
+// Firebase Hosting glob -> RegExp ("**" any depth, "*" one path segment).
+function globRe(glob) {
+  const re = glob
+    .replace(/[.+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\*\*/g, "\0")
+    .replace(/\*/g, "[^/]*")
+    .replace(/\0/g, ".*");
+  return new RegExp(`^${re}$`);
+}
+
+// Every public route in App.jsx (dynamic segments filled with real slugs or a
+// sample id) must be served by firebase.json — otherwise it would answer 404.
+async function checkHostingRoutes() {
+  const fb = JSON.parse(await readFile(resolve(__dirname, "../firebase.json"), "utf8"));
+  const { rewrites = [], redirects = [] } = fb.hosting;
+  const sources = [...rewrites, ...redirects].map((r) => {
+    if (r.regex) return new RegExp(r.regex);
+    if (r.source === "**") fail('firebase.json has a catch-all "**" rewrite — unknown URLs would answer 200 instead of 404.');
+    return globRe(r.source);
+  });
+  const app = await readFile(resolve(__dirname, "../src/App.jsx"), "utf8");
+  const paths = [...app.matchAll(/path="(\/[^"]*)"/g)].map((m) => m[1]);
+  const expanded = [];
+  for (const p of paths) {
+    const m = p.match(/^\/(vajra-masters|presidents)\/:slug$/);
+    if (m) {
+      const group = m[1] === "presidents" ? "president" : "vajra";
+      for (const x of MASTERS) if (x.groups.includes(group)) expanded.push(`/${m[1]}/${x.slug}`);
+    } else {
+      expanded.push(p.replace(/:[^/]+/g, "sample-id"));
+    }
+  }
+  expanded.push("/admin/news", "/admin/news/new", "/admin/news/sample-id");
+  const missing = expanded.filter((r) => r !== "/" && !sources.some((re) => re.test(r)));
+  if (missing.length) {
+    fail(`firebase.json has no rewrite for these app routes (they would answer 404):\n  ${missing.join("\n  ")}\n` +
+      `Add a { "source": ..., "destination": "/index.html" } rewrite for each.`);
+  }
+  console.log(`[prerender] firebase.json covers all ${expanded.length} app routes`);
+}
+
+// The NotFound page, baked into dist/404.html.
+async function render404(browser) {
+  const page = await browser.newPage();
+  try {
+    await page.goto(ORIGIN + "/__prerender-404-check", { waitUntil: "networkidle2", timeout: 30000 });
+    await page.waitForFunction(
+      (t) => document.title === t && document.querySelector('meta[name="robots"][content*="noindex"]'),
+      { timeout: 15000 },
+      NOT_FOUND_TITLE
+    );
+    await new Promise((r) => setTimeout(r, 400));
+    await writeFile(join(DIST, "404.html"), await page.content(), "utf8");
+    console.log("[prerender] 404 page -> dist/404.html");
+  } finally {
+    await page.close();
+  }
 }
 
 function outFile(route) {
@@ -104,10 +176,23 @@ function waitForServer(url, tries = 60) {
 }
 
 async function main() {
+  await checkHostingRoutes();
+
+  if (process.env.SKIP_PRERENDER === "1") {
+    console.warn(
+      "[prerender] SKIP_PRERENDER=1 — prerender skipped. This build has NO per-page meta and NO 404.html:\n" +
+      "            fine for local dev, NEVER deploy it."
+    );
+    return;
+  }
+
   const chrome = await findChrome();
   if (!chrome) {
-    console.warn("[prerender] No Chrome found — skipping prerender (SPA still works).");
-    return;
+    fail(
+      "No Chrome/Chromium/Edge found, so pages can't be prerendered and every page would lose its title/meta.\n" +
+      "  Install Google Chrome, or set PUPPETEER_EXECUTABLE_PATH=/path/to/chrome.\n" +
+      "  (Local dev only: SKIP_PRERENDER=1 npm run build — never deploy that build.)"
+    );
   }
 
   const preview = spawn(
@@ -119,11 +204,18 @@ async function main() {
   let browser;
   try {
     await waitForServer(ORIGIN);
-    browser = await puppeteer.launch({
-      executablePath: chrome,
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    try {
+      browser = await puppeteer.launch({
+        executablePath: chrome,
+        headless: true,
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      });
+    } catch (e) {
+      fail(`Chrome at "${chrome}" could not be launched: ${e.message}\n  Pages can't be prerendered — fix Chrome (or PUPPETEER_EXECUTABLE_PATH) and rebuild.`);
+    }
+
+    const required = new Set(routes()); // static pages + masters must all render
+    const failed = [];
 
     const list = [...routes(), ...(await newsRoutes(browser))];
     const sitemap = [];
@@ -149,6 +241,7 @@ async function main() {
         }));
         if (noindex) {
           console.warn(`[prerender] skipped ${route}: page is noindex (not found?)`);
+          if (required.has(route)) failed.push(route);
           continue;
         }
         const loc = SITE_URL + route;
@@ -161,11 +254,14 @@ async function main() {
         console.log(`[prerender] ${route} -> ${file.replace(DIST, "dist")}`);
       } catch (e) {
         console.warn(`[prerender] FAILED ${route}: ${e.message}`);
+        if (required.has(route)) failed.push(route);
       } finally {
         await page.close();
       }
     }
     console.log(`[prerender] done: ${ok}/${list.length} routes`);
+    if (failed.length) fail(`these pages failed to prerender (they would ship without meta):\n  ${failed.join("\n  ")}`);
+    await render404(browser);
     await writeSitemap(sitemap);
   } finally {
     if (browser) await browser.close();
@@ -174,6 +270,7 @@ async function main() {
 }
 
 main().catch((e) => {
-  console.error("[prerender] error:", e);
+  if (e instanceof PrerenderError) console.error(`\n[prerender] ERROR: ${e.message}\n`);
+  else console.error("[prerender] error:", e);
   process.exit(1);
 });

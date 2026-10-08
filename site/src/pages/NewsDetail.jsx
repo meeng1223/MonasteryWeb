@@ -8,20 +8,12 @@ import RichText from "../components/RichText.jsx";
 import { applySeo, NoIndex } from "../components/Seo.jsx";
 import { trimDescription } from "../lib/seo.js";
 import { richTextToPlain } from "../lib/richtext.js";
-
-// 2028 consecration registration page in the visitor's language.
-const REGISTER_2028 = {
-  EN: "https://2028.zangdokpalriodisha.com/register",
-  VI: "https://2028.zangdokpalriodisha.com/vi/register",
-  ZH: "https://2028.zangdokpalriodisha.com/zh-hk/register",
-  HI: "https://2028.zangdokpalriodisha.com/hi/register",
-  TIB: "https://2028.zangdokpalriodisha.com/bo/register",
-  OR: "https://2028.zangdokpalriodisha.com/or/register",
-};
+import { useSisterLinks } from "../lib/sisterSites.js";
 
 export default function NewsDetail() {
   const { id } = useParams();
   const { lang } = useLang();
+  const sister = useSisterLinks();
   // undefined = loading, null = not found. Starts from the cached news list
   // (instant when the visitor came from /news or the homepage), then refreshes.
   const [doc, setDoc] = useState(() => cachedItem("news", id) || undefined);
@@ -86,8 +78,12 @@ export default function NewsDetail() {
           <aside className="mb-xl border-l-2 border-gold bg-cream px-base py-3 font-body-md text-ink-mid">
             <span>Part of Zangdok Palri</span>
             {" · "}
-            <a href={REGISTER_2028[lang] || REGISTER_2028.EN} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
+            <a href={sister.register} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
               <span>Register for the 2028 consecration</span> →
+            </a>
+            {" · "}
+            <a href={sister.travel} target="_blank" rel="noreferrer" className="text-maroon underline hover:text-gold">
+              <span>Plan your visit: transport, stay &amp; permits</span> →
             </a>
           </aside>
         )}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { cld, newsCover } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
+import { useSisterLinks } from "../lib/sisterSites.js";
 import { richTextToPlain } from "../lib/richtext.js";
 
 const IMG = {
@@ -48,6 +49,7 @@ const pillars = [
 export default function Home() {
   // Latest News — auto-synced from the News page (Firestore "news" collection).
   const { lang } = useLang();
+  const sister = useSisterLinks();
   // Last known news first (instant), then refreshed from the CMS.
   const [newsDocs, setNewsDocs] = useState(() => cachedPublished("news"));
   useEffect(() => {
@@ -202,6 +204,18 @@ export default function Home() {
                 Donate Now
               </a>
             </div>
+            <ul className="mt-8 space-y-3 text-[14px] text-white/80">
+              <li>
+                <a href={sister.register} target="_blank" rel="noopener" className="underline decoration-gold/60 underline-offset-4 hover:text-gold transition-colors">
+                  <span>Register for the 2028 consecration</span> <span aria-hidden="true">→</span>
+                </a>
+              </li>
+              <li>
+                <a href={sister.travel} target="_blank" rel="noopener" className="underline decoration-gold/60 underline-offset-4 hover:text-gold transition-colors">
+                  <span>Plan your visit: transport, stay &amp; permits</span> <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            </ul>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 aspect-[16/9] rounded-sm overflow-hidden shadow-2xl">

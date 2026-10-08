@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNewsletter } from "../lib/useNewsletter.js";
+import { useSisterLinks } from "../lib/sisterSites.js";
 
 const SOCIAL = [
   { label: "Facebook", icon: "ti-brand-facebook", href: "https://facebook.com/odishadudjom.vihara" },
@@ -9,6 +10,7 @@ const SOCIAL = [
 
 export default function Footer() {
   const { email, setEmail, status, subscribe } = useNewsletter();
+  const sister = useSisterLinks();
 
   return (
     <footer className="bg-maroon-dark text-white pt-20 pb-10 px-6">
@@ -44,6 +46,16 @@ export default function Footer() {
             <li>
               <a className="hover:text-gold transition-colors" href="https://vajralotusfoundation.org" target="_blank" rel="noreferrer">
                 Nonprofit
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold transition-colors" href={sister.consecration} target="_blank" rel="noopener">
+                <span>Zangdok Palri Consecration 2028</span> <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold transition-colors" href={sister.travel} target="_blank" rel="noopener">
+                <span>Plan Your Visit to Zangdok Palri</span> <span aria-hidden="true">↗</span>
               </a>
             </li>
           </ul>
