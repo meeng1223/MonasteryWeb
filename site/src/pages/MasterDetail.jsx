@@ -1,11 +1,13 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { getMaster } from "../data/masters.js";
 import { NoIndex } from "../components/Seo.jsx";
+import { usePersonSchema, masterPerson } from "../lib/personSchema.js";
 
 export default function MasterDetail() {
   const { slug } = useParams();
   const { pathname } = useLocation();
   const master = getMaster(slug);
+  usePersonSchema(master ? masterPerson(master) : null);
 
   if (!master) {
     return (
