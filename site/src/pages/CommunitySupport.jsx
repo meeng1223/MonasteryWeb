@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
+import { cldw } from "../lib/cloudinary.js";
 
 // Real monastery outreach photos (folder "4- community support").
 const IMG_BANNER = "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782884827/monastery/flsilmnvctcmitgnrvch.jpg";
@@ -45,7 +46,7 @@ export default function CommunitySupport() {
               <img
                 alt="Food distribution initiative"
                 className="rounded-xl shadow-lg w-full aspect-video md:aspect-square object-cover relative z-10"
-                src={IMG_FOOD}
+                src={cldw(IMG_FOOD, 1200)}
               />
             </div>
           </div>
@@ -61,7 +62,7 @@ export default function CommunitySupport() {
               <img
                 alt="Medical relief for health workers"
                 className="rounded-xl shadow-lg w-full aspect-video md:aspect-square object-cover relative z-10"
-                src={IMG_COVID}
+                src={cldw(IMG_COVID, 1200)}
               />
             </div>
           </div>

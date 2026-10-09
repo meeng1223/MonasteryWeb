@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
+import { cldw } from "../lib/cloudinary.js";
 import { PUJA_LIST, PUJA_PURPOSES, pujaCategoryId } from "../data/pujaList.js";
 import { useLang } from "../lib/i18n.jsx";
 
@@ -75,7 +76,7 @@ export default function Support() {
           </div>
         </div>
         <div className="max-w-screen-xl mx-auto px-4 sm:px-8 lg:px-16 mt-12 sm:mt-16">
-          <img src={IMG_BAND} alt="Dundul Raptenling Monastery community" className="w-full h-[260px] sm:h-[420px] object-cover rounded-lg" />
+          <img src={cldw(IMG_BAND, 1920)} alt="Dundul Raptenling Monastery community" className="w-full h-[260px] sm:h-[420px] object-cover rounded-lg" />
         </div>
       </section>
 

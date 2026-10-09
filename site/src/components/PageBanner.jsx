@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { cldw, cldSrcSet } from "../lib/cloudinary.js";
 
 // Standard page banner used across all interior pages.
 // - Hero image with maroon overlay, centered eyebrow + title.
@@ -10,9 +11,14 @@ export default function PageBanner({ image, imagePosition, eyebrow, title, subti
     <>
       <header className="relative h-[300px] sm:h-[360px] md:h-[420px] flex items-center justify-center overflow-hidden bg-maroon-dark">
         {image && (
+          // The banner is the page's largest paint: load it first, at the size
+          // the screen needs (300-420px tall, object-cover, so never < ~640px wide).
           <img
             className="absolute inset-0 w-full h-full object-cover"
-            src={image}
+            srcSet={cldSrcSet(image)}
+            sizes="max(100vw, 640px)"
+            src={cldw(image, 1920)}
+            fetchpriority="high"
             style={imagePosition ? { objectPosition: imagePosition } : undefined}
             alt={typeof title === "string" ? title : ""}
           />

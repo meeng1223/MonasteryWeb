@@ -1,0 +1,6 @@
+/* Tailwind, compiled at build time (tailwind.config.js holds the design tokens).
+   Imported after index.css so utilities and the reset come last in the cascade,
+   exactly as the Play CDN injected them. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

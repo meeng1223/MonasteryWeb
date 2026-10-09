@@ -1,5 +1,6 @@
 import { Link, useParams, useLocation } from "react-router-dom";
 import { getMaster } from "../data/masters.js";
+import { cldw } from "../lib/cloudinary.js";
 import { NoIndex } from "../components/Seo.jsx";
 import { usePersonSchema, masterPerson } from "../lib/personSchema.js";
 
@@ -82,7 +83,7 @@ export default function MasterDetail() {
               <img loading="lazy" decoding="async"
                 alt={`Portrait of ${master.name}`}
                 className="w-full aspect-[3/4] object-cover"
-                src={master.portrait}
+                src={cldw(master.portrait, 800)}
               />
             </div>
           </div>

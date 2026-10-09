@@ -4,7 +4,7 @@ import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { newsSlugMap } from "../lib/newsSlug.js";
 import { useNewsletter } from "../lib/useNewsletter.js";
 import { useLang, localized } from "../lib/i18n.jsx";
-import { cld, newsCover } from "../lib/cloudinary.js";
+import { cld, cldw, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 import { richTextToPlain } from "../lib/richtext.js";
 
@@ -123,7 +123,7 @@ export default function News() {
                 <div className="relative overflow-hidden h-56 sm:h-64">
                   <img loading="lazy" decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    src={a.img}
+                    src={cldw(a.img, 800)}
                     alt={a.alt}
                   />
                   <div className="absolute top-4 left-4">
@@ -138,7 +138,7 @@ export default function News() {
                     <div className="grid grid-cols-4 gap-1.5 mb-xl">
                       {a.images.slice(0, 4).map((src, i) => (
                         <div key={i} className="aspect-square overflow-hidden rounded-sm bg-cream">
-                          <img loading="lazy" decoding="async" src={src} alt="" className="w-full h-full object-cover" />
+                          <img loading="lazy" decoding="async" src={cldw(src, 240)} alt="" className="w-full h-full object-cover" />
                         </div>
                       ))}
                     </div>

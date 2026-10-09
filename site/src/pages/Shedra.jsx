@@ -37,7 +37,7 @@ export default function Shedra() {
             </p>
           </div>
           <div className="order-1 md:order-2 rounded-xl overflow-hidden border-[0.5px] border-gold/20 shadow-sm">
-            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover" alt="A group of young Tibetan monks in traditional maroon robes engaged in a lively debate in an open-air monastery courtyard" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520029/monastery/ixtt8shyzretsqerqtgg.jpg" />
+            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover" alt="A group of young Tibetan monks in traditional maroon robes engaged in a lively debate in an open-air monastery courtyard" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782520029/monastery/ixtt8shyzretsqerqtgg.jpg" />
           </div>
         </div>
       </section>
@@ -45,7 +45,7 @@ export default function Shedra() {
       <section className="py-2xl md:py-4xl bg-cream">
         <div className="px-lg md:px-3xl max-w-max-width mx-auto grid md:grid-cols-2 gap-3xl items-center">
           <div className="rounded-xl overflow-hidden border-[0.5px] border-gold/20 shadow-sm">
-            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover" alt="A dignified portrait of a Tibetan Lama in serene meditation" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520029/monastery/cfnjpj73wvlhbspfj4tp.jpg" />
+            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover" alt="A dignified portrait of a Tibetan Lama in serene meditation" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782520029/monastery/cfnjpj73wvlhbspfj4tp.jpg" />
           </div>
           <div>
             <span className="font-label-eyebrow text-label-eyebrow text-gold uppercase mb-sm block">Leadership</span>
@@ -87,7 +87,7 @@ export default function Shedra() {
             </p>
           </div>
           <div className="rounded-xl overflow-hidden border-[0.5px] border-gold/20 shadow-sm relative group">
-            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" alt="A modern monastic residential and educational building featuring traditional Tibetan architectural elements" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520030/monastery/mdvjm4zf7yurumtyqz4f.jpg" />
+            <img loading="lazy" decoding="async" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" alt="A modern monastic residential and educational building featuring traditional Tibetan architectural elements" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782520030/monastery/mdvjm4zf7yurumtyqz4f.jpg" />
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import PageBanner from "../components/PageBanner.jsx";
+import { cldw } from "../lib/cloudinary.js";
 
 const CLASS_2024 = [
   { name: "Sherap Dorjee Kunphel", img: "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782627749/monastery/wad2lcf0pbkc2dncwjlc.jpg" },
@@ -21,7 +22,7 @@ function MonkCard({ monk, year }) {
         <img loading="lazy" decoding="async"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           alt={monk.name}
-          src={monk.img}
+          src={cldw(monk.img, 600)}
         />
       </div>
       <div className="p-lg">

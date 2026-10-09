@@ -105,7 +105,7 @@ export default function History() {
           </div>
           <div className="mt-3xl lg:mt-4xl">
             <div className="relative w-full aspect-[21/9] overflow-hidden">
-              <img loading="lazy" decoding="async" className="w-full h-full object-cover" data-alt="Detailed close-up of intricate Tibetan temple architecture during golden hour." src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520022/monastery/oxqwdcgghc5hi1mdhhr6.jpg" />
+              <img loading="lazy" decoding="async" className="w-full h-full object-cover" data-alt="Detailed close-up of intricate Tibetan temple architecture during golden hour." src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782520022/monastery/oxqwdcgghc5hi1mdhhr6.jpg" />
               <div className="absolute inset-0 bg-maroon-dark/20 flex items-end p-xl">
                 <p className="text-gold-light font-caption italic max-w-lg">Every corner of Dundul Raptenling is arranged according to the sacred symbolism of the enlightened realms.</p>
               </div>
@@ -121,7 +121,7 @@ export default function History() {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-gold/40"></div>
               <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-gold/40"></div>
-              <img loading="lazy" decoding="async" className="w-full h-auto shadow-2xl relative z-10" data-alt="Aerial view of Dundul Raptenling Monastery nestled among the holy mountains of the Phuntsok Ling settlement." src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782630123/monastery/aurntk0zyqqcxsebfbtx.png" />
+              <img loading="lazy" decoding="async" className="w-full h-auto shadow-2xl relative z-10" data-alt="Aerial view of Dundul Raptenling Monastery nestled among the holy mountains of the Phuntsok Ling settlement." src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782630123/monastery/aurntk0zyqqcxsebfbtx.png" />
             </div>
             <div className="flex flex-col gap-lg">
               <span className="font-label-eyebrow text-label-eyebrow text-gold uppercase block">Auspicious Connection to Oḍḍiyāna</span>

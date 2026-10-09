@@ -32,7 +32,7 @@ export default function Stupa() {
         <div className="max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-2 gap-xl md:gap-4xl items-center">
           <div className="relative order-2 md:order-1">
             <div className="aspect-[4/5] overflow-hidden rounded-xl editorial-border shadow-lg">
-              <img loading="lazy" decoding="async" alt="The Dundul Chorten" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642814/monastery/ctzz1bw4g1mc49z83jvl.jpg" />
+              <img loading="lazy" decoding="async" alt="The Dundul Chorten" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782642814/monastery/ctzz1bw4g1mc49z83jvl.jpg" />
             </div>
             <div className="absolute -bottom-4 -right-4 bg-cream p-4 editorial-border rounded-lg hidden md:block max-w-[220px]">
               <p className="font-sans text-[12px] text-ink-mid italic leading-relaxed">Kyabje Dudjom Rinpoche, visionary behind the Chorten's founding.</p>
@@ -83,7 +83,7 @@ export default function Stupa() {
           </div>
           <div className="relative">
             <div className="aspect-square overflow-hidden rounded-xl editorial-border shadow-md">
-              <img loading="lazy" decoding="async" alt="The Dundul Chorten at dusk" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642813/monastery/xgt0adyafdbky9qs8yq3.jpg" />
+              <img loading="lazy" decoding="async" alt="The Dundul Chorten at dusk" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782642813/monastery/xgt0adyafdbky9qs8yq3.jpg" />
             </div>
           </div>
         </div>
@@ -97,28 +97,28 @@ export default function Stupa() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="group relative overflow-hidden rounded-lg editorial-border aspect-[3/4]">
-              <img loading="lazy" decoding="async" alt="H.H. the 14th Dalai Lama" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642815/monastery/wxd3yr7wc987s0rhoz1t.jpg" />
+              <img loading="lazy" decoding="async" alt="H.H. the 14th Dalai Lama" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782642815/monastery/wxd3yr7wc987s0rhoz1t.jpg" />
               <div className="absolute inset-0 bg-maroon/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-base text-center">
                 <h3 className="font-serif text-lg text-gold-light">H.H. the 14th Dalai Lama</h3>
                 <p className="font-sans text-[10px] uppercase tracking-widest text-gold-light/80 mt-2">Supreme Head of Tibetan Buddhism</p>
               </div>
             </div>
             <div className="group relative overflow-hidden rounded-lg editorial-border aspect-[3/4]">
-              <img loading="lazy" decoding="async" alt="Sakya Gonma Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642817/monastery/txuakre3ihygxnxpcfcl.jpg" />
+              <img loading="lazy" decoding="async" alt="Sakya Gonma Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782642817/monastery/txuakre3ihygxnxpcfcl.jpg" />
               <div className="absolute inset-0 bg-maroon/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-base text-center">
                 <h3 className="font-serif text-lg text-gold-light">Sakya Gonma Rinpoche</h3>
                 <p className="font-sans text-[10px] uppercase tracking-widest text-gold-light/80 mt-2">Supreme Lineage Holder of the Sakya Lineage</p>
               </div>
             </div>
             <div className="group relative overflow-hidden rounded-lg editorial-border aspect-[3/4]">
-              <img loading="lazy" decoding="async" alt="Kyabje Chatral Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642818/monastery/yxrv5j9imnmtmbc2xusb.jpg" />
+              <img loading="lazy" decoding="async" alt="Kyabje Chatral Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782642818/monastery/yxrv5j9imnmtmbc2xusb.jpg" />
               <div className="absolute inset-0 bg-maroon/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-base text-center">
                 <h3 className="font-serif text-lg text-gold-light">Kyabje Chatral Rinpoche</h3>
                 <p className="font-sans text-[10px] uppercase tracking-widest text-gold-light/80 mt-2">Dzogchen Master &amp; Ascetic</p>
               </div>
             </div>
             <div className="group relative overflow-hidden rounded-lg editorial-border aspect-[3/4]">
-              <img loading="lazy" decoding="async" alt="Tarthang Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642820/monastery/t8bye4nzw9a4wwnycadl.jpg" />
+              <img loading="lazy" decoding="async" alt="Tarthang Rinpoche" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782642820/monastery/t8bye4nzw9a4wwnycadl.jpg" />
               <div className="absolute inset-0 bg-maroon/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-base text-center">
                 <h3 className="font-serif text-lg text-gold-light">Tarthang Rinpoche</h3>
                 <p className="font-sans text-[10px] uppercase tracking-widest text-gold-light/80 mt-2">Founder of the Nyingma Institute</p>
@@ -154,7 +154,7 @@ export default function Stupa() {
         <div className="max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-2 gap-xl md:gap-4xl items-center">
           <div className="order-2 md:order-1">
             <div className="aspect-video overflow-hidden rounded-xl editorial-border shadow-lg">
-              <img loading="lazy" decoding="async" alt="Community ceremony at the Dundul Chorten" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782642812/monastery/ifne6ufxyx6mulmwusrz.jpg" />
+              <img loading="lazy" decoding="async" alt="Community ceremony at the Dundul Chorten" className="w-full h-full object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782642812/monastery/ifne6ufxyx6mulmwusrz.jpg" />
             </div>
           </div>
           <div className="order-1 md:order-2 space-y-lg">

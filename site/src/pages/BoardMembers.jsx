@@ -1,4 +1,5 @@
 import PageBanner from "../components/PageBanner.jsx";
+import { cldw } from "../lib/cloudinary.js";
 
 const I = (id, v) => `https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v${v}/monastery/${id}.jpg`;
 
@@ -28,7 +29,7 @@ function MemberCard({ name, role, img }) {
     <div className="bg-white rounded-lg border border-gold/20 overflow-hidden">
       <div className="aspect-square bg-maroon-light grid place-items-center overflow-hidden">
         {img ? (
-          <img src={img} alt={name} className="w-full h-full object-cover" />
+          <img src={cldw(img, 600)} alt={name} className="w-full h-full object-cover" />
         ) : (
           <i className="ti ti-user text-maroon/30 text-5xl"></i>
         )}

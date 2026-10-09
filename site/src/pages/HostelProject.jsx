@@ -31,7 +31,7 @@ export default function HostelProject() {
               <img
                 loading="lazy"
                 decoding="async"
-                src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782808833/monastery/rhbw0nkvc3qryw661o7i.jpg"
+                src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782808833/monastery/rhbw0nkvc3qryw661o7i.jpg"
                 alt="Sey me mi Dhun Ling floor plan"
                 className="w-full h-full object-cover"
               />

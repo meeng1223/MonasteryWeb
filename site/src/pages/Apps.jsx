@@ -28,7 +28,7 @@ export default function Apps() {
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-stretch">
             {/* Nyingma Calendar Card */}
             <div className="group flex flex-col items-start space-y-8 bg-surface p-10 md:p-14 rounded-xl shadow-[0_20px_40px_rgba(87,0,0,0.06)] hover:translate-y-[-8px] transition-all duration-500">
-              <img loading="lazy" decoding="async" alt="Nyingmapa Calendar app" className="w-full rounded-xl shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1783405636/monastery/oo6mbjxorrz02xgsu8zk.jpg" />
+              <img loading="lazy" decoding="async" alt="Nyingmapa Calendar app" className="w-full rounded-xl shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1783405636/monastery/oo6mbjxorrz02xgsu8zk.jpg" />
               <div className="space-y-4">
                 <h2 className="font-headline text-3xl md:text-4xl text-primary font-bold">Nyingmapa Calendar</h2>
                 <p className="font-body text-lg leading-relaxed text-on-surface-variant">
@@ -48,7 +48,7 @@ export default function Apps() {
             </div>
             {/* NamkhaZoe Card */}
             <div className="group flex flex-col items-start space-y-8 bg-surface p-10 md:p-14 rounded-xl shadow-[0_20px_40px_rgba(87,0,0,0.06)] hover:translate-y-[-8px] transition-all duration-500">
-              <img loading="lazy" decoding="async" alt="NamkhaZoe app" className="w-full rounded-xl shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1783405637/monastery/yqho5m6t9ijoritokz4x.webp" />
+              <img loading="lazy" decoding="async" alt="NamkhaZoe app" className="w-full rounded-xl shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1783405637/monastery/yqho5m6t9ijoritokz4x.webp" />
               <div className="space-y-4">
                 <h2 className="font-headline text-3xl md:text-4xl text-primary font-bold">NamkhaZoe</h2>
                 <p className="font-body text-lg leading-relaxed text-on-surface-variant">

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
-import { cld } from "../lib/cloudinary.js";
+import { cld, cldw } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 import RichText from "../components/RichText.jsx";
 
@@ -99,7 +99,7 @@ export default function PrayerBooks() {
             {items.map((b) => (
               <div key={b.title} className="bg-white rounded-lg overflow-hidden border border-outline-variant/60 shadow-sm flex flex-col">
                 <div className="relative h-56 overflow-hidden">
-                  <img loading="lazy" decoding="async" src={b.img} alt={b.title} className="w-full h-full object-cover" />
+                  <img loading="lazy" decoding="async" src={cldw(b.img, 600)} alt={b.title} className="w-full h-full object-cover" />
                   <span className="absolute top-4 left-4 bg-gold text-maroon-dark text-[11px] font-semibold uppercase tracking-widest px-3 py-1 rounded-sm shadow-sm">{b.tag}</span>
                 </div>
                 <div className="p-6 sm:p-8 flex flex-col flex-grow text-center">

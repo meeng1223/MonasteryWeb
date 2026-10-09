@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { findNews } from "../lib/newsSlug.js";
 import { useLang, localized, articleLangs, t } from "../lib/i18n.jsx";
-import { cld, newsCover } from "../lib/cloudinary.js";
+import { cld, cldw, newsCover } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 import RichText from "../components/RichText.jsx";
 import { applySeo, NoIndex } from "../components/Seo.jsx";
@@ -129,7 +129,7 @@ export default function NewsDetail() {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-2xl">
             {images.map((src, i) => (
               <div key={i} className="aspect-square overflow-hidden rounded-lg bg-cream">
-                <img loading="lazy" decoding="async" src={src} alt="" className="w-full h-full object-cover" />
+                <img loading="lazy" decoding="async" src={cldw(src, 600)} alt="" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>

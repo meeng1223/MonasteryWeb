@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
-import { cld, newsCover } from "../lib/cloudinary.js";
+import { cld, cldw, cldSrcSet, newsCover } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import { useSisterLinks } from "../lib/sisterSites.js";
 import { richTextToPlain } from "../lib/richtext.js";
@@ -86,7 +86,8 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative h-[680px] w-full overflow-hidden">
-        <img loading="lazy" decoding="async" alt="Dundul Raptenling Monastery Front View" className="w-full h-full object-cover" src={IMG.hero} />
+        {/* Largest paint: load first, sized to the screen (680px tall, object-cover). */}
+        <img fetchpriority="high" alt="Dundul Raptenling Monastery Front View" className="w-full h-full object-cover" srcSet={cldSrcSet(IMG.hero)} sizes="max(100vw, 1020px)" src={cldw(IMG.hero, 1920)} />
         <div className="absolute inset-0 hero-gradient"></div>
         <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6">
           <span className="eyebrow text-gold mb-3 block">Sacred Lineage Preservation</span>
@@ -127,7 +128,7 @@ export default function Home() {
           </div>
           <div className="relative">
             <div className="aspect-[3/4] overflow-hidden rounded-sm shadow-xl">
-              <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche" className="w-full h-full object-cover" src={IMG.founder} />
+              <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche" className="w-full h-full object-cover" src={cldw(IMG.founder, 1200)} />
             </div>
             <div className="mt-6 bg-cream p-8 rounded-sm border-l-[3px] border-gold">
               <p className="italic text-ink-mid text-sm leading-relaxed font-serif">
@@ -149,7 +150,7 @@ export default function Home() {
             {pillars.map(([img, name, role, to]) => (
               <Link key={name} to={to} className="group cursor-pointer">
                 <div className="aspect-square overflow-hidden rounded-sm mb-4">
-                  <img loading="lazy" decoding="async" alt={name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={img} />
+                  <img loading="lazy" decoding="async" alt={name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={cldw(img, 600)} />
                 </div>
                 <h3 className="font-serif text-base text-ink mb-1 group-hover:text-maroon transition-colors">{name}</h3>
                 <span className="eyebrow text-[10px] text-ink-light">{role}</span>
@@ -175,7 +176,7 @@ export default function Home() {
             {latestNews.map(([img, meta, title, body, to]) => (
               <Link key={title} to={to} className="group cursor-pointer bg-white block">
                 <div className="overflow-hidden mb-6 aspect-video">
-                  <img loading="lazy" decoding="async" alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={img} />
+                  <img loading="lazy" decoding="async" alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={cldw(img, 800)} />
                 </div>
                 <div className="px-2">
                   <span className="eyebrow text-[10px]">{meta}</span>
@@ -220,13 +221,13 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2 aspect-[16/9] rounded-sm overflow-hidden shadow-2xl">
-              <img loading="lazy" decoding="async" alt="Zangdok Palri Render" className="w-full h-full object-cover" src={IMG.zp} />
+              <img loading="lazy" decoding="async" alt="Zangdok Palri Render" className="w-full h-full object-cover" src={cldw(IMG.zp, 1200)} />
             </div>
             <div className="aspect-square rounded-sm overflow-hidden shadow-2xl">
-              <img loading="lazy" decoding="async" alt="Construction detail" className="w-full h-full object-cover" src={IMG.zp2} />
+              <img loading="lazy" decoding="async" alt="Construction detail" className="w-full h-full object-cover" src={cldw(IMG.zp2, 600)} />
             </div>
             <div className="aspect-square rounded-sm overflow-hidden shadow-2xl">
-              <img loading="lazy" decoding="async" alt="Roof Detail" className="w-full h-full object-cover" src={IMG.zp3} />
+              <img loading="lazy" decoding="async" alt="Roof Detail" className="w-full h-full object-cover" src={cldw(IMG.zp3, 600)} />
             </div>
           </div>
         </div>
@@ -259,7 +260,7 @@ export default function Home() {
             {sangha.map(([label, img]) => (
               <div key={label} className="relative group h-40 overflow-hidden cursor-pointer">
                 {img ? (
-                  <img loading="lazy" decoding="async" alt={`Sangha ${label}`} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src={img} />
+                  <img loading="lazy" decoding="async" alt={`Sangha ${label}`} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" src={cldw(img, 600)} />
                 ) : (
                   <div className="w-full h-full bg-cream-dark flex flex-col items-center justify-center text-ink-light/50">
                     <span className="material-symbols-outlined text-3xl">image</span>
