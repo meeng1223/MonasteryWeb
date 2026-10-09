@@ -4,7 +4,12 @@
 import { useEffect } from "react";
 
 const SITE = "https://dundulraptenling.org";
-export const MONASTERY = { "@type": "PlaceOfWorship", name: "Dundul Raptenling Monastery", url: SITE + "/" };
+export const MONASTERY = {
+  "@type": "PlaceOfWorship",
+  name: "Dundul Raptenling Monastery",
+  url: SITE + "/",
+  sameAs: ["https://www.wikidata.org/wiki/Q141677199"],
+};
 
 export function usePersonSchema(data) {
   const json = data ? JSON.stringify({ "@context": "https://schema.org", "@type": "Person", ...data }) : "";
