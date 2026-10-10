@@ -45,8 +45,9 @@ function localDays(iso) {
 // datePublished from the article's real fields, never invented:
 // - the CMS entry time (createdAt, with timezone) when it falls on the shown
 //   date / in the shown month (posts written when the news happened);
-// - else the shown date itself when it is a full date ("2022-01-19": posts
-//   copied from the old site keep their original date);
+// - else the shown date itself when it is a full date, as midnight in India
+//   ("2022-01-19T00:00:00+05:30": posts copied from the old site keep their
+//   original day; Google wants a time and timezone on article dates);
 // - else nothing (only a month is shown and the entry was made later, or the
 //   shown date can't be read).
 export function articleDatePublished(doc) {
@@ -58,7 +59,7 @@ export function articleDatePublished(doc) {
     const days = localDays(created);
     if (shown.d ? days.includes(`${ym}-${pad(shown.d)}`) : days.some((d) => d.startsWith(ym))) return created;
   }
-  return shown.d ? `${ym}-${pad(shown.d)}` : null;
+  return shown.d ? `${ym}-${pad(shown.d)}T00:00:00+05:30` : null;
 }
 
 // NewsArticle for an article shown in language `inLanguage` (BCP 47) at
