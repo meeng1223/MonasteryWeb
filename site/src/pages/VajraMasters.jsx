@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import { mastersByGroup } from "../data/masters.js";
+import { cldw } from "../lib/cloudinary.js";
 
 export default function VajraMasters() {
   const vajraMasters = mastersByGroup("vajra");
@@ -55,7 +56,7 @@ export default function VajraMasters() {
                 <img loading="lazy" decoding="async"
                   alt={`Portrait of ${m.name}`}
                   className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-700"
-                  src={m.portrait}
+                  src={cldw(m.portrait, 800)}
                 />
               </div>
               <div className="mt-lg text-center">

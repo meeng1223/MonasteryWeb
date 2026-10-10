@@ -40,3 +40,22 @@ if (missing.length) {
   process.exit(1);
 }
 console.log(`[check-icons] ${used.size} icons, all in the font subset.`);
+
+// Tabler icons ("ti ti-name", or { icon: "ti-name" }) come from a self-hosted
+// subset font: every one used must have its rule in src/tabler-icons.css.
+const tablerCss = readFileSync(join(root, "src/tabler-icons.css"), "utf8");
+const tablerHave = new Set([...tablerCss.matchAll(/\.(ti-[a-z0-9-]+):before/g)].map((m) => m[1]));
+const tablerUsed = new Map();
+for (const file of files(join(root, "src"))) {
+  for (const m of readFileSync(file, "utf8").matchAll(/\bti-[a-z0-9]+(?:-[a-z0-9]+)*/g)) {
+    if (!tablerUsed.has(m[0])) tablerUsed.set(m[0], file);
+  }
+}
+const tablerMissing = [...tablerUsed].filter(([name]) => !tablerHave.has(name));
+if (tablerMissing.length) {
+  console.error("[check-icons] Tabler icons used but missing from src/tabler-icons.css (subset font):");
+  for (const [name, file] of tablerMissing) console.error(`  ${name}  (${file.replace(root + "/", "")})`);
+  console.error("Add them as explained at the top of src/tabler-icons.css and build again.");
+  process.exit(1);
+}
+console.log(`[check-icons] ${tablerUsed.size} Tabler icons, all in the subset font.`);

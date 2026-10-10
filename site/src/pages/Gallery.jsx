@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
-import { cld } from "../lib/cloudinary.js";
+import { cld, cldw } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 
 const FILTERS = ["All", "3D Mandala", "General", "Lingdro", "Monastery", "Zangdok Palri"];
@@ -168,7 +168,7 @@ export default function Gallery() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
             {visible.map((it, i) => (
               <div key={i} onClick={() => setLightbox(it)} className={`gallery-item relative group ${it.wrap} overflow-hidden rounded-lg bg-surface-container-high editorial-shadow cursor-pointer`}>
-                <img loading="lazy" decoding="async" className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt={it.alt} src={it.src} />
+                <img loading="lazy" decoding="async" className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt={it.alt} src={cldw(it.src, 800)} />
                 <div className="overlay absolute inset-x-0 bottom-0 p-lg bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300">
                   <span className="font-body-md text-[10px] text-white uppercase tracking-widest">{it.label}</span>
                 </div>

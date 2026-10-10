@@ -5,7 +5,9 @@ import App from "./App.jsx";
 import { LanguageProvider, loadDict, langFromPath, localePath, PATH } from "./lib/i18n.jsx";
 import { PAGE_SEO } from "./lib/seo.js";
 import { getMaster } from "./data/masters.js";
+import "./tabler-icons.css";
 import "./index.css";
+import "./tailwind.css";
 
 // The URL is the only source of the page language: "/vi/about" is Vietnamese,
 // "/about" English. The router runs under the language prefix, so every

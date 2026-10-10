@@ -152,7 +152,7 @@ export default function DudjomRinpoche() {
           </div>
           <div className="relative group">
             <div className="absolute -inset-4 border border-primary/10 rounded-lg group-hover:border-primary/20 transition-colors"></div>
-            <img loading="lazy" decoding="async" alt="Formal portrait of H.H. Dudjom Rinpoche" className="relative z-10 w-full aspect-[3/4] object-cover rounded shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782636915/monastery/ocycrekbhfbnd2utdqin.jpg" />
+            <img loading="lazy" decoding="async" alt="Formal portrait of H.H. Dudjom Rinpoche" className="relative z-10 w-full aspect-[3/4] object-cover rounded shadow-lg" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782636915/monastery/ocycrekbhfbnd2utdqin.jpg" />
           </div>
         </div>
       </section>
@@ -160,7 +160,7 @@ export default function DudjomRinpoche() {
       <section className="bg-surface-container-low py-24 px-6 md:px-12">
         <div className="content-container grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
           <div className="order-2 md:order-1 relative">
-            <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche in his youth" className="w-full aspect-[3/4] object-cover rounded shadow-2xl" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782636916/monastery/kiyo4mlrrwvcci9dqowf.jpg" />
+            <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche in his youth" className="w-full aspect-[3/4] object-cover rounded shadow-2xl" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782636916/monastery/kiyo4mlrrwvcci9dqowf.jpg" />
           </div>
           <div className="order-1 md:order-2">
             <span className="eyebrow mb-3">The Hidden Lands</span>

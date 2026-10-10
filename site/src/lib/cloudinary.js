@@ -15,6 +15,37 @@ export function cld(url) {
   return url.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
 }
 
+const UPLOAD = "/image/upload/";
+
+/**
+ * A Cloudinary image at most `width` px wide (never upscaled: c_limit), with
+ * auto format + quality — so visitors download the size the page displays, not
+ * the 2000px+ original. Replaces a plain f_auto,q_auto[,c_limit,w_N] transform;
+ * other custom transforms and non-Cloudinary URLs are returned unchanged.
+ */
+export function cldw(url, width) {
+  if (!url || typeof url !== "string") return url || "";
+  const i = url.includes("res.cloudinary.com") ? url.indexOf(UPLOAD) : -1;
+  if (i < 0) return url;
+  const head = url.slice(0, i + UPLOAD.length);
+  let rest = url.slice(i + UPLOAD.length);
+  const seg = rest.split("/")[0];
+  if (/^[a-z]{1,3}_/.test(seg)) {
+    if (!/^f_auto,q_auto(,c_limit,w_\d+)?$/.test(seg)) return url; // custom transform: leave it
+    rest = rest.slice(seg.length + 1);
+  }
+  return `${head}f_auto,q_auto,c_limit,w_${width}/${rest}`;
+}
+
+// Widths offered to the browser for full-width banners (srcset).
+export const BANNER_WIDTHS = [640, 960, 1280, 1600, 1920];
+
+/** srcset string for a Cloudinary image (undefined for any other URL). */
+export function cldSrcSet(url, widths = BANNER_WIDTHS) {
+  if (!url || cldw(url, widths[0]) === url) return undefined;
+  return widths.map((w) => `${cldw(url, w)} ${w}w`).join(", ");
+}
+
 /**
  * Downscale + re-compress a large image in the browser BEFORE upload, so we
  * don't store huge originals. Keeps PNG (transparency); leaves GIF/SVG/HEIC and

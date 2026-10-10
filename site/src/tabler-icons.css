@@ -1,0 +1,76 @@
+/* Tabler Icons 2.47.0 (https://tabler.io, MIT), self-hosted and cut down to the
+   icons the site uses: 8 KB instead of the 760 KB full font from the CDN.
+   (2.47.0 is what cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css
+   actually served -- x-jsd-version: 2.47.0 -- so the glyphs match the old site.) The
+   glyphs, metrics and rules below are unchanged from the original
+   tabler-icons.css. scripts/check-icons.mjs fails the build if a "ti-…" class is
+   used in src/ but missing here.
+
+   Adding an icon: add its rule from
+   https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.css
+   below, then rebuild the font with every codepoint listed here
+   (pip install fonttools brotli):
+     pyftsubset tabler-icons.woff2 --unicodes=U+…,U+… --flavor=woff2 \
+       --drop-tables+=GSUB,GPOS,GDEF --name-IDs='*' --notdef-outline \
+       --output-file=src/fonts/tabler-icons-2.47.0-subset.woff2
+   (tabler-icons.woff2 = the full font from the same CDN folder, fonts/). */
+@font-face {
+  font-family: "tabler-icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/tabler-icons-2.47.0-subset.woff2") format("woff2");
+}
+
+.ti {
+  font-family: "tabler-icons" !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ti-arrow-down:before { content: "\ea16"; }
+.ti-arrow-right:before { content: "\ea1f"; }
+.ti-arrow-up-right:before { content: "\ea24"; }
+.ti-book:before { content: "\ea39"; }
+.ti-brand-facebook:before { content: "\ec1a"; }
+.ti-brand-instagram:before { content: "\ec20"; }
+.ti-brand-whatsapp:before { content: "\ec74"; }
+.ti-brand-youtube:before { content: "\ec90"; }
+.ti-building-arch:before { content: "\ea49"; }
+.ti-building-bank:before { content: "\ebe2"; }
+.ti-calendar:before { content: "\ea53"; }
+.ti-calendar-event:before { content: "\ea52"; }
+.ti-candle:before { content: "\efc6"; }
+.ti-check:before { content: "\ea5e"; }
+.ti-chevron-down:before { content: "\ea5f"; }
+.ti-chevron-up:before { content: "\ea62"; }
+.ti-chevrons-right:before { content: "\ea65"; }
+.ti-circle:before { content: "\ea6b"; }
+.ti-cloud:before { content: "\ea76"; }
+.ti-download:before { content: "\ea96"; }
+.ti-eye:before { content: "\ea9a"; }
+.ti-feather:before { content: "\ee8b"; }
+.ti-flag:before { content: "\eaa6"; }
+.ti-flame:before { content: "\ec2c"; }
+.ti-heart:before { content: "\eabe"; }
+.ti-heart-plus:before { content: "\f142"; }
+.ti-mail:before { content: "\eae5"; }
+.ti-map-pin:before { content: "\eae8"; }
+.ti-moon:before { content: "\eaf8"; }
+.ti-phone:before { content: "\eb09"; }
+.ti-plant:before { content: "\ed50"; }
+.ti-player-play-filled:before { content: "\f691"; }
+.ti-plus:before { content: "\eb0b"; }
+.ti-search:before { content: "\eb1c"; }
+.ti-shield:before { content: "\eb24"; }
+.ti-sparkles:before { content: "\f6d7"; }
+.ti-star:before { content: "\eb2e"; }
+.ti-sun:before { content: "\eb30"; }
+.ti-user:before { content: "\eb4d"; }
+.ti-users:before { content: "\ebf2"; }
+.ti-world:before { content: "\eb54"; }

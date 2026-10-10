@@ -51,7 +51,7 @@ export default function Presidents() {
             <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-gold/40"></div>
             <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-gold/40"></div>
             <div className="overflow-hidden thangka-border shadow-sm">
-              <img loading="lazy" decoding="async" alt="Portrait of Chagdud Tulku Rinpoche" className="w-full aspect-[4/5] object-cover filter grayscale-[0.1] hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782643898/monastery/hmk8xtrlwhmqlp73fpy3.jpg" />
+              <img loading="lazy" decoding="async" alt="Portrait of Chagdud Tulku Rinpoche" className="w-full aspect-[4/5] object-cover filter grayscale-[0.1] hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782643898/monastery/hmk8xtrlwhmqlp73fpy3.jpg" />
             </div>
             <div className="mt-lg text-center">
               <span className="font-label-eyebrow text-label-eyebrow text-gold tracking-widest block uppercase">First President</span>
@@ -99,7 +99,7 @@ export default function Presidents() {
             <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-gold/40"></div>
             <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-gold/40"></div>
             <div className="overflow-hidden thangka-border shadow-sm">
-              <img loading="lazy" decoding="async" alt="Portrait of Kongtul Tsephel Rinpoche" className="w-full aspect-[4/5] object-cover filter brightness-[0.98] hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782643899/monastery/hlrnkpeebnpqf6rgxkfr.jpg" />
+              <img loading="lazy" decoding="async" alt="Portrait of Kongtul Tsephel Rinpoche" className="w-full aspect-[4/5] object-cover filter brightness-[0.98] hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782643899/monastery/hlrnkpeebnpqf6rgxkfr.jpg" />
             </div>
             <div className="mt-lg text-center">
               <span className="font-label-eyebrow text-label-eyebrow text-gold tracking-widest block uppercase">Second President</span>
@@ -114,7 +114,7 @@ export default function Presidents() {
         <div className="max-w-max-width mx-auto px-base md:px-3xl grid md:grid-cols-2 gap-3xl items-center">
           <Link to="/presidents/lama-sonam-tashi-rinpoche" className="relative order-2 md:order-1 block">
             <div className="overflow-hidden thangka-border bg-surface-container-low group relative">
-              <img loading="lazy" decoding="async" alt="Portrait of Lama Sonam Tashi Rinpoche" className="w-full aspect-[4/5] object-cover opacity-95 transition-all duration-700 group-hover:scale-105" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782643900/monastery/oedajdlcav9i98m9mv2l.jpg" />
+              <img loading="lazy" decoding="async" alt="Portrait of Lama Sonam Tashi Rinpoche" className="w-full aspect-[4/5] object-cover opacity-95 transition-all duration-700 group-hover:scale-105" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782643900/monastery/oedajdlcav9i98m9mv2l.jpg" />
 
             </div>
             <div className="mt-lg text-center">

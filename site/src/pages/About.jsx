@@ -33,7 +33,7 @@ export default function About() {
             </div>
           </div>
           <div className="relative">
-            <img loading="lazy" decoding="async" alt="Monastic Heritage" className="rounded-xl w-full h-[450px] object-cover shadow-xl border border-outline-variant/30" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782519999/monastery/zwxarrtf98c4disfdpib.jpg" />
+            <img loading="lazy" decoding="async" alt="Monastic Heritage" className="rounded-xl w-full h-[450px] object-cover shadow-xl border border-outline-variant/30" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782519999/monastery/zwxarrtf98c4disfdpib.jpg" />
           </div>
         </div>
       </section>
@@ -42,7 +42,7 @@ export default function About() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-2xl items-center">
           <div className="md:col-span-6 lg:col-span-7">
             <div className="relative group">
-              <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche" className="rounded-xl shadow-2xl border-4 border-white w-full aspect-square object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782519999/monastery/dxu5yggbeknsxsh9w95q.jpg" />
+              <img loading="lazy" decoding="async" alt="H.H. Dudjom Rinpoche" className="rounded-xl shadow-2xl border-4 border-white w-full aspect-square object-cover" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782519999/monastery/dxu5yggbeknsxsh9w95q.jpg" />
             </div>
           </div>
           <div className="md:col-span-6 lg:col-span-5">
@@ -73,7 +73,7 @@ export default function About() {
             {/* President 1 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Chagdud Tulku Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782519984/monastery/kuprw5quwkr3f1b5pv7i.png" />
+                <img loading="lazy" decoding="async" alt="Chagdud Tulku Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782519984/monastery/kuprw5quwkr3f1b5pv7i.png" />
               </div>
               <h4 className="font-headline text-card-title text-on-surface mb-1">Chagdud Tulku Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">1st President</p>
@@ -81,7 +81,7 @@ export default function About() {
             {/* President 2 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Kongtul Tsephei Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520000/monastery/ruhtszy7jgc3mklqokwa.jpg" />
+                <img loading="lazy" decoding="async" alt="Kongtul Tsephei Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520000/monastery/ruhtszy7jgc3mklqokwa.jpg" />
               </div>
               <h4 className="font-headline text-card-title text-on-surface mb-1">Kongtul Tsephei Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">2nd President</p>
@@ -89,7 +89,7 @@ export default function About() {
             {/* President 3 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Lama Sonam Tashi Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520001/monastery/roih0mmcyruepfw2gie9.jpg" />
+                <img loading="lazy" decoding="async" alt="Lama Sonam Tashi Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520001/monastery/roih0mmcyruepfw2gie9.jpg" />
               </div>
               <h4 className="font-headline text-card-title text-on-surface mb-1">Lama Sonam Tashi Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">3rd President - Current</p>
@@ -105,7 +105,7 @@ export default function About() {
             {/* Master 1 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Chagdud Tulku Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782519984/monastery/kuprw5quwkr3f1b5pv7i.png" />
+                <img loading="lazy" decoding="async" alt="Chagdud Tulku Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782519984/monastery/kuprw5quwkr3f1b5pv7i.png" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Chagdud Tulku Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">1st Vajra Master</p>
@@ -113,7 +113,7 @@ export default function About() {
             {/* Master 2 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Lama Sherab Dorje Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520002/monastery/o8arcw7oo9rtmlgvgrfm.jpg" />
+                <img loading="lazy" decoding="async" alt="Lama Sherab Dorje Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520002/monastery/o8arcw7oo9rtmlgvgrfm.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Lama Sherab Dorje Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">2nd Vajra Master</p>
@@ -121,7 +121,7 @@ export default function About() {
             {/* Master 3 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Khenchen Tulku Shekar Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520003/monastery/jjpq8bb1hyn7f65og4zt.jpg" />
+                <img loading="lazy" decoding="async" alt="Khenchen Tulku Shekar Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520003/monastery/jjpq8bb1hyn7f65og4zt.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Khenchen Tulku Shekar Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">Temporary Vajra Master</p>
@@ -129,7 +129,7 @@ export default function About() {
             {/* Master 4 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Lama Dorje Nagyal Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520003/monastery/xrgxroky1daqxtx5rj1t.jpg" />
+                <img loading="lazy" decoding="async" alt="Lama Dorje Nagyal Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520003/monastery/xrgxroky1daqxtx5rj1t.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Lama Dorje Nagyal Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">3rd Vajra Master</p>
@@ -137,7 +137,7 @@ export default function About() {
             {/* Master 5 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Kongtul Tsephei Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520004/monastery/iiwi34bdb5eh2noycnks.jpg" />
+                <img loading="lazy" decoding="async" alt="Kongtul Tsephei Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520004/monastery/iiwi34bdb5eh2noycnks.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Kongtul Tsephei Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">4th Vajra Master</p>
@@ -145,7 +145,7 @@ export default function About() {
             {/* Master 6 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Lama Jamphel Sherap Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520005/monastery/zcsh2jezbriribkyxbpp.jpg" />
+                <img loading="lazy" decoding="async" alt="Lama Jamphel Sherap Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520005/monastery/zcsh2jezbriribkyxbpp.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Lama Jamphel Sherap Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">5th Vajra Master</p>
@@ -153,7 +153,7 @@ export default function About() {
             {/* Master 7 */}
             <div className="group">
               <div className="aspect-[3/4] overflow-hidden rounded-xl mb-base shadow-lg border border-surface-container-highest">
-                <img loading="lazy" decoding="async" alt="Lama Kelsang Nyima Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520006/monastery/oq8jq80w70tnmxtf6yuq.jpg" />
+                <img loading="lazy" decoding="async" alt="Lama Kelsang Nyima Rinpoche" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_600/v1782520006/monastery/oq8jq80w70tnmxtf6yuq.jpg" />
               </div>
               <h4 className="font-headline text-[16px] text-on-surface mb-1">Lama Kelsang Nyima Rinpoche</h4>
               <p className="text-gold-dark text-[10px] uppercase tracking-widest font-medium font-label">6th Vajra Master</p>

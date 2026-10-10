@@ -140,7 +140,7 @@ export default function Offering() {
 
       {/* Quote banner */}
       <section className="relative h-[320px] flex items-center overflow-hidden">
-        <img className="absolute inset-0 w-full h-full object-cover" alt="Himalayan monastery" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520072/monastery/wocwwpny7tf75yv8zfx9.jpg" />
+        <img className="absolute inset-0 w-full h-full object-cover" alt="Himalayan monastery" src="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1920/v1782520072/monastery/wocwwpny7tf75yv8zfx9.jpg" />
         <div className="absolute inset-0 bg-gradient-to-r from-maroon-dark/90 via-maroon-dark/70 to-transparent"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-8 w-full">
           <h2 className="text-2xl sm:text-3xl text-gold-light font-serif italic mb-3">"Giving is the most sacred of rituals."</h2>

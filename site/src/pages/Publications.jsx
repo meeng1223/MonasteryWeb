@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
-import { cld } from "../lib/cloudinary.js";
+import { cld, cldw } from "../lib/cloudinary.js";
 import { useLang, localized } from "../lib/i18n.jsx";
 import RichText from "../components/RichText.jsx";
 
@@ -178,7 +178,7 @@ export default function Publications() {
           {data.map((p) => (
             <article key={p.title} className="bg-white sacred-border rounded-lg overflow-hidden flex flex-col group transition-transform hover:-translate-y-1">
               <div className="relative aspect-[3/4] overflow-hidden bg-surface-container">
-                <img loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt={p.alt} src={p.coverImage} />
+                <img loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt={p.alt} src={cldw(p.coverImage, 800)} />
                 <div className={`absolute top-4 right-4 ${p.badgeClass} font-label-eyebrow px-3 py-1 rounded-sm`}>{p.badgeLabel}</div>
               </div>
               <div className="p-lg flex flex-col flex-grow">

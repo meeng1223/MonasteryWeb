@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { listPublished, cachedPublished } from "../lib/publicContent.js";
 import { useLang, localized } from "../lib/i18n.jsx";
-import { cld } from "../lib/cloudinary.js";
+import { cld, cldw } from "../lib/cloudinary.js";
 import PageBanner from "../components/PageBanner.jsx";
 import RichText from "../components/RichText.jsx";
 
@@ -162,7 +162,7 @@ export default function Magazine() {
                 <img loading="lazy" decoding="async"
                   alt={featured ? featured.title || "Magazine Cover" : "Magazine Cover 2025"}
                   className="w-full h-full object-cover rounded-sm"
-                  src={featured && featured.coverImage ? featured.coverImage : "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520056/monastery/nobb2omlxuatxypcim4w.jpg"}
+                  src={cldw(featured && featured.coverImage ? featured.coverImage : "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520056/monastery/nobb2omlxuatxypcim4w.jpg", 800)}
                 />
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function Magazine() {
                     alt={`Magazine Cover ${issue.year.replace("Issue ", "")}`}
                     className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                     data-alt={issue.alt}
-                    src={issue.img}
+                    src={cldw(issue.img, 800)}
                   />
                 </div>
                 <span className="font-label-eyebrow text-label-eyebrow text-gold uppercase mb-xs">{issue.year}</span>
