@@ -25,7 +25,8 @@
 // under /vi, /zh-hk, /hi, /bo, /or -> dist/<prefix>/<route>/index.html), four
 // pages at a time. Each translated page must have the right <html lang>, a
 // self-referencing canonical, its hreflang set (7 links on normal pages) and the
-// same JSON-LD as English, or the build fails. A coverage report prints the
+// same JSON-LD as English apart from the per-language fields (page URL,
+// inLanguage, headline/description, breadcrumb names), or the build fails. A coverage report prints the
 // share of visible text still identical to English per page (warning > 40%).
 
 import { spawn } from "node:child_process";
@@ -277,10 +278,11 @@ async function renderPage(browser, route, code) {
         () => document.querySelector("#root")?.children.length > 0,
         { timeout: 15000, polling: 100 }
       );
-      // Articles load from Firestore after mount.
+      // Articles load from Firestore after mount; the page's own JS chunk
+      // must be in (no Suspense fallback captured as the page).
       step = "content";
       await page.waitForFunction(
-        () => !document.querySelector("main")?.innerText.includes("Loading…"),
+        () => !document.querySelector("main")?.innerText.includes("Loading…") && !document.querySelector("[data-route-loading]"),
         { timeout: 15000, polling: 100 }
       );
       // Translation applied and the DOM quiet (set by LanguageProvider).
@@ -317,6 +319,53 @@ async function renderPage(browser, route, code) {
   } finally {
     await page.close();
   }
+}
+
+// JSON-LD checks. Every block must parse; a page has at most one ProfilePage,
+// NewsArticle and BreadcrumbList; their URL and language are the page's own.
+const LD_PREFIX_RE = new RegExp(`^${SITE_URL.replace(/[.]/g, "\\.")}/(?:${OTHER.map((c) => PATH[c]).join("|")})(?=/|$)`);
+// Fields that are per-language by design (page URL / language, translated
+// headline and breadcrumb names); everything else must equal English.
+const LD_LOCALIZED = { ProfilePage: ["inLanguage"], NewsArticle: ["headline", "description", "inLanguage"], ListItem: ["name"] };
+function normalizeLd(v) {
+  if (Array.isArray(v)) return v.map((x) => normalizeLd(x));
+  if (v && typeof v === "object") {
+    const out = {};
+    for (const k of Object.keys(v)) {
+      out[k] = (LD_LOCALIZED[v["@type"]] || []).includes(k) ? "(localized)" : normalizeLd(v[k]);
+    }
+    return out;
+  }
+  if (typeof v === "string" && LD_PREFIX_RE.test(v)) {
+    const url = v.replace(LD_PREFIX_RE, SITE_URL); // "/vi" -> "", the English home is "/"
+    return url === SITE_URL ? SITE_URL + "/" : url;
+  }
+  return v;
+}
+function ldKey(blocks) {
+  return JSON.stringify(blocks.map((b) => normalizeLd(b)));
+}
+function checkLd(r, wantLang) {
+  const errs = [];
+  const blocks = [];
+  for (const text of r.jsonld) {
+    try { blocks.push(JSON.parse(text)); } catch (e) { errs.push(`JSON-LD does not parse: ${e.message}`); }
+  }
+  const of = (t) => blocks.filter((b) => b["@type"] === t);
+  for (const t of ["ProfilePage", "NewsArticle", "BreadcrumbList"]) {
+    if (of(t).length > 1) errs.push(`${of(t).length} ${t} blocks`);
+  }
+  const page = [...of("ProfilePage").map((b) => [b.url, b.inLanguage]), ...of("NewsArticle").map((b) => [b.mainEntityOfPage, b.inLanguage])];
+  for (const [url, lang] of page) {
+    if (url !== r.canonical) errs.push(`structured data URL ${url}, canonical ${r.canonical}`);
+    if (lang !== wantLang) errs.push(`structured data inLanguage ${lang}, expected ${wantLang}`);
+  }
+  for (const b of of("BreadcrumbList")) {
+    for (const it of b.itemListElement || []) {
+      if (it.item && !(it.item === SITE_URL + "/" || it.item.startsWith(SITE_URL + "/"))) errs.push(`breadcrumb item ${it.item} is not on ${SITE_URL}`);
+    }
+  }
+  return { errs, blocks };
 }
 
 // Share of a page's visible text (by characters) still identical to English.
@@ -424,6 +473,7 @@ async function main() {
       const want = route.startsWith("/news/") ? langs.length + 1 : CODES.length + 1;
       if (r.lang !== "en") guardErrors.push(`${route}: <html lang="${r.lang}">, expected "en"`);
       if (r.hreflang.length !== want) guardErrors.push(`${route}: ${r.hreflang.length} hreflang links, expected ${want}`);
+      for (const e of checkLd(r, "en").errs) guardErrors.push(`${route}: ${e}`);
     });
 
     // 2) Every other language, checked against English.
@@ -446,7 +496,9 @@ async function main() {
       if (r.canonical !== wantCanonical) errs.push(`canonical ${r.canonical}, expected ${wantCanonical}`);
       if (r.hreflang.length !== expectedLangs.length + 1) errs.push(`${r.hreflang.length} hreflang links, expected ${expectedLangs.length + 1}`);
       else if (gotAlt !== wantAlt) errs.push(`hreflang links differ from the expected set`);
-      if (r.jsonld.join("\n") !== base.jsonld.join("\n")) errs.push("JSON-LD differs from the English page");
+      const ld = checkLd(r, langMeta(canonicalLang).html);
+      errs.push(...ld.errs);
+      if (!ld.errs.length && ldKey(ld.blocks) !== ldKey(checkLd(base, "en").blocks)) errs.push("JSON-LD differs from the English page");
       if (errs.length) guardErrors.push(`${label}: ${errs.join("; ")}`);
       if (canonicalLang === code) {
         if (!okByRoute.has(route)) okByRoute.set(route, new Set());

@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import { cldw, cldSrcSet } from "../lib/cloudinary.js";
+import { useJsonLd, breadcrumbList } from "../lib/jsonLd.js";
+import { useLang, t } from "../lib/i18n.jsx";
 
 // Standard page banner used across all interior pages.
 // - Hero image with maroon overlay, centered eyebrow + title.
 // - Breadcrumb ALWAYS rendered in its own bar BELOW the banner.
 // `trail` is an array of { label, to? } — the last item is the current page.
+// The trail is also published as BreadcrumbList structured data, in the page language.
 // `imagePosition` (CSS object-position) keeps a face in view when the photo is cropped.
 export default function PageBanner({ image, imagePosition, eyebrow, title, subtitle, trail = [] }) {
+  const { lang } = useLang();
+  useJsonLd("breadcrumb", breadcrumbList(trail, lang, (s) => t(s, lang)));
   return (
     <>
       <header className="relative h-[300px] sm:h-[360px] md:h-[420px] flex items-center justify-center overflow-hidden bg-maroon-dark">

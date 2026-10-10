@@ -10,6 +10,8 @@ import { applySeo, NoIndex } from "../components/Seo.jsx";
 import { trimDescription } from "../lib/seo.js";
 import { richTextToPlain } from "../lib/richtext.js";
 import { useSisterLinks } from "../lib/sisterSites.js";
+import { useJsonLd, canonicalUrl, inLanguage } from "../lib/jsonLd.js";
+import { newsArticle } from "../lib/newsSchema.js";
 
 export default function NewsDetail() {
   // /news/<slug>; old links /news/<id> are replaced by the slug URL below.
@@ -55,23 +57,47 @@ export default function NewsDetail() {
 
   // Article title/description/image for Google and link previews, in the
   // language shown.
-  useEffect(() => {
-    if (!doc) return;
+  let seo = null;
+  if (doc) {
     // (an English excerpt is not used for a translated article: its body is)
     const excerpt = localized(doc, "excerpt", shown);
     const ownExcerpt = shown === "EN" || excerpt !== localized(doc, "excerpt", "EN") ? excerpt : "";
     const text = richTextToPlain(ownExcerpt || localized(doc, "body", shown));
-    applySeo({
-      title: `${localized(doc, "title", shown)} | ${t("Dundul Raptenling Monastery", lang)}`,
+    seo = {
+      headline: localized(doc, "title", shown),
       description: trimDescription(text.replace(/\s+/g, " ").trim()),
-      path: `/news/${slug}`,
       image: newsCover(doc, { fallback: false }) || undefined,
+    };
+  }
+
+  useEffect(() => {
+    if (!doc) return;
+    applySeo({
+      title: `${seo.headline} | ${t("Dundul Raptenling Monastery", lang)}`,
+      description: seo.description,
+      path: `/news/${slug}`,
+      image: seo.image,
       lang,
       langs: articleLangs(doc),
       canonicalLang: shown,
       translate: false,
     });
-  }, [doc, slug, lang, shown]);
+  }, [doc, slug, lang, shown, seo?.headline, seo?.description, seo?.image]);
+
+  // NewsArticle structured data: same headline/description/images as above,
+  // canonical URL and language of the version shown.
+  useJsonLd(
+    "article",
+    doc && slug
+      ? newsArticle(doc, {
+          url: canonicalUrl(shown, `/news/${slug}`),
+          inLanguage: inLanguage(shown),
+          headline: seo.headline,
+          description: seo.description,
+          images: [seo.image, ...(Array.isArray(doc.images) ? doc.images.filter((x) => typeof x === "string").map(cld) : [])],
+        })
+      : null
+  );
 
   if (doc === undefined) {
     return <div className="py-4xl text-center text-ink-light">Loading…</div>;

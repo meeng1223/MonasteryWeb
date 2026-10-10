@@ -2,13 +2,26 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { getMaster } from "../data/masters.js";
 import { cldw } from "../lib/cloudinary.js";
 import { NoIndex } from "../components/Seo.jsx";
-import { usePersonSchema, masterPerson } from "../lib/personSchema.js";
+import { useProfileSchema, masterPerson, masterPath } from "../lib/personSchema.js";
+import { useJsonLd, breadcrumbList } from "../lib/jsonLd.js";
+import { useLang, t } from "../lib/i18n.jsx";
 
 export default function MasterDetail() {
   const { slug } = useParams();
   const { pathname } = useLocation();
+  const { lang } = useLang();
   const master = getMaster(slug);
-  usePersonSchema(master ? masterPerson(master) : null);
+  const isPresident = pathname.startsWith("/presidents");
+  const listPath = isPresident ? "/presidents" : "/vajra-masters";
+  const listLabel = isPresident ? "Presidents" : "Vajra Masters";
+  useProfileSchema(master ? masterPerson(master) : null, { path: master ? masterPath(master) : "", lang });
+  // Same trail as the visible breadcrumb below.
+  useJsonLd(
+    "breadcrumb",
+    master
+      ? breadcrumbList([{ label: "Home", to: "/" }, { label: listLabel, to: listPath }, { label: master.name }], lang, (s) => t(s, lang))
+      : null
+  );
 
   if (!master) {
     return (
@@ -29,10 +42,6 @@ export default function MasterDetail() {
       </div>
     );
   }
-
-  const isPresident = pathname.startsWith("/presidents");
-  const listPath = isPresident ? "/presidents" : "/vajra-masters";
-  const listLabel = isPresident ? "Presidents" : "Vajra Masters";
 
   return (
     <div className="page-master-detail">

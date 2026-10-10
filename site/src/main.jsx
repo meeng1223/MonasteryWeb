@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App.jsx";
+import App, { preloadRoute } from "./App.jsx";
 import { LanguageProvider, loadDict, langFromPath, localePath, PATH } from "./lib/i18n.jsx";
 import { PAGE_SEO } from "./lib/seo.js";
 import { getMaster } from "./data/masters.js";
+import { removePrerenderedJsonLd } from "./lib/jsonLd.js";
 import "./tabler-icons.css";
 import "./index.css";
 import "./tailwind.css";
@@ -55,13 +56,17 @@ if (redirect) {
 } else {
   // A prerendered snapshot may carry another page's marker.
   delete document.documentElement.dataset.i18n;
-  // Load the dictionary first so the first commit is already translated.
-  loadDict(lang)
-    .catch(() => null)
+  // ...and the page's structured data, which the page adds again when it mounts.
+  removePrerenderedJsonLd();
+  // Unprefixed app path ("/vi/about" -> "/about"), for the router basename.
+  const appPath = prefix ? location.pathname.slice(prefix.length + 1) || "/" : location.pathname;
+  // Load the dictionary and the page's own chunk first, so the first commit is
+  // already the full translated page (it replaces the prerendered HTML).
+  Promise.all([loadDict(lang).catch(() => null), preloadRoute(appPath)])
     .then(() => {
       ReactDOM.createRoot(document.getElementById("root")).render(
         <React.StrictMode>
-          <BrowserRouter basename={prefix ? "/" + prefix : "/"}>
+          <BrowserRouter basename={prefix ? "/" + prefix : "/"} future={{ v7_startTransition: true }}>
             <LanguageProvider lang={lang}>
               <App />
             </LanguageProvider>
