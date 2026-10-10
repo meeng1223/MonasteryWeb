@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { trackEvent } from "../lib/analytics.js";
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
@@ -6,6 +6,7 @@ import { PUJA_LIST, PUJA_CATEGORIES, PUJA_PURPOSES, pujaCategoryId } from "../da
 import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
 import { useLang } from "../lib/i18n.jsx";
+import { useJsonLd } from "../lib/jsonLd.js";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
@@ -37,6 +38,10 @@ const FAQ = [
   },
 ];
 
+const FAQ_SCHEMA = {
+  "@type": "FAQPage",
+  mainEntity: FAQ.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+};
 
 // showName: false in Tibetan mode, where the English name would be translated
 // into the same Tibetan title already shown above it.
@@ -103,17 +108,7 @@ export default function PujaList() {
   const toggle = (cat) => setExpanded((e) => ({ ...e, [cat]: !e[cat] }));
 
   // FAQ structured data for Google (in the prerendered head of /puja only).
-  useEffect(() => {
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.textContent = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: FAQ.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
-    });
-    document.head.appendChild(el);
-    return () => el.remove();
-  }, []);
+  useJsonLd("faq", FAQ_SCHEMA);
 
   return (
     <div className="page-puja">

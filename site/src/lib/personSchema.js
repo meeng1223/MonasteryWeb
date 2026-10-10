@@ -1,7 +1,10 @@
-// Person structured data (schema.org) for biography pages, so search engines can tell who
-// a page is about. English only and the same in every language (the prerender checks that
-// JSON-LD is identical across languages). Added to <head> while the page is shown.
-import { useEffect } from "react";
+// Profile-page structured data (schema.org ProfilePage whose mainEntity is the
+// Person) for biography pages, so search engines can tell who a page is about.
+// https://developers.google.com/search/docs/appearance/structured-data/profile-page
+// The Person facts are English and the same in every language; the ProfilePage
+// carries the page's own canonical URL and language (the prerender checks both).
+// Added to <head> while the page is shown (see jsonLd.js).
+import { useJsonLd, canonicalUrl, inLanguage } from "./jsonLd.js";
 
 const SITE = "https://dundulraptenling.org";
 export const MONASTERY = {
@@ -11,16 +14,21 @@ export const MONASTERY = {
   sameAs: ["https://www.wikidata.org/wiki/Q141677199"],
 };
 
-export function usePersonSchema(data) {
-  const json = data ? JSON.stringify({ "@context": "https://schema.org", "@type": "Person", ...data }) : "";
-  useEffect(() => {
-    if (!json) return undefined;
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.textContent = json;
-    document.head.appendChild(el);
-    return () => el.remove();
-  }, [json]);
+// One ProfilePage per biography page. `path` = the page's unprefixed canonical
+// path, `lang` = the page language (every biography exists in all languages).
+// No dateCreated/dateModified: the biographies have no real dates.
+export function useProfileSchema(person, { path, lang }) {
+  useJsonLd(
+    "profile",
+    person
+      ? {
+          "@type": "ProfilePage",
+          url: canonicalUrl(lang, path),
+          inLanguage: inLanguage(lang),
+          mainEntity: { "@type": "Person", ...person },
+        }
+      : null
+  );
 }
 
 // Extra facts for individual masters, keyed by slug.
@@ -33,11 +41,15 @@ const EXTRA = {
   },
 };
 
+// Unprefixed canonical path of a master's biography (people listed as both a
+// President and a Vajra Master: the /presidents/ page).
+export const masterPath = (master) =>
+  (master.groups.includes("president") ? "/presidents/" : "/vajra-masters/") + master.slug;
+
 export function masterPerson(master) {
-  const path = master.groups.includes("president") ? "/presidents/" : "/vajra-masters/";
   return {
     name: master.name,
-    url: SITE + path + master.slug,
+    url: SITE + masterPath(master),
     image: master.portrait,
     description: `${master.role}, Dundul Raptenling Monastery`,
     affiliation: MONASTERY,
@@ -52,5 +64,6 @@ export const DUDJOM_RINPOCHE = {
   birthDate: "1904-06-10",
   deathDate: "1987-01-17",
   description: "Supreme Head of the Nyingma tradition and founder of Dundul Raptenling Monastery in Odisha, India.",
+  image: "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,c_limit,w_1200/v1782636915/monastery/ocycrekbhfbnd2utdqin.jpg",
   sameAs: ["https://www.wikidata.org/wiki/Q1688950", "https://en.wikipedia.org/wiki/Dudjom_Jigdral_Yeshe_Dorje"],
 };
