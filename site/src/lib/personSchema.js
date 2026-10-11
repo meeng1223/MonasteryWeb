@@ -37,7 +37,7 @@ const EXTRA = {
     jobTitle: "President of Dundul Raptenling Monastery",
     birthDate: "1987-08-11",
     memberOf: { "@type": "Organization", name: "Vajra Lotus Foundation", url: "https://vajralotusfoundation.org/" },
-    sameAs: ["https://vajralotusfoundation.org/leadership"],
+    sameAs: ["https://www.wikidata.org/wiki/Q141694573", "https://vajralotusfoundation.org/leadership"],
   },
 };
 
