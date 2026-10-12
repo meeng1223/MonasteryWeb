@@ -169,6 +169,11 @@ export const PAGE_SEO = {
     title: "Privacy Policy | Dundul Raptenling Monastery",
     description: "Read the privacy policy for the Dundul Raptenling Monastery website.",
   },
+  "/calendar-privacy": {
+    title: "Nyingmapa Calendar App Privacy Policy | Dundul Raptenling",
+    description:
+      "Privacy policy for the Tibetan Nyingmapa Calendar app: no account, your data stays on your device, and how the optional Zoe AI guide, weather and alerts work.",
+  },
 };
 
 // Biography pages: one unique title/description per person. People listed as

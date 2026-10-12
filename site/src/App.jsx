@@ -37,6 +37,7 @@ const Contact = lazyPage(() => import("./pages/Contact.jsx"));
 const Offering = lazyPage(() => import("./pages/Offering.jsx"));
 const Terms = lazyPage(() => import("./pages/Terms.jsx"));
 const Privacy = lazyPage(() => import("./pages/Privacy.jsx"));
+const CalendarPrivacy = lazyPage(() => import("./pages/CalendarPrivacy.jsx"));
 
 // Admin screens (and Firebase) load only when someone opens /admin.
 const AdminRoot = lazy(() => import("./admin/AdminRoot.jsx"));
@@ -96,6 +97,7 @@ const routes = (
       <Route path="/lama-sonam-tashi" element={<Navigate to="/presidents/lama-sonam-tashi-rinpoche" replace />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/calendar-privacy" element={<CalendarPrivacy />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   </>
