@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 
 export default function Apps() {
@@ -45,6 +46,7 @@ export default function Apps() {
                   Google Play
                 </a>
               </div>
+              <Link to="/calendar-privacy" className="font-label text-label-md text-on-surface-variant underline hover:text-primary transition-colors">App privacy policy</Link>
             </div>
             {/* NamkhaZoe Card */}
             <div className="group flex flex-col items-start space-y-8 bg-surface p-10 md:p-14 rounded-xl shadow-[0_20px_40px_rgba(87,0,0,0.06)] hover:translate-y-[-8px] transition-all duration-500">

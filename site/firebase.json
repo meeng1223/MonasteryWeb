@@ -45,6 +45,7 @@
       { "source": "/contact", "destination": "/index.html" },
       { "source": "/terms", "destination": "/index.html" },
       { "source": "/privacy", "destination": "/index.html" },
+      { "source": "/calendar-privacy", "destination": "/index.html" },
       { "source": "/vajra-masters/chagdud-tulku-rinpoche", "destination": "/index.html" },
       { "source": "/vajra-masters/kongtul-tsephel-rinpoche", "destination": "/index.html" },
       { "source": "/vajra-masters/lama-sherab-dorje-rinpoche", "destination": "/index.html" },
@@ -56,7 +57,7 @@
       { "source": "/presidents/kongtul-tsephel-rinpoche", "destination": "/index.html" },
       { "source": "/presidents/lama-sonam-tashi-rinpoche", "destination": "/index.html" },
       { "source": "/news/*", "destination": "/index.html" },
-      { "regex": "^/(vi|zh-hk|hi|bo|or)(/(about|history|stupa|odisha-vihara|dudjom-rinpoche|vajra-masters|presidents|board-members|shedra|graduate-monks|puja|prayer-books|community-support|support|support-young-monks|offering|hostel-project|expenditures|news|magazine|publications|gallery|apps|contact|terms|privacy|vajra-masters/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sherab-dorje-rinpoche|khenchen-tulku-shekar-rinpoche|lama-dorje-namgyal-rinpoche|lama-jamphel-sherap-rinpoche|lama-kelsang-nyima-rinpoche)|presidents/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sonam-tashi-rinpoche)|news/[^/]+))?$", "destination": "/index.html" },
+      { "regex": "^/(vi|zh-hk|hi|bo|or)(/(about|history|stupa|odisha-vihara|dudjom-rinpoche|vajra-masters|presidents|board-members|shedra|graduate-monks|puja|prayer-books|community-support|support|support-young-monks|offering|hostel-project|expenditures|news|magazine|publications|gallery|apps|contact|terms|privacy|calendar-privacy|vajra-masters/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sherab-dorje-rinpoche|khenchen-tulku-shekar-rinpoche|lama-dorje-namgyal-rinpoche|lama-jamphel-sherap-rinpoche|lama-kelsang-nyima-rinpoche)|presidents/(chagdud-tulku-rinpoche|kongtul-tsephel-rinpoche|lama-sonam-tashi-rinpoche)|news/[^/]+))?$", "destination": "/index.html" },
       { "source": "/admin", "destination": "/index.html" },
       { "source": "/admin/**", "destination": "/index.html" }
     ],
