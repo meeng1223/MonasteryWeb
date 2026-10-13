@@ -6,6 +6,10 @@ const ALLOWED = new Set(["P", "BR", "STRONG", "EM", "U", "UL", "OL", "LI", "A"])
 const RENAME = { B: "STRONG", I: "EM", DIV: "P" };
 const BLOCK_DROP = new Set(["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "TEMPLATE", "NOSCRIPT", "SVG", "MATH"]);
 const SAFE_HREF = /^(https?:|mailto:|tel:|\/|#)/i;
+// Full links to this site (written as https://dundulraptenling.org/... so they
+// survive copy-paste) open in the same tab like relative ones; the href stays
+// absolute so e-mails built from the same text still get a working link.
+const OWN_SITE = /^https?:\/\/(www\.)?dundulraptenling\.org(?=[/?#]|$)/i;
 
 const escapeHtml = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -20,7 +24,7 @@ const linkify = (text) =>
     .split(URL_RE)
     .map((part, i) =>
       i % 2
-        ? `<a href="${escapeHtml(part)}" target="_blank" rel="noopener noreferrer">${escapeHtml(part)}</a>`
+        ? `<a href="${escapeHtml(part)}"${OWN_SITE.test(part) ? "" : ' target="_blank" rel="noopener noreferrer"'}>${escapeHtml(part)}</a>`
         : escapeHtml(part),
     )
     .join("");
@@ -71,7 +75,7 @@ function cleanNode(node, doc) {
         continue;
       }
       el.setAttribute("href", href);
-      if (/^https?:/i.test(href)) {
+      if (/^https?:/i.test(href) && !OWN_SITE.test(href)) {
         el.setAttribute("target", "_blank");
         el.setAttribute("rel", "noopener noreferrer");
       }
