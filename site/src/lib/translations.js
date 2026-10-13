@@ -33,7 +33,7 @@ const BASE = {
   "Nonprofit ↗": "ཁེ་མེད་ཚོགས་པ། ↗",
   "The Monastery": "དགོན་པ།",
   "Odisha Dudjom Vihara": "ཨོ་ཌི་ཤ་བདུད་འཇོམས་གཙུག་ལག་ཁང་།",
-  "Shenphen Shedrubling Shedra": "གཞན་ཕན་བཤད་སྒྲུབ་གླིང་བཤད་གྲྭ།",
+  "Shenphen Shedrubling Shedra": "སྔ་འགྱུར་མཐོ་སློབ་གཞན་ཕན་བཤད་སྒྲུབ་གླིང་།",
   "Graduate Monks": "མཐར་ཕྱིན་གྲྭ་པ།",
   "Projects": "ལས་གཞི།",
   "Zangdok Palri ↗": "ཟངས་མདོག་དཔལ་རི། ↗",

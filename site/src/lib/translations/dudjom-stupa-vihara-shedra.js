@@ -104,7 +104,7 @@ export default {
   "Our monastic college stands as a beacon of wisdom, preserving the ancient Nyingmapa scholastic traditions. Here, the mind is refined through rigorous debate, analytical meditation, and the study of the Five Great Sciences.": "ང་ཚོའི་བཤད་གྲྭ་ནི་ཤེས་རབ་ཀྱི་མར་མེ་ཞིག་ཏུ་གནས་ཤིང་། རྙིང་མ་པའི་སྔར་སྲོལ་མཁས་པའི་ལུགས་སྲོལ་སྲུང་སྐྱོབ་བྱེད། འདིར་སེམས་ནི་རྩོད་པ་དམ་པོ་དང་དཔྱད་སྒོམ་དང་རིག་གནས་ཆེན་པོ་ལྔའི་སློབ་སྦྱོང་བརྒྱུད་ནས་སྦྱང་བར་བྱེད།",
   "Become a Monk": "གྲྭ་པར་འགྱུར་བ།",
   "A Day of a Monk": "གྲྭ་པ་ཞིག་གི་ཉིན་གཅིག",
-  "Shenphen Shedrubling Shedra": "གཞན་ཕན་བཤད་སྒྲུབ་གླིང་བཤད་གྲྭ།",
+  "Shenphen Shedrubling Shedra": "སྔ་འགྱུར་མཐོ་སློབ་གཞན་ཕན་བཤད་སྒྲུབ་གླིང་།",
   "A Day in Monastic Life": "གྲྭ་པའི་འཚོ་བའི་ཉིན་གཅིག",
   "From 04:30 AM Morning Liturgy to 19:00 PM Evening Chanting, the rhythm of practice never ceases.": "ཞོགས་པ་ཆུ་ཚོད་ ༠༤:༣༠ ཀྱི་ཞོགས་ཆོས་ནས་དགོང་མོ་ཆུ་ཚོད་ ༡༩:༠༠ ཀྱི་དགོང་ཆོས་བར་དུ། ཉམས་ལེན་གྱི་འགྲོས་ནམ་ཡང་མི་འཆད།",
   "Class of 2024": "༢༠༢༤ ལོའི་འཛིན་གྲྭ།",
