@@ -38,6 +38,67 @@ function plainToHtml(s) {
     .join("");
 }
 
+// Markdown (what a chat app's copy button puts on the clipboard) -> HTML, so
+// links, bold, italic and lists survive the paste. Headings become bold lines
+// (the editor has no heading style); "> " quote markers are dropped.
+const MD_LINK = /\[([^\]\n]+)\]\(((?:https?:\/\/|\/|mailto:)[^\s)]+)\)/g;
+export const looksLikeMarkdown = (s) =>
+  /\[[^\]\n]+\]\((https?:\/\/|\/|mailto:)/.test(s) || /\*\*[^*\n]+\*\*/.test(s) || /^\s*(>\s*)?#{1,6}\s/m.test(s);
+
+const mdEmphasis = (html) =>
+  html.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>").replace(/(^|[^\w*])\*([^*\n]+)\*(?!\w)/g, "$1<em>$2</em>");
+
+const mdInline = (text) =>
+  text
+    .split(MD_LINK)
+    .map((part, i, arr) => {
+      if (i % 3 === 1) return `<a href="${escapeHtml(arr[i + 1])}">${mdEmphasis(escapeHtml(part))}</a>`;
+      if (i % 3 === 2) return "";
+      return mdEmphasis(linkify(part));
+    })
+    .join("");
+
+export function markdownToHtml(md) {
+  const lines = String(md || "").replace(/\r\n?/g, "\n").split("\n").map((l) => l.replace(/^\s*>\s?/, ""));
+  const out = [];
+  let para = [];
+  let list = null; // { tag: "ul" | "ol", items: [] }
+  const flushPara = () => {
+    if (para.length) out.push(`<p>${para.map(mdInline).join("<br>")}</p>`);
+    para = [];
+  };
+  const flushList = () => {
+    if (list) out.push(`<${list.tag}>${list.items.map((t) => `<li>${mdInline(t)}</li>`).join("")}</${list.tag}>`);
+    list = null;
+  };
+  for (const raw of lines) {
+    const line = raw.trim();
+    const heading = line.match(/^#{1,6}\s+(.*)$/);
+    const bullet = line.match(/^[-*•]\s+(.*)$/);
+    const numbered = line.match(/^\d+[.)]\s+(.*)$/);
+    if (!line) {
+      flushPara();
+      flushList();
+    } else if (heading) {
+      flushPara();
+      flushList();
+      out.push(`<p><strong>${mdInline(heading[1].replace(/^\*\*(.*)\*\*$/, "$1"))}</strong></p>`);
+    } else if (bullet || numbered) {
+      flushPara();
+      const tag = bullet ? "ul" : "ol";
+      if (list && list.tag !== tag) flushList();
+      if (!list) list = { tag, items: [] };
+      list.items.push((bullet || numbered)[1]);
+    } else {
+      flushList();
+      para.push(line);
+    }
+  }
+  flushPara();
+  flushList();
+  return out.join("");
+}
+
 function cleanNode(node, doc) {
   const out = doc.createDocumentFragment();
   for (const child of [...node.childNodes]) {
