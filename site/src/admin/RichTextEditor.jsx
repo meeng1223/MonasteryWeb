@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { normalizeRichText, toSafeHtml } from "../lib/richtext.js";
+import { looksLikeMarkdown, markdownToHtml, normalizeRichText, toSafeHtml } from "../lib/richtext.js";
 
 // Small WYSIWYG box for "richtext" fields: bold, italic, underline, bullet and
 // numbered lists, links, clear formatting. Output is cleaned by lib/richtext.js,
@@ -52,7 +52,11 @@ export default function RichTextEditor({ value, onChange, lang, placeholder, min
     e.preventDefault();
     const cd = e.clipboardData;
     const html = cd.getData("text/html");
-    const clean = html ? toSafeHtml(html) : toSafeHtml(cd.getData("text/plain"));
+    const plain = cd.getData("text/plain");
+    // Copy buttons in chat apps give Markdown as plain text (sometimes wrapped in
+    // bare HTML): convert it unless the HTML already carries links or bold.
+    const richHtml = html && /<(a|strong|b|em|i|ul|ol)\b/i.test(html);
+    const clean = !richHtml && looksLikeMarkdown(plain) ? toSafeHtml(markdownToHtml(plain)) : toSafeHtml(html || plain);
     document.execCommand("insertHTML", false, clean);
     emit();
   };
