@@ -392,7 +392,7 @@ export default {
   "Serving Frontline Heroes": "གདོང་མཆོང་དཔའ་བོར་ཞབས་འདེགས་ཞུ།",
   "Sey me mi Dhun Ling": "སད་མི་མི་བདུན་གླིང་།",
   "Sey me mi Dhun Ling is a new multi-purpose building designed to support the growing monastic community. This sacred structure will house essential facilities, including modern classrooms for the Shedra, comfortable living quarters for the monks, and a dedicated library to preserve precious Dharma texts.": "སད་མི་མི་བདུན་གླིང་གི་དམིགས་སྒོ་སྣ་མང་ལྡན་པའི་གཙུག་ལག་འདི་བཞིན་དགེ་འདུན་པའི་སྡེ་འཕེལ་རྒྱས་འགྲོ་བཞིན་པར་དམིགས་པ་ཞིག་ཡིན། གནས་ཁྱད་པར་ཅན་གྱི་བཟོ་བཀོད་འདིའི་ནང་དུ་མཐུན་རྐྱེན་གལ་ཆེན་ཁག་ནི་ཤེས་རིག་སློབ་གྲྭའི་ཆེད་དུ་དེང་རབས་ཅན་གྱི་འཛིན་ཁང་དང་། གྲྭ་པ་རྣམས་ཀྱི་ཆེད་དུ་སྡོད་གནས། དེ་བཞིན་དམ་པའི་ཆོས་ཀྱི་གཞུང་ལུགས་རྩ་ཆེན་ཉར་ཚགས་བྱེད་སའི་དཔེ་མཛོད་ཁང་བཅས་ཡིན།",
-  "Shenphen Shedrubling Shedra": "གཞན་ཕན་བཤད་སྒྲུབ་གླིང་བཤད་གྲྭ།",
+  "Shenphen Shedrubling Shedra": "སྔ་འགྱུར་མཐོ་སློབ་གཞན་ཕན་བཤད་སྒྲུབ་གླིང་།",
   "Shung": "གཞུང་།",
   "Smoke and Mahakala puja for whole day": "ཉིན་ཧྲིལ་བོར་བསང་གསོལ་དང་མ་ཧཱ་ཀཱ་ལའི་མཆོད་འབུལ།",
   "Smoke and mahakala puja for whole day": "བསང་གསོལ་ཉིན་ཚོགས།",
