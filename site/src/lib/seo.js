@@ -79,7 +79,7 @@ export const PAGE_SEO = {
       "Odisha Dudjom Vihara supports Dudjom Tersar practice, Buddhist education, pujas, and Dharma activities connected with Dundul Raptenling Monastery.",
   },
   "/shedra": {
-    title: "Shenphen Shedrubling Shedra | Monastic Buddhist Education",
+    title: "Ngagyur Shenphen Shedrubling Institute | Monastic Buddhist Education",
     description:
       "Shenphen Shedrubling Shedra provides Tibetan Buddhist monastic education, philosophy study, ritual training, and Dharma learning for monks in Odisha.",
   },
