@@ -20,7 +20,7 @@ export const NAV = [
     label: "The Monastery",
     items: [
       { to: "/odisha-vihara", label: "Odisha Dudjom Vihara" },
-      { to: "/shedra", label: "Shenphen Shedrubling Shedra" },
+      { to: "/shedra", label: "NGAGYUR SHENPHEN SHEDRUB LING INSTITUTE", i18nLabel: "Shenphen Shedrubling Shedra" },
       { to: "/graduate-monks", label: "Graduate Monks" },
     ],
   },

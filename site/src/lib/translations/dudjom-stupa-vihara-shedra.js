@@ -105,6 +105,7 @@ export default {
   "Become a Monk": "གྲྭ་པར་འགྱུར་བ།",
   "A Day of a Monk": "གྲྭ་པ་ཞིག་གི་ཉིན་གཅིག",
   "Shenphen Shedrubling Shedra": "སྔ་འགྱུར་མཐོ་སློབ་གཞན་ཕན་བཤད་སྒྲུབ་གླིང་།",
+  "NGAGYUR SHENPHEN SHEDRUB LING INSTITUTE": "སྔ་འགྱུར་མཐོ་སློབ་གཞན་ཕན་བཤད་སྒྲུབ་གླིང་།",
   "A Day in Monastic Life": "གྲྭ་པའི་འཚོ་བའི་ཉིན་གཅིག",
   "From 04:30 AM Morning Liturgy to 19:00 PM Evening Chanting, the rhythm of practice never ceases.": "ཞོགས་པ་ཆུ་ཚོད་ ༠༤:༣༠ ཀྱི་ཞོགས་ཆོས་ནས་དགོང་མོ་ཆུ་ཚོད་ ༡༩:༠༠ ཀྱི་དགོང་ཆོས་བར་དུ། ཉམས་ལེན་གྱི་འགྲོས་ནམ་ཡང་མི་འཆད།",
   "Class of 2024": "༢༠༢༤ ལོའི་འཛིན་གྲྭ།",

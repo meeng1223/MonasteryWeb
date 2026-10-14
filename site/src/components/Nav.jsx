@@ -7,7 +7,10 @@ import { useLang, LANGUAGES, localePath } from "../lib/i18n.jsx";
 const LOGO =
   "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto,w_160/v1782276752/monastery/jcdpra8qbr4a3loloekk.png";
 
-function DropdownItem({ item }) {
+// English shows `label`; other languages translate `i18nLabel` when an item has one.
+const navLabel = (item, lang) => (lang !== "EN" && item.i18nLabel) || item.label;
+
+function DropdownItem({ item, lang }) {
   if (item.external) {
     return (
       <a
@@ -16,7 +19,7 @@ function DropdownItem({ item }) {
         rel="noreferrer"
         className="block px-5 py-2.5 text-[13px] transition-colors text-ink-mid hover:text-maroon hover:bg-cream/60"
       >
-        {item.label}
+        {navLabel(item, lang)}
       </a>
     );
   }
@@ -28,7 +31,7 @@ function DropdownItem({ item }) {
         (isActive ? "text-maroon bg-cream font-medium" : "text-ink-mid hover:text-maroon hover:bg-cream/60")
       }
     >
-      {item.label}
+      {navLabel(item, lang)}
     </NavLink>
   );
 }
@@ -215,7 +218,7 @@ export default function Nav() {
                     <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72 z-50">
                       <div className="bg-white rounded-md shadow-[0_20px_45px_rgba(87,0,0,0.12)] border border-gold/15 overflow-hidden py-2">
                         {group.items.map((item) => (
-                          <DropdownItem key={item.to || item.href} item={item} />
+                          <DropdownItem key={item.to || item.href} item={item} lang={lang} />
                         ))}
                       </div>
                     </div>
@@ -293,7 +296,7 @@ export default function Nav() {
                             rel="noreferrer"
                             className="block pl-9 pr-6 py-2.5 text-sm text-ink-mid"
                           >
-                            {item.label}
+                            {navLabel(item, lang)}
                           </a>
                         ) : (
                           <NavLink
@@ -304,7 +307,7 @@ export default function Nav() {
                               (isActive ? "text-maroon font-medium" : "text-ink-mid")
                             }
                           >
-                            {item.label}
+                            {navLabel(item, lang)}
                           </NavLink>
                         )
                       )}
