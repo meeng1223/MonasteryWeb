@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
-import { useLang } from "../lib/i18n.jsx";
 
 export default function Shedra() {
-  const { lang } = useLang();
   return (
     <div className="page-shedra">
       <style>{`
@@ -22,8 +20,7 @@ export default function Shedra() {
       <PageBanner
         image="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520028/monastery/cll1htaqn3ahkjnvgbl2.jpg"
         eyebrow="Monastic Education"
-        title="NGAGYUR SHENPHEN SHEDRUB LING INSTITUTE"
-        subtitle={lang === "TIB" ? undefined : "(HIGHER BUDDHIST STUDIES & RESEARCH CENTER)"}
+        title="Ngagyur Shenphen Shedrubling Institute"
         trail={[{ label: "Home", to: "/" }, { label: "The Monastery" }, { label: "Shenphen Shedrubling Shedra" }]}
       />
       {/* 4. Block B (Text + Image) - Lineage Revival */}
