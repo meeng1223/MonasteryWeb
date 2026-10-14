@@ -21,7 +21,7 @@ export default function Shedra() {
         image="https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520028/monastery/cll1htaqn3ahkjnvgbl2.jpg"
         eyebrow="Monastic Education"
         title="Ngagyur Shenphen Shedrubling Institute"
-        trail={[{ label: "Home", to: "/" }, { label: "The Monastery" }, { label: "Shenphen Shedrubling Shedra" }]}
+        trail={[{ label: "Home", to: "/" }, { label: "The Monastery" }, { label: "Ngagyur Shenphen Shedrubling Institute" }]}
       />
       {/* 4. Block B (Text + Image) - Lineage Revival */}
       <section className="py-2xl md:py-4xl bg-surface">
