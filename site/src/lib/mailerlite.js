@@ -1,3 +1,5 @@
+import { looksLikeSpamEmail } from "./botGuard.jsx";
+
 // Adds a form sender to MailerLite (Vajra Lotus Foundation account) via the
 // serverless endpoint on the Zangdok Palri 2028 Vercel project, which holds the
 // MailerLite API key. Best effort: a failure never blocks the form.
@@ -7,7 +9,7 @@ const ENDPOINT =
 // source: "newsletter" | "contact" | "puja"; newsletter: true when the sender ticked the opt-in box.
 // Returns true when MailerLite accepted the contact.
 export async function addToMailerLite({ email, name, source, newsletter = false, puja }) {
-  if (!email) return false;
+  if (!email || looksLikeSpamEmail(email)) return false;
   try {
     const r = await fetch(ENDPOINT, {
       method: "POST",

@@ -5,6 +5,7 @@ import PageBanner from "../components/PageBanner.jsx";
 import { PUJA_LIST, PUJA_CATEGORIES, PUJA_PURPOSES, pujaCategoryId } from "../data/pujaList.js";
 import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
+import { useBotGuard } from "../lib/botGuard.jsx";
 import { useLang } from "../lib/i18n.jsx";
 import { useJsonLd } from "../lib/jsonLd.js";
 
@@ -69,10 +70,13 @@ export default function PujaList() {
   const [pStatus, setPStatus] = useState("idle");
   const setField = (k) => (e) => setPf((f) => ({ ...f, [k]: e.target.value }));
   const [newsletter, setNewsletter] = useState(false);
+  const guard = useBotGuard();
   const submitPuja = async (e) => {
     e.preventDefault();
     if (pStatus === "sending") return;
     setPStatus("sending");
+    // Bots get the normal "sent" state but nothing is saved or sent.
+    if (guard.isBot()) { setPStatus("sent"); return; }
     const payload = {
       name: pf.name,
       email: pf.email,
@@ -95,6 +99,7 @@ export default function PujaList() {
     setPStatus("sent");
     setPf({ puja: "", name: "", email: "", dedication: "", intention: "" });
     setNewsletter(false);
+    guard.reset();
   };
 
   const q = query.trim().toLowerCase();
@@ -277,7 +282,8 @@ export default function PujaList() {
                 </button>
               </div>
             ) : (
-              <form className="space-y-5" onSubmit={submitPuja}>
+              <form className="relative space-y-5" onSubmit={submitPuja}>
+              {guard.field}
                 <div>
                   <label className="block text-[13px] font-medium text-ink-mid mb-1.5">Puja Selection *</label>
                   <select required value={pf.puja} onChange={setField("puja")} className="w-full bg-white border border-outline-variant rounded-[6px] px-4 py-2.5 text-[14px] focus:ring-1 focus:ring-gold focus:border-gold outline-none">

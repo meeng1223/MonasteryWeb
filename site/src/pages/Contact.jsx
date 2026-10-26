@@ -3,6 +3,7 @@ import { trackEvent } from "../lib/analytics.js";
 import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
 import PageBanner from "../components/PageBanner.jsx";
+import { useBotGuard } from "../lib/botGuard.jsx";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
@@ -11,11 +12,19 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const [newsletter, setNewsletter] = useState(false);
+  const guard = useBotGuard();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "sending") return;
     setStatus("sending");
+
+    // Bots get the normal "sent" state but nothing is saved or sent.
+    if (guard.isBot()) {
+      setStatus("sent");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
 
     // 1) Lưu vào admin inbox (Firestore) — best effort
     try {
@@ -51,6 +60,7 @@ export default function Contact() {
     setStatus("sent");
     setForm({ name: "", email: "", subject: "", message: "" });
     setNewsletter(false);
+    guard.reset();
     setTimeout(() => setStatus("idle"), 4000);
   };
 
@@ -84,7 +94,8 @@ export default function Contact() {
             <div className="lg:col-span-7 bg-white p-base sm:p-xl editorial-shadow rounded-xl border-[0.5px] border-gold/20">
               <h2 className="font-section-heading text-section-heading text-maroon mb-lg">Send us a Message</h2>
               <p className="font-body-md text-ink-light mb-xl">Whether you have questions about our monastic programs, puja requests, or how to support our projects, we are here to help.</p>
-              <form className="space-y-lg" onSubmit={handleSubmit}>
+              <form className="space-y-lg relative" onSubmit={handleSubmit}>
+                {guard.field}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
                   <div className="space-y-xs">
                     <label className="font-label-eyebrow text-ink-mid block">FULL NAME</label>
