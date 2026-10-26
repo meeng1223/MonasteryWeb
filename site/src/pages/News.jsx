@@ -19,7 +19,7 @@ export default function News() {
   // Last known news first (instant), then refreshed from the CMS.
   const [docs, setDocs] = useState(() => cachedPublished("news"));
   const [page, setPage] = useState(1);
-  const { email, setEmail, status, subscribe } = useNewsletter();
+  const { email, setEmail, status, subscribe, honeypot } = useNewsletter();
   const { lang } = useLang();
 
   useEffect(() => {
@@ -203,7 +203,8 @@ export default function News() {
           <span className="font-label-eyebrow text-gold uppercase tracking-[0.2em] mb-4 block">Preserve Wisdom</span>
           <h2 className="font-section-heading text-section-heading text-maroon mb-base">Subscribe to the Archives</h2>
           <p className="font-body-md text-ink-mid mb-xl">Join our global community and receive monthly updates on rare teachings, ritual events, and digitization milestones.</p>
-          <form className="flex flex-col md:flex-row gap-base" onSubmit={subscribe}>
+          <form className="flex flex-col md:flex-row gap-base relative" onSubmit={subscribe}>
+            {honeypot}
             <input
               className="flex-grow bg-white border border-outline-variant rounded-lg px-base py-3 focus:ring-2 focus:ring-gold focus:border-gold outline-none font-body-md disabled:opacity-50"
               placeholder="Email Address"

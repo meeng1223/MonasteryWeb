@@ -9,7 +9,7 @@ const SOCIAL = [
 ];
 
 export default function Footer() {
-  const { email, setEmail, status, subscribe } = useNewsletter();
+  const { email, setEmail, status, subscribe, honeypot } = useNewsletter();
   const sister = useSisterLinks();
 
   return (
@@ -74,7 +74,8 @@ export default function Footer() {
         {/* Column 4: Newsletter + Social Media */}
         <div>
           <span className="eyebrow text-gold mb-8 block">Newsletter</span>
-          <form onSubmit={subscribe} className="mb-8">
+          <form onSubmit={subscribe} className="mb-8 relative">
+            {honeypot}
             <p className="text-white/60 text-xs leading-relaxed tracking-wider mb-4">
               Receive teachings, news, and event updates from the monastery.
             </p>

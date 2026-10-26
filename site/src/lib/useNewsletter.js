@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createItem } from "./publicContent.js";
 import { addToMailerLite } from "./mailerlite.js";
 import { trackEvent } from "./analytics.js";
+import { useBotGuard } from "./botGuard.jsx";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
@@ -10,11 +11,20 @@ const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 export function useNewsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | sent
+  const guard = useBotGuard();
 
   const subscribe = async (e) => {
     e.preventDefault();
     if (status === "sending" || !email) return;
     setStatus("sending");
+
+    // Bots get the normal "sent" state but nothing is saved or sent.
+    if (guard.isBot()) {
+      setStatus("sent");
+      setEmail("");
+      setTimeout(() => setStatus("idle"), 4000);
+      return;
+    }
 
     // 1) Lưu vào Firestore để xem trong admin — best effort
     try {
@@ -48,8 +58,9 @@ export function useNewsletter() {
     trackEvent("sign_up", { method: "newsletter" });
     setStatus("sent");
     setEmail("");
+    guard.reset();
     setTimeout(() => setStatus("idle"), 4000);
   };
 
-  return { email, setEmail, status, subscribe };
+  return { email, setEmail, status, subscribe, honeypot: guard.field };
 }
