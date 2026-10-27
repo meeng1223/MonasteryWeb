@@ -15,7 +15,7 @@ const SHARED = [
     sent: "Your question, with the earlier messages of the same chat; your first name (the first word of your profile name, never your full name); your Tibetan birth year with today's reading details (for example your life-force day). Never your birth date. A random install ID.",
     to: (
       <>
-        Our server, run on Cloudflare, passes the question to <b>Google Gemini</b>, which writes the answer. Our server does not store questions or answers; it keeps only the install ID and a count of your questions for up to 40 days, to apply the daily limit. We use Google's paid service, under which your questions are not used to train or improve its models.
+        Our server, run on Cloudflare, passes the question to a third-party AI provider that writes the answer. We may change which provider we use; every provider we use only receives the information listed here. Our server does not store questions or answers; it keeps only the install ID and a count of your questions for up to 40 days, to apply the daily limit. We only use providers' paid business services, under which your questions are not used to train or improve their models.
       </>
     ),
   },
@@ -42,7 +42,7 @@ export default function CalendarPrivacy() {
       <header className="relative bg-maroon text-gold-light py-4xl">
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <h1 className="font-page-banner text-page-banner mb-md">Privacy Policy</h1>
-          <p className="font-body-md text-gold-light/90">Tibetan Nyingmapa Calendar app · Dundul Raptenling Monastery<br />Effective 12 October 2026</p>
+          <p className="font-body-md text-gold-light/90">Tibetan Nyingmapa Calendar app · Dundul Raptenling Monastery<br />Effective 26 October 2026</p>
           <div className="w-12 h-px bg-gold/40 mx-auto mt-lg"></div>
         </div>
       </header>
@@ -85,7 +85,7 @@ export default function CalendarPrivacy() {
           </section>
           <section>
             <h2 className={h2}>Your agreement for Zoe</h2>
-            <p>Before your first question, the app explains what is sent to Google and asks for your agreement. You are asked once. You can withdraw it, or give it again, at any time in <b>Profile → My Astrology → Allow Zoe to answer my questions</b>. When it is off, nothing is sent to Zoe.</p>
+            <p>Before your first question, the app explains what is sent and that a third-party AI provider writes the answer, and asks for your agreement. You are asked once. You can withdraw it, or give it again, at any time in <b>Profile → My Astrology → Allow Zoe to answer my questions</b>. When it is off, nothing is sent to Zoe.</p>
             <p className="mt-4">Please don't share private details in your questions. Zoe can make mistakes; its answers are for reflection and study and are not a substitute for a qualified teacher, astrologer, doctor or other professional.</p>
           </section>
           <section>
