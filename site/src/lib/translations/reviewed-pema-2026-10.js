@@ -87,7 +87,7 @@ export default {
   "Construction of the Glorious Zangdok Palri": "ཟངས་མདོག་དཔལ་རི་བཞེངས་སྐྲུན།",
   "Contact Us": "འབྲེལ་གཏུག",
   "Contribute to our Daily Mandala": "ང་ཚོའི་ཉིན་རེའི་མཎྜལ་ལ་མཐུན་འགྱུར་གནང་རོགས།",
-  "Current President": "ད་ལྟའི་གཙོ་འཛིན།",
+  "Current President": "ད་ལྟའི་དབུ་འཛིན་",
   "Curriculum": "གཏན་འབེབས་སློབ་ཚན།",
   "Daily Practice": "ཉིན་རྒྱུན་གྱི་ཉམས་ལེན།",
   "Dedicated rituals for your wellbeing.": "ཁྱེད་ཀྱི་བདེ་ཐང་ཆེད་དུ་དམིགས་པའི་ཆོ་ག།",

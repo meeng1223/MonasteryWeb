@@ -26,7 +26,7 @@ export default {
   "Lineage Holder": "བརྒྱུད་འཛིན།",
   "Shedra Founder": "བཤད་གྲྭ་གསར་འཛུགས་མཁན།",
   "Lama Sonam Tashi Rinpoche": "བླ་མ་བསོད་ནམས་བཀྲ་ཤིས་རིན་པོ་ཆེ།",
-  "Current President": "ད་ལྟའི་ཚོགས་གཙོ།",
+  "Current President": "ད་ལྟའི་དབུ་འཛིན་",
   "The Dundul Chorten": "བདུད་འདུལ་མཆོད་རྟེན།",
   "Sacred Stupa": "མཆོད་རྟེན་དམ་པ།",
   "Latest news & events": "གསར་འགྱུར་དང་བྱ་བ་ཕྱི་ཤོས།",
