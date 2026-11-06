@@ -29,7 +29,7 @@ export default {
   "Kongtul Tsephel Rinpoche": "ཀོང་སྤྲུལ་ཚེ་འཕེལ་རིན་པོ་ཆེ།",
   "1926 — 2005": "༡༩༢༦ — ༢༠༠༥",
   "\"True leadership is the silent bridge between the wisdom of our ancestors and the potential of the future.\"": "\"འགོ་ཁྲིད་བདེན་པ་ནི་རང་གི་མེས་པོའི་ཤེས་རབ་དང་མ་འོངས་པའི་ནུས་པ་གཉིས་བར་གྱི་ཁ་ཁུ་སིམ་པའི་ཟམ་པ་ཡིན།\"",
-  "Current President": "ད་ལྟའི་ཚོགས་གཙོ།",
+  "Current President": "ད་ལྟའི་དབུ་འཛིན་",
   "Lama Sonam Tashi Rinpoche": "བླ་མ་བསོད་ནམས་བཀྲ་ཤིས་རིན་པོ་ཆེ།",
   "Born 1987": "༡༩༨༧ལོར་འཁྲུངས།",
   "The current spiritual head, Lama Sonam Tashi Rinpoche, was born in 1987 into a family with deep roots in the Dudjom lineage. From a young age, he was recognized for his sharp intellect and innate realization of the Dzogchen teachings.": "ད་ལྟའི་ཆོས་ཕྱོགས་ཀྱི་སྤྱི་གཙོ་བླ་མ་བསོད་ནམས་བཀྲ་ཤིས་རིན་པོ་ཆེ་ཕྱི་ལོ་༡༩༨༧ལོར་བདུད་འཇོམས་བརྒྱུད་པ་ལ་རྩ་བ་ཟབ་མོ་ལྡན་པའི་ཁྱིམ་ཚང་ཞིག་ཏུ་འཁྲུངས། སྐུ་ན་གཞོན་དུས་ནས་ཁོང་གི་བློ་གྲོས་རྣོ་བ་དང་རྫོགས་ཆེན་གྱི་གདམས་ངག་ལྷན་སྐྱེས་ཀྱི་རྟོགས་པས་གྲགས།",
@@ -144,7 +144,7 @@ export default {
   "Lama Jamphel Sherap Rinpoche": "བླ་མ་འཇམ་དཔལ་ཤེས་རབ་རིན་པོ་ཆེ།",
   "5th Vajra Master": "རྡོ་རྗེ་སློབ་དཔོན་ལྔ་པ།",
   "Lama Kelsang Nyima Rinpoche": "བླ་མ་སྐལ་བཟང་ཉི་མ་རིན་པོ་ཆེ།",
-  "6th Vajra Master · Current President": "རྡོ་རྗེ་སློབ་དཔོན་དྲུག་པ · ད་ལྟའི་ཚོགས་གཙོ།",
+  "6th Vajra Master · Current President": "རྡོ་རྗེ་སློབ་དཔོན་དྲུག་པ · ད་ལྟའི་དབུ་འཛིན་",
 
   // ===== masters.js — Chagdud Tulku Rinpoche bio =====
   "Chagdud Tulku Rinpoche was born in 1930 as Padma Gargyi Wangchuk in the Thromtar region of Kham in Eastern Tibet. His father was Sera Kharto Tulku, a lama of the Gelugpa School of Tibetan Buddhism. His mother was Delog Dawa Drolma, who was widely considered to be an emanation of Tara, and was from a Sakya family; she had a profound influence on her son's spiritual life.": "ལྕགས་མདུད་སྤྲུལ་སྐུ་རིན་པོ་ཆེ་ཕྱི་ལོ་༡༩༣༠ལོར་ཤར་ཕྱོགས་བོད་ཀྱི་ཁམས་ཀྱི་ཁྲོམ་ཐར་ས་ཁུལ་དུ་པདྨ་གར་གྱི་དབང་ཕྱུག་ཅེས་འཁྲུངས། ཁོང་གི་ཡབ་ནི་སེ་ར་མཁར་ཐོ་སྤྲུལ་སྐུ་སྟེ། བོད་ཀྱི་ནང་པའི་དགེ་ལུགས་པའི་གྲུབ་མཐའི་བླ་མ་ཞིག་ཡིན། ཁོང་གི་ཡུམ་ནི་འདས་ལོག་ཟླ་བ་སྒྲོལ་མ་སྟེ། ཁོང་ནི་སྒྲོལ་མའི་སྤྲུལ་པ་ཞིག་ཡིན་པར་ཁྱབ་ཆེར་ངོས་འཛིན་བྱས་ཤིང་། ས་སྐྱའི་ཁྱིམ་ཚང་ཞིག་ནས་ཡིན་ལ། ཁོང་གིས་རང་གི་སྲས་ཀྱི་ཆོས་ཕྱོགས་ཀྱི་མི་ཚེར་ཤུགས་རྐྱེན་ཟབ་མོ་ཐེབས།",
