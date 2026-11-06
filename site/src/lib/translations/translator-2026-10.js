@@ -18,9 +18,9 @@ export default {
   "His Holiness Dudjom Rinpoche was one of the greatest masters of Tibetan Buddhism and the supreme head of the Nyingma school in modern times. Recognized as the incarnation of the great tertön Dudjom Lingpa, he was renowned as a realized master, prolific scholar, and revealer of profound teachings known as the Dudjom Tersar.":
     "༧སྐྱབས་རྗེ་བདུད་འཇོམས་རིན་པོ་ཆེ་ནི་བོད་བརྒྱུད་ནང་པའི་ཆོས་ལུགས་ཀྱི་སློབ་དཔོན་ཆེན་པོ་ཞིག་དང་དེང་དུས་ཀྱི་རྙིང་མ་ཆོས་བརྒྱུད་ཀྱི་དབུ་འཛིན་མཐོ་ཤོས་དེ་ཡིན། ཁོང་ནི་རྟོགས་པ་མཐོ་བའི་སློབ་དཔོན་དང་མཁས་པ་ཆེན་པོ་ཞིག་ཡིན་ལ། ད་དུང་བདུད་འཇོམས་གཏེར་གསར་ལུགས་ཀྱི་སྲོལ་འབྱེད་པོ་གཏེར་སྟོན་བདུད་འཇོམས་གླིང་པའི་ཡང་སྲིད་དུ་ངོས་འཛིན་བྱས་པ་ཞིག་ཡིན།",
   "2nd President":
-    "ཚོོགས་གཙོ་གཉིས་པ།",
+    "དབུ་འཛིན་ ༢",
   "3rd President - Current":
-    "ཚོགས་གཙོོ་གསུམ་པ།",
+    "དབུ་འཛིན་ ༣",
   "2nd Vajra Master":
     "རྡོོ་རྗེ་སློབ་དཔོན་གཉིས་པ།",
   "3rd Vajra Master":
@@ -74,9 +74,9 @@ export default {
   "Due to the deteriorating political situation in Tibet, Tulku Tsephel was separated from his root guru. But Tulku was reunited with Kyabje Dudjom Rinpoche after Tulku fled Tibet and arrived in India. Once again, he was able to serve Kyabje Rinpoche. Kyabje Rinpoche asked Tulku Tsephel to go to Odisha and settle there. From that time until he passed away, Tulku stayed in Odisha in order to serve the Dundul Raptenling Monastery. He was appointed the 5th president of the monastery in about 1975. Tulku Tsephel was especially known for his knowledge and accuracy in astronomy and divinations. His prayers and blessings were known as effective and beneficial.":
     "བོད་ཀྱི་ཆབ་སྲིད་ཀྱི་གནས་སྟངས་ཇེ་སྡུག་ཏུ་ཕྱིན་པའི་རྐྱེན་གྱིས། སྤྲུལ་སྐུ་ཚེ་འཕེལ་མཆོག་རང་གི་རྩ་བའི་བླ་མ་དང་ཞལ་བྲལ་དགོས་བྱུང་། འོན་ཀྱང་སྤྲུལ་སྐུ་མཆོག་བོད་ནས་བྲོས་བྱོལ་དུ་ཕེབས་ཏེ་རྒྱ་གར་ལ་འབྱོར་རྗེས། ༧སྐྱབས་རྗེ་བདུད་འཇོམས་རིན་པོ་ཆེ་མཆོག་དང་སླར་ཡང་ཞལ་འཛོམས་བྱུང་། དེ་ནས་ཁོང་གིས་བསྐྱར་དུ་༧སྐྱབས་རྗེ་རིན་པོ་ཆེ་མཆོག་གི་ཞབས་ཕྱི་ཞུ་བའི་སྐལ་བ་ཐོབ།\n༧སྐྱབས་རྗེ་རིན་པོ་ཆེ་མཆོག་གིས་སྤྲུལ་སྐུ་ཚེ་འཕེལ་མཆོག་ལ་ཨོ་ཌི་ཤར་ཕེབས་ནས་ས་གནས་དེར་གཞི་ཆགས་དགོས་པའི་བཀའ་བསྩལ། དུས་དེ་ནས་བཟུང་སྐུ་གཤེགས་པའི་བར་དུ། སྤྲུལ་སྐུ་མཆོག་གིས་བདུད་འདུལ་རབ་བརྟན་གླིང་དགོན་པར་ཞབས་ཕྱི་ཞུས་ཏེ་ཨོ་ཌི་ཤར་བཞུགས། ཕྱི་ལོ་ ༡༩༧༥ ལོར་ཁོང་དགོན་པ་འདིའི་གཙོ་འཛིན་ལྔ་པར་བསྐོ་གཞག་གནང་། སྤྲུལ་སྐུ་ཚེ་འཕེལ་མཆོག་ནི་ལྷག་པར་དུ་སྐར་རྩིས་རིག་པ་དང་མོ་རྩིས་ཀྱི་སྐོར་ལ་མཁྱེན་རྒྱ་ཆེ་ཞིང་གནད་ལ་འཁེལ་བ་ཞིག་ཡིན་པས་ཡོངས་སུ་གྲགས། ཁོང་གིས་བསྔོ་སྨོན་དང་བྱིན་རླབས་གནང་བ་རྣམས་ཕན་ཐོགས་དང་ནུས་པ་ཆེན་པོ་ལྡན་པ་ཞིག་ཡིན་པར་ཀུན་གྱིས་ཤེས།",
   "Second President":
-    "གཙོ་གཛིན་གཉིས་པ།",
+    "དབུ་འཛིན་ ༢",
   "3rd President":
-    "གཙོ་འཛིན་གསུམ་པ།",
+    "དབུ་འཛིན་ ༣",
   "Leadership":
     "ལགན་འཛིན།",
   "Tsering Choephel":
