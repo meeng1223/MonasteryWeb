@@ -16,7 +16,8 @@ export const PUJA_PURPOSES = [
   {
     cat: "Rituals for Illness",
     slug: "health-healing",
-    zeffy: null,
+    listTitle: "Pujas for Health and Healing",
+    zeffy: "donation-form/puja-for-health-and-healing-dundul-raptenling-monastery",
     icon: "ti-heart-plus",
     title: "Puja for Health and Healing",
     desc: "Prayers and rituals for someone who is ill or recovering, such as the Medicine Buddha ritual and the Heart Sutra, dedicated to their healing and well-being.",
@@ -24,7 +25,8 @@ export const PUJA_PURPOSES = [
   {
     cat: "Long Life Rituals",
     slug: "long-life",
-    zeffy: null,
+    listTitle: "Pujas for Long Life",
+    zeffy: "donation-form/long-life-puja-dundul-raptenling-monastery",
     icon: "ti-plant",
     title: "Long Life Puja",
     desc: "Long-life rituals to strengthen the life force, often requested for elders, teachers, or at times of ill health, such as the long life puja through Vijaya and the long life sutra.",
@@ -32,7 +34,8 @@ export const PUJA_PURPOSES = [
   {
     cat: "Removing Obstacle Rituals",
     slug: "removing-obstacles",
-    zeffy: null,
+    listTitle: "Pujas for Removing Obstacles",
+    zeffy: "donation-form/puja-for-removing-obstacles-dundul-raptenling-monastery",
     icon: "ti-shield",
     title: "Puja for Removing Obstacles",
     desc: "Rituals to clear obstacles in health, family, work, travel, or practice, such as Vajrakilaya, Wrathful Guru Rinpoche, and the White Parasol (Ushnisha Sitapatra).",
@@ -40,7 +43,8 @@ export const PUJA_PURPOSES = [
   {
     cat: "Rituals of Caring for the Deceased",
     slug: "deceased",
-    zeffy: null,
+    listTitle: "Pujas for the Deceased",
+    zeffy: "donation-form/puja-for-the-deceased-dundul-raptenling-monastery",
     icon: "ti-candle",
     title: "Puja for the Deceased",
     desc: "Prayers for a loved one who has passed away, to purify negative karma and guide them toward a good rebirth, such as the Amitabha puja, 1000 times Vajrasattva, and Avalokiteshvara practice.",
@@ -50,7 +54,7 @@ export const PUJA_PURPOSES = [
 // Light & butter lamp offering: its own card and page, not a catalogue category.
 export const BUTTER_LAMP = {
   slug: "butter-lamps",
-  zeffy: null,
+  zeffy: "donation-form/light-and-butter-lamp-offering-dundul-raptenling-monastery",
   icon: "ti-flame",
   title: "Light & Butter Lamp Offering",
   desc: "Offer butter lamps before the sacred images of the monastery: 1, 21, 108 or 1,000 lamps, lit by the monks and dedicated to the names and intention you send.",
@@ -61,6 +65,10 @@ export const BUTTER_LAMP = {
 // Rupee ↔ US dollar for showing both amounts (Zeffy charges in US$).
 // About ₹94.50 per US$1 on 6 November 2026, as on /support-young-monks.
 export const INR_PER_USD = 94.5;
+// Online offerings (Zeffy) are received by the monastery's U.S. partner.
+// The butter lamp page uses VLF_NOTE_LAMPS (lamps are priced in US$, not converted from ₹).
+export const VLF_NOTE = "Online offerings are received by Vajra Lotus Foundation, a U.S. 501(c)(3) nonprofit and partner of Dundul Raptenling Monastery, which sends them to the monastery. Amounts are in US dollars, converted from the monastery's puja prices in Indian Rupees. You will receive an email receipt from Vajra Lotus Foundation.";
+export const VLF_NOTE_LAMPS = "Online offerings are received by Vajra Lotus Foundation, a U.S. 501(c)(3) nonprofit and partner of Dundul Raptenling Monastery, which sends them to the monastery. Amounts are in US dollars. You will receive an email receipt from Vajra Lotus Foundation.";
 export const RATE_NOTE = "US dollar amounts use about ₹94.50 per US$1 (6 November 2026); the actual amount may vary with exchange rates and fees.";
 
 // The five offering pages at /puja/<slug>: the four puja purposes + butter lamps.
