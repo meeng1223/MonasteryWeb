@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import ZeffyEmbed from "../components/ZeffyEmbed.jsx";
 import { PujaCard, fmt } from "../components/PujaItemCard.jsx";
-import { PUJA_LIST, PUJA_PAGES, BUTTER_LAMP, INR_PER_USD, RATE_NOTE } from "../data/pujaList.js";
+import { PUJA_LIST, PUJA_PAGES, BUTTER_LAMP, INR_PER_USD, RATE_NOTE, VLF_NOTE, VLF_NOTE_LAMPS } from "../data/pujaList.js";
 import { useLang } from "../lib/i18n.jsx";
 
 const BANNER = "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520072/monastery/wocwwpny7tf75yv8zfx9.jpg";
@@ -50,8 +50,41 @@ export default function PujaCategory({ slug }) {
         </div>
       </section>
 
+      {/* Offering form */}
+      <section id="offer" className="py-14 sm:py-20 bg-cream border-y border-outline-variant scroll-mt-28">
+        <div className="max-w-[760px] mx-auto px-base sm:px-lg">
+          <div className="text-center mb-8">
+            <span className="text-[11px] text-gold-dark tracking-widest uppercase mb-2 block">Secure online offering</span>
+            <h2 className="text-2xl sm:text-3xl text-ink font-normal">{isLamp ? "Offer Butter Lamps" : "Make Your Puja Offering"}</h2>
+            <div className="h-[1px] w-16 bg-gold mx-auto mt-4"></div>
+          </div>
+          <div className="flex items-start gap-3 bg-white border border-gold/30 rounded-lg px-4 py-3 mb-6">
+            <i className="ti ti-shield text-gold-dark text-xl"></i>
+            <p className="text-[13px] text-ink-mid leading-relaxed">{isLamp ? VLF_NOTE_LAMPS : VLF_NOTE}</p>
+          </div>
+          {page.zeffy ? (
+            <ZeffyEmbed form={page.zeffy} />
+          ) : (
+            <div className="bg-white rounded-lg border border-gold/30 p-6 sm:p-8 text-center">
+              <i className="ti ti-heart text-gold text-3xl mb-3 inline-block"></i>
+              <p className="text-ink-mid leading-relaxed mb-6">
+                The online offering form for this page is coming soon. Until then, please send your request with the form on the puja page, and the monastery will reply by email with how to make your offering.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link to="/puja#puja-request" className="inline-flex items-center gap-2 bg-maroon text-white px-6 py-3 rounded-[4px] text-[12px] uppercase tracking-[0.15em] font-medium hover:bg-maroon-dark">
+                  Puja Request Form <i className="ti ti-arrow-right"></i>
+                </Link>
+                <Link to="/offering" className="inline-flex items-center gap-2 border border-maroon text-maroon px-6 py-3 rounded-[4px] text-[12px] uppercase tracking-[0.15em] font-medium hover:bg-cream">
+                  Other ways to give
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Butter lamp options, or the pujas in this category */}
-      <section className="py-14 sm:py-20 bg-cream">
+      <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-max-width mx-auto px-base sm:px-lg">
           {isLamp ? (
             <>
@@ -79,7 +112,7 @@ export default function PujaCategory({ slug }) {
             <>
               <div className="text-center mb-10">
                 <span className="text-[11px] text-gold-dark tracking-widest uppercase mb-2 block">{items.length} pujas</span>
-                <h2 className="text-2xl sm:text-3xl text-ink font-normal">Pujas you can request</h2>
+                <h2 className="text-2xl sm:text-3xl text-ink font-normal">{page.listTitle}</h2>
                 <div className="h-[1px] w-16 bg-gold mx-auto mt-4"></div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,7 +128,7 @@ export default function PujaCategory({ slug }) {
       </section>
 
       {/* How it works */}
-      <section className="py-14 sm:py-16 bg-white">
+      <section className="py-14 sm:py-16 bg-cream border-t border-outline-variant">
         <div className="max-w-max-width mx-auto px-base sm:px-lg">
           <div className="text-center mb-10">
             <span className="text-[11px] text-gold-dark tracking-widest uppercase mb-2 block">How it works</span>
@@ -113,35 +146,6 @@ export default function PujaCategory({ slug }) {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* Offering form */}
-      <section id="offer" className="py-14 sm:py-20 bg-cream border-y border-outline-variant scroll-mt-28">
-        <div className="max-w-[760px] mx-auto px-base sm:px-lg">
-          <div className="text-center mb-8">
-            <span className="text-[11px] text-gold-dark tracking-widest uppercase mb-2 block">Secure online offering</span>
-            <h2 className="text-2xl sm:text-3xl text-ink font-normal">{isLamp ? "Offer Butter Lamps" : "Make Your Puja Offering"}</h2>
-            <div className="h-[1px] w-16 bg-gold mx-auto mt-4"></div>
-          </div>
-          {page.zeffy ? (
-            <ZeffyEmbed form={page.zeffy} />
-          ) : (
-            <div className="bg-white rounded-lg border border-gold/30 p-6 sm:p-8 text-center">
-              <i className="ti ti-heart text-gold text-3xl mb-3 inline-block"></i>
-              <p className="text-ink-mid leading-relaxed mb-6">
-                The online offering form for this page is coming soon. Until then, please send your request with the form on the puja page, and the monastery will reply by email with how to make your offering.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link to="/puja#puja-request" className="inline-flex items-center gap-2 bg-maroon text-white px-6 py-3 rounded-[4px] text-[12px] uppercase tracking-[0.15em] font-medium hover:bg-maroon-dark">
-                  Puja Request Form <i className="ti ti-arrow-right"></i>
-                </Link>
-                <Link to="/offering" className="inline-flex items-center gap-2 border border-maroon text-maroon px-6 py-3 rounded-[4px] text-[12px] uppercase tracking-[0.15em] font-medium hover:bg-cream">
-                  Other ways to give
-                </Link>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 

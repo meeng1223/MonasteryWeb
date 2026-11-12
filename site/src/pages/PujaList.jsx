@@ -27,7 +27,11 @@ const FAQ = [
   },
   {
     q: "What does the puja offering cover?",
-    a: "The listed amounts are suggested offerings in Indian Rupees. They help cover food, ritual materials, and support for the monks who perform the puja.",
+    a: "The listed amounts are suggested offerings in Indian Rupees, with approximate US dollar amounts. They help cover food, ritual materials, and support for the monks who perform the puja.",
+  },
+  {
+    q: "Who receives my online offering?",
+    a: "Online offerings are received by Vajra Lotus Foundation, a U.S. 501(c)(3) nonprofit and partner of Dundul Raptenling Monastery, which sends them to the monastery. Amounts are in US dollars, converted from the monastery’s puja prices in Indian Rupees, and you receive an email receipt from Vajra Lotus Foundation.",
   },
   {
     q: "Which puja should I choose?",
