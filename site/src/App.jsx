@@ -21,6 +21,7 @@ const BoardMembers = lazyPage(() => import("./pages/BoardMembers.jsx"));
 const Shedra = lazyPage(() => import("./pages/Shedra.jsx"));
 const GraduateMonks = lazyPage(() => import("./pages/GraduateMonks.jsx"));
 const PujaList = lazyPage(() => import("./pages/PujaList.jsx"));
+const PujaCategory = lazyPage(() => import("./pages/PujaCategory.jsx"));
 const PrayerBooks = lazyPage(() => import("./pages/PrayerBooks.jsx"));
 const CommunitySupport = lazyPage(() => import("./pages/CommunitySupport.jsx"));
 const Support = lazyPage(() => import("./pages/Support.jsx"));
@@ -80,6 +81,11 @@ const routes = (
       <Route path="/shedra" element={<Shedra />} />
       <Route path="/graduate-monks" element={<GraduateMonks />} />
       <Route path="/puja" element={<PujaList />} />
+      <Route path="/puja/health-healing" element={<PujaCategory slug="health-healing" />} />
+      <Route path="/puja/long-life" element={<PujaCategory slug="long-life" />} />
+      <Route path="/puja/removing-obstacles" element={<PujaCategory slug="removing-obstacles" />} />
+      <Route path="/puja/deceased" element={<PujaCategory slug="deceased" />} />
+      <Route path="/puja/butter-lamps" element={<PujaCategory slug="butter-lamps" />} />
       <Route path="/prayer-books" element={<PrayerBooks />} />
       <Route path="/community-support" element={<CommunitySupport />} />
       <Route path="/support" element={<Support />} />

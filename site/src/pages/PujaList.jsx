@@ -2,7 +2,8 @@ import { useState } from "react";
 import { trackEvent } from "../lib/analytics.js";
 import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
-import { PUJA_LIST, PUJA_CATEGORIES, PUJA_PURPOSES, pujaCategoryId } from "../data/pujaList.js";
+import { PujaCard, fmt, usd } from "../components/PujaItemCard.jsx";
+import { PUJA_LIST, PUJA_CATEGORIES, PUJA_PAGES, pujaCategoryId } from "../data/pujaList.js";
 import { createItem } from "../lib/publicContent.js";
 import { addToMailerLite } from "../lib/mailerlite.js";
 import { useBotGuard } from "../lib/botGuard.jsx";
@@ -10,11 +11,6 @@ import { useLang } from "../lib/i18n.jsx";
 import { useJsonLd } from "../lib/jsonLd.js";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
-
-const fmt = (n) => {
-  const num = Number(n);
-  return Number.isFinite(num) ? num.toLocaleString("en-IN") : n;
-};
 
 const FAQ = [
   {
@@ -43,23 +39,6 @@ const FAQ_SCHEMA = {
   "@type": "FAQPage",
   mainEntity: FAQ.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
 };
-
-// showName: false in Tibetan mode, where the English name would be translated
-// into the same Tibetan title already shown above it.
-function PujaCard(p, showName) {
-  return (
-    <div key={`${p.cat}-${p.si}`} className="p-6 rounded-lg border border-outline-variant bg-white transition-all hover:shadow-md flex flex-col">
-      <div className="flex justify-between items-start gap-3 mb-3">
-        <span className="font-serif text-maroon/70 text-base leading-snug">{p.tib}</span>
-        <span className="text-gold-dark font-semibold whitespace-nowrap">₹{fmt(p.amount)}</span>
-      </div>
-      {showName && p.en && <h4 className="text-[16px] text-ink leading-snug mb-3">{p.en}</h4>}
-      <div className="flex items-center justify-between mt-auto pt-1">
-        <span className="flex items-center gap-2 text-[11px] text-ink-light uppercase tracking-wider"><i className="ti ti-calendar text-gold"></i> {p.days}</span>
-      </div>
-    </div>
-  );
-}
 
 export default function PujaList() {
   const { lang } = useLang();
@@ -156,26 +135,24 @@ export default function PujaList() {
             <h2 className="text-2xl sm:text-3xl text-ink font-normal">Choose a Puja for Your Intention</h2>
             <div className="h-[1px] w-16 bg-gold mx-auto mt-4"></div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {PUJA_PURPOSES.map((p) => {
-              const items = PUJA_LIST.filter((x) => x.cat === p.cat);
-              const from = Math.min(...items.map((x) => Number(x.amount)).filter(Number.isFinite));
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PUJA_PAGES.map((p) => {
+              const items = p.cat ? PUJA_LIST.filter((x) => x.cat === p.cat) : [];
+              const from = items.length ? Math.min(...items.map((x) => Number(x.amount)).filter(Number.isFinite)) : null;
               return (
-                <div key={p.cat} className="p-6 sm:p-8 rounded-lg border border-outline-variant bg-cream flex flex-col">
+                <Link key={p.slug} to={`/puja/${p.slug}`} className="group p-6 sm:p-8 rounded-lg border border-outline-variant bg-cream flex flex-col transition-all hover:shadow-md hover:border-gold/50">
                   <i className={`ti ${p.icon} text-gold text-3xl mb-3`}></i>
                   <h3 className="text-xl text-maroon mb-3">{p.title}</h3>
                   <p className="text-[14px] text-ink-mid leading-relaxed mb-5">{p.desc}</p>
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
-                    <span className="text-[12px] text-ink-light uppercase tracking-wider">{items.length} pujas · from ₹{fmt(from)}</span>
-                    <a
-                      href={`#${pujaCategoryId(p.cat)}`}
-                      onClick={() => setExpanded((e) => ({ ...e, [p.cat]: true }))}
-                      className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.15em] text-maroon hover:text-gold-dark"
-                    >
-                      See pujas <i className="ti ti-arrow-down"></i>
-                    </a>
+                    <span className="text-[12px] text-ink-light uppercase tracking-wider">
+                      {from != null ? `${items.length} pujas · from ₹${fmt(from)} (≈ $${usd(from)})` : "$1 per lamp (≈ ₹95) · 1 to 1,000 lamps"}
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-[12px] uppercase tracking-[0.15em] text-maroon group-hover:text-gold-dark">
+                      Offer now <i className="ti ti-arrow-right"></i>
+                    </span>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

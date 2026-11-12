@@ -15,29 +15,58 @@ export const PUJA_CATEGORIES = [
 export const PUJA_PURPOSES = [
   {
     cat: "Rituals for Illness",
+    slug: "health-healing",
+    zeffy: null,
     icon: "ti-heart-plus",
     title: "Puja for Health and Healing",
     desc: "Prayers and rituals for someone who is ill or recovering, such as the Medicine Buddha ritual and the Heart Sutra, dedicated to their healing and well-being.",
   },
   {
     cat: "Long Life Rituals",
+    slug: "long-life",
+    zeffy: null,
     icon: "ti-plant",
     title: "Long Life Puja",
     desc: "Long-life rituals to strengthen the life force, often requested for elders, teachers, or at times of ill health, such as the long life puja through Vijaya and the long life sutra.",
   },
   {
     cat: "Removing Obstacle Rituals",
+    slug: "removing-obstacles",
+    zeffy: null,
     icon: "ti-shield",
     title: "Puja for Removing Obstacles",
     desc: "Rituals to clear obstacles in health, family, work, travel, or practice, such as Vajrakilaya, Wrathful Guru Rinpoche, and the White Parasol (Ushnisha Sitapatra).",
   },
   {
     cat: "Rituals of Caring for the Deceased",
+    slug: "deceased",
+    zeffy: null,
     icon: "ti-candle",
     title: "Puja for the Deceased",
     desc: "Prayers for a loved one who has passed away, to purify negative karma and guide them toward a good rebirth, such as the Amitabha puja, 1000 times Vajrasattva, and Avalokiteshvara practice.",
   },
 ];
+
+// Light & butter lamp offering: its own card and page, not a catalogue category.
+export const BUTTER_LAMP = {
+  slug: "butter-lamps",
+  zeffy: null,
+  icon: "ti-flame",
+  title: "Light & Butter Lamp Offering",
+  desc: "Offer butter lamps before the sacred images of the monastery: 1, 21, 108 or 1,000 lamps, lit by the monks and dedicated to the names and intention you send.",
+  usdPerLamp: 1,
+  options: [1, 21, 108, 1000],
+};
+
+// Rupee ↔ US dollar for showing both amounts (Zeffy charges in US$).
+// About ₹94.50 per US$1 on 6 November 2026, as on /support-young-monks.
+export const INR_PER_USD = 94.5;
+export const RATE_NOTE = "US dollar amounts use about ₹94.50 per US$1 (6 November 2026); the actual amount may vary with exchange rates and fees.";
+
+// The five offering pages at /puja/<slug>: the four puja purposes + butter lamps.
+// `zeffy` is the Zeffy form path (e.g. "donation-form/<form-slug>"); while it is
+// null the page shows the request form link instead of an embedded payment form.
+export const PUJA_PAGES = [...PUJA_PURPOSES, BUTTER_LAMP];
 
 // Anchor id of a category in the /puja catalogue.
 export const pujaCategoryId = (cat) => "cat-" + cat.toLowerCase().replace(/[^a-z]+/g, "-").replace(/-$/, "");

@@ -141,6 +141,31 @@ export const PAGE_SEO = {
     description:
       "Request a puja online from Dundul Raptenling Monastery in Odisha, India: Dudjom Tersar prayers for health, long life, removing obstacles, and the deceased.",
   },
+  "/puja/health-healing": {
+    title: "Puja for Health and Healing | Dundul Raptenling Monastery",
+    description:
+      "Request a puja for health and healing, such as the Medicine Buddha ritual, performed by the monks of Dundul Raptenling Monastery in Odisha, India.",
+  },
+  "/puja/long-life": {
+    title: "Long Life Puja | Dundul Raptenling Monastery",
+    description:
+      "Request a long life puja, such as the Vijaya long life ritual, for elders, teachers or loved ones, performed at Dundul Raptenling Monastery in Odisha.",
+  },
+  "/puja/removing-obstacles": {
+    title: "Puja for Removing Obstacles | Dundul Raptenling Monastery",
+    description:
+      "Request a puja to remove obstacles in health, family, work or practice, such as Vajrakilaya and the White Parasol, at Dundul Raptenling Monastery.",
+  },
+  "/puja/deceased": {
+    title: "Puja for the Deceased | Dundul Raptenling Monastery",
+    description:
+      "Request prayers for a loved one who has passed away, such as the Amitabha puja and Vajrasattva practice, at Dundul Raptenling Monastery in Odisha.",
+  },
+  "/puja/butter-lamps": {
+    title: "Light & Butter Lamp Offering | Dundul Raptenling Monastery",
+    description:
+      "Offer 1, 21, 108 or 1,000 butter lamps at US$1 per lamp, lit by the monks of Dundul Raptenling Monastery and dedicated to your loved ones.",
+  },
   "/prayer-books": {
     title: "Puja Prayer Books | Dundul Raptenling Monastery",
     description:
