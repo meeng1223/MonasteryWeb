@@ -62,8 +62,10 @@ export default function PujaCategory({ slug }) {
             <i className="ti ti-shield text-gold-dark text-xl"></i>
             <p className="text-[13px] text-ink-mid leading-relaxed">{isLamp ? VLF_NOTE_LAMPS : VLF_NOTE}</p>
           </div>
+          {/* key: a new box per form. Zeffy fills a box only once, so moving between
+              puja pages in the app would otherwise keep showing the previous form. */}
           {page.zeffy ? (
-            <ZeffyEmbed form={page.zeffy} />
+            <ZeffyEmbed key={page.zeffy} form={page.zeffy} />
           ) : (
             <div className="bg-white rounded-lg border border-gold/30 p-6 sm:p-8 text-center">
               <i className="ti ti-heart text-gold text-3xl mb-3 inline-block"></i>
