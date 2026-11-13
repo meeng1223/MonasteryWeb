@@ -7,6 +7,11 @@ import { useLang } from "../lib/i18n.jsx";
 
 const BANNER = "https://res.cloudinary.com/dvhwombxw/image/upload/f_auto,q_auto/v1782520072/monastery/wocwwpny7tf75yv8zfx9.jpg";
 
+// Shown above the offering form (wording from the monastery, Nov 2026).
+const OFFERING_NOTE = "The suggested offering helps cover the cost of arranging a half-day or full-day puja, including materials such as torma, mandala and offerings to the deities. Please do not feel any pressure to offer beyond your means; you are welcome to enter any amount in the form, and our monks can perform a shorter prayer session for you.";
+const GURU_DAY_NOTE = "You can also offer butter lamps from $1 on Guru Rinpoche Day (the 10th day of each Tibetan month). Every month our monks pray together for you and your loved ones.";
+const GURU_DAY_NOTE_LAMPS = "You can offer butter lamps from $1 on Guru Rinpoche Day (the 10th day of each Tibetan month). Every month our monks pray together for you and your loved ones.";
+
 const PUJA_STEPS = [
   { icon: "ti-check", title: "Choose a puja", text: "Pick the puja from the list on this page, or let us know your situation and the monks will suggest one." },
   { icon: "ti-heart", title: "Make your offering", text: "Use the secure form below. Add the name(s) the prayers are for and your intention." },
@@ -57,6 +62,18 @@ export default function PujaCategory({ slug }) {
             <span className="text-[11px] text-gold-dark tracking-widest uppercase mb-2 block">Secure online offering</span>
             <h2 className="text-2xl sm:text-3xl text-ink font-normal">{isLamp ? "Offer Butter Lamps" : "Make Your Puja Offering"}</h2>
             <div className="h-[1px] w-16 bg-gold mx-auto mt-4"></div>
+          </div>
+          <div className="flex items-start gap-3 bg-gold-light border border-gold/30 rounded-lg px-4 py-4 mb-4">
+            <i className="ti ti-heart text-maroon text-xl"></i>
+            <div className="space-y-2 text-[14px] text-ink-mid leading-relaxed">
+              {!isLamp && <p>{OFFERING_NOTE}</p>}
+              <p>{isLamp ? GURU_DAY_NOTE_LAMPS : GURU_DAY_NOTE}</p>
+              {!isLamp && (
+                <Link to="/puja/butter-lamps" className="inline-flex items-center gap-1 text-maroon text-[13px] font-medium hover:underline">
+                  Offer butter lamps <i className="ti ti-arrow-right"></i>
+                </Link>
+              )}
+            </div>
           </div>
           <div className="flex items-start gap-3 bg-white border border-gold/30 rounded-lg px-4 py-3 mb-6">
             <i className="ti ti-shield text-gold-dark text-xl"></i>
